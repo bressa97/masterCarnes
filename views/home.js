@@ -1,35 +1,6 @@
-/**
-* Sample React Native App
-* https://github.com/facebook/react-native
-* @flow
-*/
 import React, { Component } from 'react';
-import { Cell, Section, TableView } from 'react-native-tableview-simple'
-const SideMenu = require('react-native-side-menu');
-const Menu = require('./menu');
-import Icon from 'react-native-vector-icons/FontAwesome';
-import Home from './views/home.js';
-import PageTwo from './views/pagetwo.js';
-import Help from'./views/pagetwo';
-
-import {
-   AppRegistry,
-   StyleSheet,
-   Text,
-   View,
-   ScrollView,
-   ListView,
-   Navigator,
-   Platform,
-   TouchableHighlight,
-   TouchableNativeFeedback,
-   TouchableOpacity,
-   Modal,
-   NavigatorIOS,
-   Image,
-   StatusBar
-} from 'react-native';
-
+import { View,ListView,Text,StyleSheet,TouchableOpacity,ScrollView,Modal,StatusBar,Navigator,Image } from 'react-native';
+import PageTwo from '../views/pagetwo.js';
 
 var products = [
   {name:'CABEZA DE LOMO',category:'CERDO'},
@@ -132,20 +103,23 @@ var products = [
   {name:'PAPA CRISSCUT',category:'POLLO, PESCADO Y OTROS'}
 ];
 
-class masterCarnesNative extends Component {
-  constructor(props){
-    super(props);
-    var dataSource = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1 !== r2,
-      sectionHeaderHasChanged: (s1, s2) => s1 !== s2
-    });
-   this.state = {
-      isOpen: false,
-      selectedItem: 'Home',
-      modalVisible:false,
-      dataSource: dataSource.cloneWithRowsAndSections(this.convertFoodArrayToMap()),
+module.exports = class Home extends React.Component {
+   constructor(props){
+      super(props);
+      var dataSource = new ListView.DataSource({
+        rowHasChanged: (r1, r2) => r1 !== r2,
+        sectionHeaderHasChanged: (s1, s2) => s1 !== s2
+      });
+      this.state = {
+         buttonLabel:'click',
+         ds : new ListView.DataSource({rowHasChanged: (r1, r2) => r1 != r2}),
+         loaded: false,
+         isOpen: false,
+         modalVisible:false,
+         dataSource: dataSource.cloneWithRowsAndSections(this.convertFoodArrayToMap()),
       }
-    }
+   }
+
    convertFoodArrayToMap() {
     var foodCategoryMap = {}; // Create the blank map
     products.forEach(function(productsItem) {
@@ -209,88 +183,56 @@ class masterCarnesNative extends Component {
          isOpen: !this.state.isOpen,
       });
    }
-   renderScene(route, navigator){
-     switch(this.state.selectedItem){
-       case 'Home':
-        return (<Home/>)
-        break;
-       case'Help':
-         return(<Help navigator={navigator}/>)
-         break;
-      }
-   }
-
 
    render() {
-      var TouchableElement = TouchableHighlight;
-      if (Platform.OS === 'android') {
-         TouchableElement = TouchableNativeFeedback;
-      }
 
-      const menu = <Menu colorGeneral="blue" onItemSelected={this.onMenuItemSelected.bind(this)}/>;
+      return(
+        <View style={{flex:1,backgroundColor:'#ffffff',justifyContent:'center',alignItems:'center'}}>
+          <View style={{borderWidth:1,height:80,width:160,borderColor:'#8c8c8c',alignItems:'center'}}>
+            <Text style={{marginTop:5,color:'#000000'}}>Hacer nueva cotización</Text>
+            <TouchableOpacity onPress={()=>{this.setModalVisible(true)}}style={{backgroundColor:'#1a75ff',marginTop:15,height:30,width:140,borderRadius:7}}><Text style={{color:'#ffffff',textAlign:'center',marginTop:4}}>Empezar cotización</Text></TouchableOpacity>
+          </View>
 
-      return (
-         <SideMenu menu={menu} isOpen={this.state.isOpen} onChange={(isOpen) => this.updateMenuState(isOpen)}>
-         <StatusBar
-          backgroundColor="#bfbfbf"
-         />
-         <Navigator
-           initialRoute={{ id: 'Home'}}
-           renderScene={this.renderScene.bind(this)}
-           navigationBar={
-            <Navigator.NavigationBar
-              routeMapper={{
-                LeftButton: (route, navigator, index, navState) =>
-                 { return (<TouchableOpacity onPress={()=>{this.toggle()}}><Image source={require('./img/burger.png')}style={{height:25,width:25,marginTop:10,marginLeft:10}}/></TouchableOpacity>); },
-                RightButton: (route, navigator, index, navState) =>
-                  { return (<TouchableOpacity style={{marginTop:-1,marginRight:10}}onPress={() => {this.setModalVisible(true)}}><Text style={{color:'#1a75ff',fontSize:34}}>+</Text></TouchableOpacity>); },
-                Title: (route, navigator, index, navState) =>
-                  { return (<Text></Text>); },
-              }}
-              style={{backgroundColor: '#ffffff'}}
+          <Modal animationType={"slide"} transparent={false} visible={this.state.modalVisible} onRequestClose={() => {alert("Modal has been closed.")}}>
+            <StatusBar
+               backgroundColor="#80b3ff"
             />
-         }
-         />
+            <Navigator
+              initialRoute={{ title: 'Awesome Scene', index: 0 }}
+              renderScene={(route, navigator) =>
+                <View style={{flex:1}}>
+                   <ListView
+                      style={{flex:.9}}
+                      dataSource={this.state.dataSource}
+                      renderRow={this.renderRow.bind(this)}
+                      renderSectionHeader={this.renderSectionHeader}
+                    />
 
-            <Modal animationType={"slide"} transparent={false} visible={this.state.modalVisible} onRequestClose={() => {alert("Modal has been closed.")}}>
-              <StatusBar
-                 backgroundColor="#80b3ff"
-              />
-              <Navigator
-                initialRoute={{ title: 'Awesome Scene', index: 0 }}
-                renderScene={(route, navigator) =>
-                  <View style={{flex:1}}>
-                     <ListView
-                        style={{flex:.9}}
-                        dataSource={this.state.dataSource}
-                        renderRow={this.renderRow.bind(this)}
-                        renderSectionHeader={this.renderSectionHeader}
-                      />
+                    <TouchableOpacity style={{flex:.08,backgroundColor:'#1a75ff',alignItems:'center'}} onPress={() => {this.setModalVisible(!this.state.modalVisible)}}>
+                     <Text style={{color:'#ffffff',marginTop:8}}>Verificar cotización</Text>
+                    </TouchableOpacity>
 
-                      <TouchableOpacity style={{flex:.08,backgroundColor:'#1a75ff',alignItems:'center'}} onPress={() => {this.setModalVisible(!this.state.modalVisible)}}>
-                       <Text style={{color:'#ffffff',marginTop:8}}>Verificar cotización</Text>
-                      </TouchableOpacity>
+                </View>
+              }
+              style={{paddingTop:60}}
+              navigationBar={
+               <Navigator.NavigationBar
+                 style={{alignContent:'center',alignItems:'center'}}
+                 routeMapper={{
+                   LeftButton: (route, navigator, index, navState) =>
+                    { return (<TouchableOpacity onPress={() => {this.setModalVisible(!this.state.modalVisible)}}><Image source={require('../img/close.png')}style={{height:15,width:15,marginTop:22,marginLeft:10}}/></TouchableOpacity>); },
+                   RightButton: (route, navigator, index, navState) =>
+                     { return (<Text></Text>); },
+                   Title: (route, navigator, index, navState) =>
+                     { return (<Text style={{fontSize:18,marginTop:17,color:'#ffffff',marginLeft:-1}}>Solicitar cotización</Text>); },
+                 }}
+                 style={{backgroundColor: '#1a75ff'}}
+               />
+             }
+           />
+          </Modal>
+        </View>
 
-                  </View>
-                }
-                style={{paddingTop:60}}
-                navigationBar={
-                 <Navigator.NavigationBar
-                   style={{alignContent:'center',alignItems:'center'}}
-                   routeMapper={{
-                     LeftButton: (route, navigator, index, navState) =>
-                      { return (<TouchableOpacity onPress={() => {this.setModalVisible(!this.state.modalVisible)}}><Image source={require('./img/close.png')}style={{height:15,width:15,marginTop:22,marginLeft:10}}/></TouchableOpacity>); },
-                     RightButton: (route, navigator, index, navState) =>
-                       { return (<Text></Text>); },
-                     Title: (route, navigator, index, navState) =>
-                       { return (<Text style={{fontSize:18,marginTop:17,color:'#ffffff',marginLeft:-1}}>Solicitar cotización</Text>); },
-                   }}
-                   style={{backgroundColor: '#1a75ff'}}
-                 />
-               }
-             />
-            </Modal>
-         </SideMenu>
       )
    }
 }
@@ -316,12 +258,11 @@ const styles = StyleSheet.create({
       fontSize: 20,
       color:'white',
       textAlign: 'center',
+      margin: 10,
    },
    instructions: {
       textAlign: 'center',
       color: '#333333',
       marginBottom: 5,
-   },
-});
-
-AppRegistry.registerComponent('masterCarnesNative', () => masterCarnesNative);
+   }
+})

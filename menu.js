@@ -51,6 +51,11 @@ const styles = StyleSheet.create({
 });
 
 module.exports = class Menu extends Component {
+  constructor(props){
+    super(props);
+
+  }
+
   static propTypes = {
     onItemSelected: React.PropTypes.func.isRequired,
   };
@@ -68,10 +73,9 @@ module.exports = class Menu extends Component {
         </View>
 
         <View style={{marginBottom:10}}>
-        <TouchableOpacity style={{width:window.width,flexDirection:'row'}}>
+        <TouchableOpacity style={{width:window.width,flexDirection:'row'}} onPress={()=>{this.props.onItemSelected('Home')}}>
           <Image source={{uri:'http://www.iberogen.es/content/uploads/2014/05/formulario.png'}} style={{width:25,height:25,marginLeft:5}}/>
           <Text
-            onPress={() => this.props.onItemSelected('About')}
             style={styles.item}>
             Pedidos
           </Text>
@@ -79,10 +83,9 @@ module.exports = class Menu extends Component {
         </View>
 
         <View style={{marginBottom:10}}>
-        <TouchableOpacity style={{width:window.width,flexDirection:'row'}}>
+        <TouchableOpacity style={{width:window.width,flexDirection:'row'}}onPress={()=>{this.props.onItemSelected('Help')}}>
           <Image source={{uri:'http://www.iberogen.es/content/uploads/2014/05/formulario.png'}} style={{width:25,height:25,marginLeft:5}}/>
           <Text
-            onPress={() => this.props.onItemSelected('About')}
             style={styles.item}>
             Ayuda
           </Text>
@@ -90,10 +93,9 @@ module.exports = class Menu extends Component {
         </View>
 
         <View style={{flexDirection:'row',marginBottom:10}}>
-        <TouchableOpacity style={{width:window.width,flexDirection:'row'}}>
+        <TouchableOpacity style={{width:window.width,flexDirection:'row'}}onPress={()=>{this.props.onItemSelected('logOut')}}>
           <Image source={{uri:'http://www.iberogen.es/content/uploads/2014/05/formulario.png'}} style={{width:25,height:25,marginLeft:5}}/>
           <Text
-            onPress={() => this.props.onItemSelected('Contacts')}
             style={styles.item}>
             Cerrar sesión
           </Text>

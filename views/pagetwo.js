@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View,ListView,Text,StyleSheet } from 'react-native';
-module.exports = class PageTwo extends Component {
+module.exports = class Help extends Component {
    constructor(props) {
       super(props)
    }
@@ -15,7 +15,7 @@ module.exports = class PageTwo extends Component {
 
    render(){
       return(
-         <View>
+         <View style={{backgroundColor:'#000000'}}>
             <Text>
                2
             </Text>

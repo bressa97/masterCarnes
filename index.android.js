@@ -25,7 +25,8 @@ import {
    TouchableOpacity,
    Modal,
    NavigatorIOS,
-   Image
+   Image,
+   StatusBar
 } from 'react-native';
 
 
@@ -218,6 +219,9 @@ class masterCarnesNative extends Component {
 
       return (
          <SideMenu menu={menu} isOpen={this.state.isOpen} onChange={(isOpen) => this.updateMenuState(isOpen)}>
+         <StatusBar
+          backgroundColor="#bfbfbf"
+         />
          <Navigator
            initialRoute={{ title: 'Awesome Scene', index: 0 }}
            renderScene={(route, navigator) =>
@@ -245,19 +249,42 @@ class masterCarnesNative extends Component {
          />
 
             <Modal animationType={"slide"} transparent={false} visible={this.state.modalVisible} onRequestClose={() => {alert("Modal has been closed.")}}>
-               <View style={{flex:1}}>
-                  <ListView
-                     style={{flex:.9}}
-                     dataSource={this.state.dataSource}
-                     renderRow={this.renderRow.bind(this)}
-                     renderSectionHeader={this.renderSectionHeader}
-                   />
+              <StatusBar
+                 backgroundColor="#80b3ff"
+              />
+              <Navigator
+                initialRoute={{ title: 'Awesome Scene', index: 0 }}
+                renderScene={(route, navigator) =>
+                  <View style={{flex:1}}>
+                     <ListView
+                        style={{flex:.9}}
+                        dataSource={this.state.dataSource}
+                        renderRow={this.renderRow.bind(this)}
+                        renderSectionHeader={this.renderSectionHeader}
+                      />
 
-                   <TouchableOpacity style={{flex:.07,backgroundColor:'#1a75ff',alignItems:'center'}} onPress={() => {this.setModalVisible(!this.state.modalVisible)}}>
-                    <Text style={{color:'#ffffff',marginTop:7}}>Hide Modal</Text>
-                   </TouchableOpacity>
+                      <TouchableOpacity style={{flex:.08,backgroundColor:'#1a75ff',alignItems:'center'}} onPress={() => {this.setModalVisible(!this.state.modalVisible)}}>
+                       <Text style={{color:'#ffffff',marginTop:8}}>Verificar cotización</Text>
+                      </TouchableOpacity>
 
-               </View>
+                  </View>
+                }
+                style={{paddingTop:60}}
+                navigationBar={
+                 <Navigator.NavigationBar
+                   style={{alignContent:'center',alignItems:'center'}}
+                   routeMapper={{
+                     LeftButton: (route, navigator, index, navState) =>
+                      { return (<TouchableOpacity onPress={() => {this.setModalVisible(!this.state.modalVisible)}}><Image source={require('./img/close.png')}style={{height:15,width:15,marginTop:22,marginLeft:10}}/></TouchableOpacity>); },
+                     RightButton: (route, navigator, index, navState) =>
+                       { return (<Text></Text>); },
+                     Title: (route, navigator, index, navState) =>
+                       { return (<Text style={{fontSize:18,marginTop:17,color:'#ffffff',marginLeft:-1}}>Solicitar cotización</Text>); },
+                   }}
+                   style={{backgroundColor: '#1a75ff'}}
+                 />
+               }
+             />
             </Modal>
          </SideMenu>
       )

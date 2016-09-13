@@ -103,14 +103,13 @@ module.exports = class TableExample extends React.Component {
       }
 
       return(
-         <ScrollView>
-            <ListView dataSource={this.state.ds} renderRow = {this.renderRows.bind(this)}/>
-            <View style={styles.button}>
-               <TouchableOpacity onPress={()=>this.changeToPageTwo()}>
-               <Text>{this.state.buttonLabel}</Text>
-               </TouchableOpacity>
+        <View style={{flex:1,backgroundColor:'#ffffff',justifyContent:'center',alignItems:'center'}}>
+             <View style={{borderWidth:1,height:80,width:160,borderColor:'#8c8c8c',alignItems:'center'}}>
+               <Text style={{marginTop:5,color:'#000000'}}>Hacer nueva cotización</Text>
+               <TouchableOpacity onPress={()=>{this.setModalVisible(true)}}style={{backgroundColor:'#1a75ff',marginTop:15,height:30,width:140,borderRadius:7}}><Text style={{color:'#ffffff',textAlign:'center',marginTop:4}}>Empezar cotización</Text></TouchableOpacity>
+             </View>
             </View>
-         </ScrollView>
+
       )
    }
 }

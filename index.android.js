@@ -10,6 +10,8 @@ const Menu = require('./menu');
 import Icon from 'react-native-vector-icons/FontAwesome';
 import TableExample from './views/firstpage.js';
 import PageTwo from './views/pagetwo.js';
+import Home from'./views/firstpage';
+import Help from'./views/pagetwo';
 
 import {
    AppRegistry,
@@ -140,9 +142,9 @@ class masterCarnesNative extends Component {
     });
    this.state = {
       isOpen: false,
-      selectedItem: 'About',
+      selectedItem: 'Home',
       modalVisible:false,
-      dataSource: dataSource.cloneWithRowsAndSections(this.convertFoodArrayToMap())
+      dataSource: dataSource.cloneWithRowsAndSections(this.convertFoodArrayToMap()),
       }
     }
    convertFoodArrayToMap() {
@@ -196,7 +198,7 @@ class masterCarnesNative extends Component {
       this.setState({ isOpen, });
    }
 
-   onMenuItemSelected = (item) => {
+   onMenuItemSelected(item){
       this.setState({
          isOpen: false,
          selectedItem: item,
@@ -208,6 +210,17 @@ class masterCarnesNative extends Component {
          isOpen: !this.state.isOpen,
       });
    }
+   renderScene(route, navigator){
+     switch(this.state.selectedItem){
+       case 'Home':
+        return (<Home/>)
+        break;
+       case'Help':
+         return(<Help navigator={navigator}/>)
+         break;
+      }
+   }
+
 
    render() {
       var TouchableElement = TouchableHighlight;
@@ -215,7 +228,7 @@ class masterCarnesNative extends Component {
          TouchableElement = TouchableNativeFeedback;
       }
 
-      const menu = <Menu onItemSelected={this.onMenuItemSelected}/>;
+      const menu = <Menu colorGeneral="blue" onItemSelected={this.onMenuItemSelected.bind(this)}/>;
 
       return (
          <SideMenu menu={menu} isOpen={this.state.isOpen} onChange={(isOpen) => this.updateMenuState(isOpen)}>
@@ -223,16 +236,8 @@ class masterCarnesNative extends Component {
           backgroundColor="#bfbfbf"
          />
          <Navigator
-           initialRoute={{ title: 'Awesome Scene', index: 0 }}
-           renderScene={(route, navigator) =>
-             <View style={{flex:1,backgroundColor:'#ffffff',justifyContent:'center',alignItems:'center'}}>
-              <View style={{borderWidth:1,height:80,width:160,borderColor:'#8c8c8c',alignItems:'center'}}>
-                <Text style={{marginTop:5,color:'#000000'}}>Hacer nueva cotización</Text>
-                <TouchableOpacity onPress={()=>{this.setModalVisible(true)}}style={{backgroundColor:'#1a75ff',marginTop:15,height:30,width:140,borderRadius:7}}><Text style={{color:'#ffffff',textAlign:'center',marginTop:4}}>Empezar cotización</Text></TouchableOpacity>
-              </View>
-             </View>
-           }
-           //style={{padding: 20}}
+           initialRoute={{ id: 'Home'}}
+           renderScene={this.renderScene.bind(this)}
            navigationBar={
             <Navigator.NavigationBar
               routeMapper={{
@@ -312,7 +317,6 @@ const styles = StyleSheet.create({
       fontSize: 20,
       color:'white',
       textAlign: 'center',
-      margin: 10,
    },
    instructions: {
       textAlign: 'center',

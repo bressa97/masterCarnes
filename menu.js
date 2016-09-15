@@ -9,6 +9,9 @@ const {
   TouchableOpacity,
 } = require('react-native');
 const { Component } = React;
+import LinearGradient from 'react-native-linear-gradient';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 
 const window = Dimensions.get('window');
 const uri = 'http://pickaface.net/includes/themes/clean/img/slide2.png';
@@ -18,7 +21,6 @@ const styles = StyleSheet.create({
     flex: 1,
     width: window.width,
     height: window.height,
-    backgroundColor: '#c8c8c8',
     padding: 0,
   },
   avatarContainer: {
@@ -36,17 +38,19 @@ const styles = StyleSheet.create({
     fontSize:18,
     marginLeft:45,
     top: 20,
-    color:'#1a75ff',
+    color:'white',
   },
   item: {
     fontSize: 14,
     fontWeight: '300',
     paddingTop: 5,
+    color:'white',
     marginLeft:10,
   },
   correo: {
     fontSize:11,
     marginLeft:36,
+    color:'white'
   }
 });
 
@@ -62,6 +66,7 @@ module.exports = class Menu extends Component {
 
   render() {
     return (
+      <LinearGradient colors={['#31A3DD', '#022470']}>
       <ScrollView scrollsToTop={false} style={styles.menu}>
         <View style={styles.avatarContainer}style={{marginTop:15,marginBottom:20}}>
           <Image
@@ -69,7 +74,7 @@ module.exports = class Menu extends Component {
             source={{ uri, }}/>
           <Text style={styles.name}>Donald Morton</Text>
           <Text style={styles.correo}>r_fonseca_8@hotmail.com</Text>
-          <View style={{height:1,backgroundColor:'#b3b3b3',marginTop:40,width:180,marginLeft:15}}/>
+          <View style={{height:1,backgroundColor:'white',marginTop:40,width:180,marginLeft:15}}/>
         </View>
 
         <View style={{marginBottom:10}}>
@@ -77,7 +82,7 @@ module.exports = class Menu extends Component {
           <Image source={{uri:'http://www.iberogen.es/content/uploads/2014/05/formulario.png'}} style={{width:25,height:25,marginLeft:5}}/>
           <Text
             style={styles.item}>
-            Pedidos
+            <Icon name="fax"/> Pedidos
           </Text>
         </TouchableOpacity>
         </View>
@@ -87,7 +92,7 @@ module.exports = class Menu extends Component {
           <Image source={{uri:'http://www.iberogen.es/content/uploads/2014/05/formulario.png'}} style={{width:25,height:25,marginLeft:5}}/>
           <Text
             style={styles.item}>
-            Ayuda
+            <Icon name="comments-o"/> Chat
           </Text>
         </TouchableOpacity>
         </View>
@@ -97,11 +102,12 @@ module.exports = class Menu extends Component {
           <Image source={{uri:'http://www.iberogen.es/content/uploads/2014/05/formulario.png'}} style={{width:25,height:25,marginLeft:5}}/>
           <Text
             style={styles.item}>
-            Cerrar sesión
+            <Icon name="sign-out"/> Cerrar sesión
           </Text>
         </TouchableOpacity>
         </View>
       </ScrollView>
+      </LinearGradient>
     );
   }
 };

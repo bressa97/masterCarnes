@@ -3,6 +3,7 @@ import { Cell, Section, TableView } from 'react-native-tableview-simple'
 const SideMenu = require('react-native-side-menu');
 const Menu = require('../menu');
 import Icon from 'react-native-vector-icons/FontAwesome';
+import LinearGradient from 'react-native-linear-gradient';
 
 
 import {
@@ -152,12 +153,30 @@ module.exports = class Home extends Component {
   }
   renderRow(productsItem) {
     return (
-      <View style={{backgroundColor:'#ffffff'}}>
-        <View style={{flex:1}}>
-          <Text style={{marginTop:3,marginTop:3,marginBottom:5,marginLeft:5}}>{productsItem.name}</Text>
+      <View style={{backgroundColor:'#ffffff',padding:10,flexDirection:'row',justifyContent:'center'}}>
+        <View style={{flex:2}}>
+          <Text>{productsItem.name}</Text>
         </View>
-        <View>
-          <View style={{height: 1, backgroundColor: '#000000'}}/>
+        <View style={{flex:1,flexDirection:'row',justifyContent:'center'}}>
+            <TouchableOpacity>
+              <View style={{flex:1}}>
+                  <View style={{height:40,width:40,borderRadius:20,alignItems:'center',backgroundColor:'rgb(219, 69, 69)',alignItems:'center',justifyContent:'center'}}>
+                     <Icon name="minus" style={{color:'white'}}/>
+                  </View>
+              </View>
+           </TouchableOpacity>
+            <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
+               <Text>
+                  1.5 Ton
+               </Text>
+            </View>
+            <TouchableOpacity>
+               <View style={{flex:1}}>
+                  <View style={{height:40,width:40,borderRadius:20,alignItems:'center',backgroundColor:'rgb(4, 131, 236)',alignItems:'center',justifyContent:'center'}}>
+                     <Icon name="plus" style={{color:'white'}}/>
+                  </View>
+               </View>
+            </TouchableOpacity>
         </View>
       </View>
     )
@@ -165,8 +184,8 @@ module.exports = class Home extends Component {
 
   renderSectionHeader(sectionData, category) {
     return (
-      <View style={{backgroundColor:'#e6e6e6',height:28}}>
-        <Text style={{fontWeight: "700",marginTop:3,marginLeft:5}}>{category}</Text>
+      <View style={{backgroundColor:'#f1f1f1',height:28,justifyContent:'center'}}>
+        <Text style={{fontWeight: "700",marginTop:3,marginLeft:5,color:'rgb(79, 78, 78)'}}>{category}</Text>
       </View>
     )
   }
@@ -196,7 +215,13 @@ module.exports = class Home extends Component {
    renderScene(route, navigator){
      switch(this.state.selectedItem){
        case 'Home':
-        return (<Home/>)
+        return (
+         <View style={{flex:1,marginTop:60,backgroundColor:'white'}}>
+            <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
+               <Image source={require('../img/loguig.png')} resizeMode="contain" style={{width:300,opacity:0.1}}/>
+            </View>
+         </View>
+        )
         break;
        case'Help':
          return(<Help navigator={navigator}/>)
@@ -225,11 +250,11 @@ module.exports = class Home extends Component {
             <Navigator.NavigationBar
               routeMapper={{
                 LeftButton: (route, navigator, index, navState) =>
-                 { return (<TouchableOpacity onPress={()=>{this.toggle()}}><Image source={require('./img/burger.png')}style={{height:25,width:25,marginTop:10,marginLeft:10}}/></TouchableOpacity>); },
+                 { return (<TouchableOpacity onPress={()=>{this.toggle()}}><Icon name="bars" style={{marginLeft:10,fontSize:34,color:'#31A3DD'}}/></TouchableOpacity>); },
                 RightButton: (route, navigator, index, navState) =>
-                  { return (<TouchableOpacity style={{marginTop:-1,marginRight:10}}onPress={() => {this.setModalVisible(true)}}><Text style={{color:'#1a75ff',fontSize:34}}>+</Text></TouchableOpacity>); },
+                  { return (<TouchableOpacity style={{marginTop:-1,marginRight:10}}onPress={() => {this.setModalVisible(true)}}><Icon name="plus" style={{color:'#31A3DD',fontSize:34}}/></TouchableOpacity>); },
                 Title: (route, navigator, index, navState) =>
-                  { return (<Text></Text>); },
+                  { return (<Text style={{fontSize:18,color:'#31A3DD'}}>12 Dic 2016</Text>); },
               }}
               style={{backgroundColor: '#ffffff'}}
             />
@@ -238,7 +263,7 @@ module.exports = class Home extends Component {
 
             <Modal animationType={"slide"} transparent={false} visible={this.state.modalVisible} onRequestClose={() => {alert("Modal has been closed.")}}>
               <StatusBar
-                 backgroundColor="#80b3ff"
+                 backgroundColor="#31A3DD"
               />
               <Navigator
                 initialRoute={{ title: 'Awesome Scene', index: 0 }}
@@ -250,11 +275,9 @@ module.exports = class Home extends Component {
                         renderRow={this.renderRow.bind(this)}
                         renderSectionHeader={this.renderSectionHeader}
                       />
-
-                      <TouchableOpacity style={{flex:.08,backgroundColor:'#1a75ff',alignItems:'center'}} onPress={() => {this.setModalVisible(!this.state.modalVisible)}}>
-                       <Text style={{color:'#ffffff',marginTop:8}}>Verificar cotización</Text>
-                      </TouchableOpacity>
-
+                     <TouchableOpacity style={{flex:.08,backgroundColor:'#31A3DD',alignItems:'center'}} onPress={() => {this.setModalVisible(!this.state.modalVisible)}}>
+                        <Text style={{color:'#ffffff',marginTop:8}}>Verificar cotización</Text>
+                     </TouchableOpacity>
                   </View>
                 }
                 style={{paddingTop:60}}
@@ -263,13 +286,13 @@ module.exports = class Home extends Component {
                    style={{alignContent:'center',alignItems:'center'}}
                    routeMapper={{
                      LeftButton: (route, navigator, index, navState) =>
-                      { return (<TouchableOpacity onPress={() => {this.setModalVisible(!this.state.modalVisible)}}><Image source={require('./img/close.png')}style={{height:15,width:15,marginTop:22,marginLeft:10}}/></TouchableOpacity>); },
+                      { return (<TouchableOpacity onPress={() => {this.setModalVisible(!this.state.modalVisible)}}><Icon name="close" style={{fontSize:20,marginLeft:10,color:'white'}}/></TouchableOpacity>); },
                      RightButton: (route, navigator, index, navState) =>
                        { return (<Text></Text>); },
                      Title: (route, navigator, index, navState) =>
-                       { return (<Text style={{fontSize:18,marginTop:17,color:'#ffffff',marginLeft:-1}}>Solicitar cotización</Text>); },
+                       { return (<Text style={{fontSize:18,color:'#ffffff',marginLeft:-1}}>Solicitar cotización</Text>); },
                    }}
-                   style={{backgroundColor: '#1a75ff'}}
+                   style={{backgroundColor: '#31A3DD',justifyContent:'center'}}
                  />
                }
              />

@@ -4,7 +4,7 @@ const SideMenu = require('react-native-side-menu');
 const Menu = require('../menu');
 import Icon from 'react-native-vector-icons/FontAwesome';
 import LinearGradient from 'react-native-linear-gradient';
-
+import Help from './pagetwo'
 
 import {
    AppRegistry,
@@ -250,11 +250,11 @@ module.exports = class Home extends Component {
             <Navigator.NavigationBar
               routeMapper={{
                 LeftButton: (route, navigator, index, navState) =>
-                 { return (<TouchableOpacity onPress={()=>{this.toggle()}}><Icon name="bars" style={{marginLeft:10,fontSize:34,color:'#31A3DD'}}/></TouchableOpacity>); },
+                 { return (<TouchableOpacity onPress={()=>{this.toggle()}}><Icon name="bars" style={{marginLeft:10,fontSize:34,color:'#0071B2'}}/></TouchableOpacity>); },
                 RightButton: (route, navigator, index, navState) =>
-                  { return (<TouchableOpacity style={{marginTop:-1,marginRight:10}}onPress={() => {this.setModalVisible(true)}}><Icon name="plus" style={{color:'#31A3DD',fontSize:34}}/></TouchableOpacity>); },
+                  { return (<TouchableOpacity style={{marginTop:-1,marginRight:10}}onPress={() => {this.setModalVisible(true)}}><Icon name="plus" style={{color:'#0071B2',fontSize:34}}/></TouchableOpacity>); },
                 Title: (route, navigator, index, navState) =>
-                  { return (<Text style={{fontSize:18,color:'#31A3DD'}}>12 Dic 2016</Text>); },
+                  { return (<Text style={{fontSize:18,color:'#0071B2'}}>12 Dic 2016</Text>); },
               }}
               style={{backgroundColor: '#ffffff'}}
             />
@@ -263,7 +263,7 @@ module.exports = class Home extends Component {
 
             <Modal animationType={"slide"} transparent={false} visible={this.state.modalVisible} onRequestClose={() => {alert("Modal has been closed.")}}>
               <StatusBar
-                 backgroundColor="#31A3DD"
+                 backgroundColor="#0071B2"
               />
               <Navigator
                 initialRoute={{ title: 'Awesome Scene', index: 0 }}
@@ -275,7 +275,7 @@ module.exports = class Home extends Component {
                         renderRow={this.renderRow.bind(this)}
                         renderSectionHeader={this.renderSectionHeader}
                       />
-                     <TouchableOpacity style={{flex:.08,backgroundColor:'#31A3DD',alignItems:'center'}} onPress={() => {this.setModalVisible(!this.state.modalVisible)}}>
+                     <TouchableOpacity style={{flex:.08,backgroundColor:'#0071B2',alignItems:'center'}} onPress={() => {this.setModalVisible(!this.state.modalVisible)}}>
                         <Text style={{color:'#ffffff',marginTop:8}}>Verificar cotización</Text>
                      </TouchableOpacity>
                   </View>
@@ -292,7 +292,7 @@ module.exports = class Home extends Component {
                      Title: (route, navigator, index, navState) =>
                        { return (<Text style={{fontSize:18,color:'#ffffff',marginLeft:-1}}>Solicitar cotización</Text>); },
                    }}
-                   style={{backgroundColor: '#31A3DD',justifyContent:'center'}}
+                   style={{backgroundColor: '#0071B2',justifyContent:'center'}}
                  />
                }
              />

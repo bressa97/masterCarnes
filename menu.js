@@ -79,7 +79,6 @@ module.exports = class Menu extends Component {
 
         <View style={{marginBottom:10}}>
         <TouchableOpacity style={{width:window.width,flexDirection:'row'}} onPress={()=>{this.props.onItemSelected('Home')}}>
-          <Image source={{uri:'http://www.iberogen.es/content/uploads/2014/05/formulario.png'}} style={{width:25,height:25,marginLeft:5}}/>
           <Text
             style={styles.item}>
             <Icon name="fax"/> Pedidos
@@ -89,7 +88,6 @@ module.exports = class Menu extends Component {
 
         <View style={{marginBottom:10}}>
         <TouchableOpacity style={{width:window.width,flexDirection:'row'}}onPress={()=>{this.props.onItemSelected('Help')}}>
-          <Image source={{uri:'http://www.iberogen.es/content/uploads/2014/05/formulario.png'}} style={{width:25,height:25,marginLeft:5}}/>
           <Text
             style={styles.item}>
             <Icon name="comments-o"/> Chat
@@ -99,8 +97,7 @@ module.exports = class Menu extends Component {
 
         <View style={{flexDirection:'row',marginBottom:10}}>
         <TouchableOpacity style={{width:window.width,flexDirection:'row'}}onPress={()=>{this.props.onItemSelected('logOut')}}>
-          <Image source={{uri:'http://www.iberogen.es/content/uploads/2014/05/formulario.png'}} style={{width:25,height:25,marginLeft:5}}/>
-          <Text
+         <Text
             style={styles.item}>
             <Icon name="sign-out"/> Cerrar sesión
           </Text>

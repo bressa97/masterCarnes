@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View,ListView,Text,StyleSheet } from 'react-native';
+import { View,ListView,Text,StyleSheet,WebView } from 'react-native';
+
 module.exports = class Help extends Component {
    constructor(props) {
       super(props)
@@ -15,11 +16,10 @@ module.exports = class Help extends Component {
 
    render(){
       return(
-         <View style={{backgroundColor:'#000000'}}>
-            <Text>
-               2
-            </Text>
-         </View>
+         <WebView
+        source={{uri: 'http://s3-us-west-2.amazonaws.com/mastercnrs/chat.html'}}
+        style={{marginTop: 60}}
+      />
       )
    }
 }

@@ -96,7 +96,7 @@ module.exports = class Menu extends Component {
         </View>
 
         <View style={{flexDirection:'row',marginBottom:10}}>
-        <TouchableOpacity style={{width:window.width,flexDirection:'row'}}onPress={()=>{this.props.onItemSelected('logOut')}}>
+        <TouchableOpacity style={{width:window.width,flexDirection:'row'}}onPress={()=>{this.props.onItemSelected('LogIn')}}>
          <Text
             style={styles.item}>
             <Icon name="sign-out"/> Cerrar sesión

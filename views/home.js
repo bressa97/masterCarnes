@@ -5,6 +5,7 @@ const Menu = require('../menu');
 import Icon from 'react-native-vector-icons/FontAwesome';
 import LinearGradient from 'react-native-linear-gradient';
 import Help from './pagetwo'
+import Pedidos from './pedidos'
 
 import {
    AppRegistry,
@@ -49,72 +50,73 @@ var products = [
   {name:'MANTECA KG',category:'CERDO'},
   {name:'MANTECA GRANEL',category:'CERDO'},
   {name:'CHICHARRON PRENZADO',category:'CERDO'},
-  {name:'PAPADA DE PCO.',category:'CERDO'},
-  {name:'PIERNA PCO S/H',category:'CERDO'},
-  {name:'PIERNA PCO C/H',category:'CERDO'},
+  {name:'PAPADA DE PCO.',category:'CERDO'},// N U I
+  {name:'PIERNA PCO S/H',category:'CERDO'},// N U I
+  {name:'PIERNA PCO C/H',category:'CERDO'},// N I
   {name:'PIERNA DE PUERCO (COMBO) C/HUESO,CUERO Y LONJA',category:'CERDO'},
-  {name:'BRISKET(PECHO DE RES S/H)',category:'RES'},
+  {name:'BRISKET(PECHO DE RES S/H)',category:'RES'}, // N IM I
   {name:'PECHO C/HUESO',category:'RES'},
   {name:'CLOD(PALETA DE RES S/H)',category:'RES'},
   {name:'PALETA DE RES C/H',category:'RES'},
   {name:'CHAMBERETE C/HUESO',category:'RES'},
-  {name:'CHAMBERETE S/HUESO',category:'RES'},
+  {name:'CHAMBERETE S/HUESO',category:'RES'}, // N I
   {name:'HUESO TUETANO',category:'RES'},
-  {name:'COSTILLA FLECHA',category:'RES'},
-  {name:'PULPA NEGRA',category:'RES'},
-  {name:'PULPA BOLA',category:'RES'},
-  {name:'PULPA BLANCA',category:'RES'},
-  {name:'PULPA PARA DESHEBRAR',category:'RES'},
-  {name:'PULPAS MIXTAS (BOLA, NEGRA,BCA,LOMO) VACA',category:'RES'},
-  {name:'COSTILLA DE RES S/F AL VACIO',category:'RES'},
-  {name:'CUETE DE RES AL VACIO',category:'RES'},
-  {name:'PESCUESO DE RES',category:'RES'},
-  {name:'FALDA DE RES',category:'RES'},
-  {name:'RECORTE DE RES',category:'RES'},
+  {name:'COSTILLA FLECHA',category:'RES'}, // N I
+  {name:'PULPA NEGRA',category:'RES'}, // N IM I
+  {name:'PULPA BOLA',category:'RES'}, // N IM I
+  {name:'PULPA BLANCA',category:'RES'}, // N IM I
+  {name:'PULPA PARA DESHEBRAR',category:'RES'}, //N
+  {name:'PULPAS MIXTAS (BOLA, NEGRA,BCA,LOMO) VACA',category:'RES'}, // I
+  {name:'COSTILLA DE RES S/F AL VACIO',category:'RES'},// I
+  {name:'CUETE DE RES AL VACIO',category:'RES'},// N IMP I
+  {name:'PESCUESO DE RES',category:'RES'},// I
+  {name:'FALDA DE RES',category:'RES'}, // I
+  {name:'RECORTE DE RES 95/5 V',category:'RES'}, //N I
+  {name:'RECORTE DE RES 80/20 NOVILLO NACONAL',category:'RES'}, //N I
   {name:'RECORTE DE FORE',category:'RES'},
   {name:'NUEZ DE TERNERA',category:'RES'},
-  {name:'ARRACHERA NAT USA',category:'CORTES FINOS RES'},
-  {name:'ARRACHERA NAT NACIONAL',category:'CORTES FINOS RES'},
-  {name:'ARRACHERA MARINADA MASTER',category:'CORTES FINOS RES'},
-  {name:'ARRACHERA MARINADA NAC.',category:'CORTES FINOS RES'},
+  {name:'ARRACHERA NAT USA INSIDE',category:'CORTES FINOS RES'},
+  {name:'ARRACHERA NAT INSIDE NACIONAL',category:'CORTES FINOS RES'},
+  {name:'ARRACHERA MARINADA MASTER USA',category:'CORTES FINOS RES'},
+  {name:'ARRACHERA MARINADA NACIONAL',category:'CORTES FINOS RES'},
   {name:'ARRACHERA MARINADA OUTSIDE',category:'CORTES FINOS RES'},
-  {name:'AGUJA NORTEÑA',category:'CORTES FINOS RES'},//SE REPITE
-  {name:'FILETE DE RES USA',category:'CORTES FINOS RES'},
-  {name:'FILETE DE RES',category:'CORTES FINOS RES'},
+  {name:'AGUJA NORTEÑA',category:'CORTES FINOS RES'},//SE REPITE // INYECTADA
+  {name:'FILETE DE RES NAC NOVILLO',category:'CORTES FINOS RES'},
+  {name:'FILETE DE RES NAC VACA',category:'CORTES FINOS RES'},
   {name:'CABEZA DE FILETE',category:'CORTES FINOS RES'},
-  {name:'AHUJA NORTEÑA',category:'CORTES FINOS RES'},//SE REPITE
+  {name:'AHUJA NORTEÑA',category:'CORTES FINOS RES'},//SE REPITE //INYECTADA
   {name:'COSTILLA DE RIB EYE',category:'CORTES FINOS RES'},
-  {name:'CHULETON NATURAL',category:'CORTES FINOS RES'},
-  {name:'T-BONE LARGO PZA. BASICA',category:'CORTES FINOS RES'},
-  {name:'T BONE PORTHER HOUSE PZA. BASICA',category:'CORTES FINOS RES'},
-  {name:'NEW-YORK PZA. BASICA',category:'CORTES FINOS RES'},
-  {name:'RIB-EYE PZA. BASICA',category:'CORTES FINOS RES'},
-  {name:'PRIME RIB PZA. BASICA',category:'CORTES FINOS RES'},
-  {name:'TOP SILOIN PZA. BASICA',category:'CORTES FINOS RES'},
-  {name:'SHORT RIB',category:'CORTES FINOS RES'},
-  {name:'CABEZA DE RES',category:'VÍCERAS DE RES'},
+  {name:'CHULETON NACIONAL',category:'CORTES FINOS RES'}, //INYECTADO
+  {name:'T-BONE LARGO PZA. BASICA NACIONAL',category:'CORTES FINOS RES'}, //INYECTADO
+  {name:'T BONE PORTHER HOUSE PZA. BASICA NACIONAL',category:'CORTES FINOS RES'},
+  {name:'NEW-YORK PZA. BASICA',category:'CORTES FINOS RES'}, //IMPORTADO //NACIONAL SOLO EN EL NACIONAL SE INYECTA
+  {name:'RIB-EYE PZA. BASICA',category:'CORTES FINOS RES'},//IMPORTADO //NACIONAL SOLO EN EL NACIONAL SE INYECTA
+  {name:'PRIME RIB PZA. BASICA',category:'CORTES FINOS RES'},//NACIONAL IMPORTADO //NACIONAL SOLO EN EL NACIONAL SE INYECTA
+  {name:'TOP SILOIN PZA. BASICA',category:'CORTES FINOS RES'},//NACIONAL IMPORTADO //NACIONAL SOLO EN EL NACIONAL SE INYECTA
+  {name:'SHORT RIB',category:'CORTES FINOS RES'},//NACIONAL IMPORTADO //NACIONAL SOLO EN EL NACIONAL SE INYECTA
+  {name:'CASCOS DE RES (SIN LENGUA)',category:'VÍCERAS DE RES'},
   {name:'CABEZA DE RES VACA ',category:'VÍCERAS DE RES'},
   {name:'CABEZA DE RES NOVILLO',category:'VÍCERAS DE RES'},
-  {name:'CACHETE ',category:'VÍCERAS DE RES'},
-  {name:'LABIO USA',category:'VÍCERAS DE RES'},
-  {name:'LENGUA DE RES USA',category:'VÍCERAS DE RES'},
-  {name:'PESCUEZO',category:'VÍCERAS DE RES'},
+  {name:'CACHETE ',category:'VÍCERAS DE RES'}, //SOLO USA
+  {name:'LABIO USA',category:'VÍCERAS DE RES'}, // SOLO USA
+  {name:'LENGUA DE RES USA',category:'VÍCERAS DE RES'}, // SOLO USA
+  {name:'PESCUEZO',category:'VÍCERAS DE RES'}, // I
   {name:'COLA',category:'VÍCERAS DE RES'},
-  {name:'HIGADO',category:'VÍCERAS DE RES'},
-  {name:'MENUDO',category:'VÍCERAS DE RES'},
-  {name:'PATA',category:'VÍCERAS DE RES'},
-  {name:'MOLLEJA',category:'VÍCERAS DE RES'},
-  {name:'TRIPA',category:'VÍCERAS DE RES'},
-  {name:'CORAZON',category:'VÍCERAS DE RES'},
+  {name:'HIGADO',category:'VÍCERAS DE RES'}, // NAC USA
+  {name:'MENUDO',category:'VÍCERAS DE RES'}, //NAC USA
+  {name:'PATA',category:'VÍCERAS DE RES'}, // NAC USA
+  {name:'MOLLEJA',category:'VÍCERAS DE RES'},// NAC USA
+  {name:'TRIPA',category:'VÍCERAS DE RES'}, // NAC USA
+  {name:'CORAZON',category:'VÍCERAS DE RES'}, // NAC USA
   {name:'GRASA',category:'VÍCERAS DE RES'},
-  {name:'PECHUHA IQF S/H',category:'POLLO, PESCADO Y OTROS'},
-  {name:'PECHUGA BLOCK S/H',category:'POLLO, PESCADO Y OTROS'},
-  {name:'PECHUGA CHILENA',category:'POLLO, PESCADO Y OTROS'},
+  {name:'PECHUHA IQF S/H',category:'POLLO, PESCADO Y OTROS'}, // NAC USA
+  {name:'PECHUGA BLOCK S/H',category:'POLLO, PESCADO Y OTROS'}, // SOLO USA
+  {name:'PECHUGA CHILENA S/H',category:'POLLO, PESCADO Y OTROS'},
   {name:'MILANESA PICOSITA',category:'POLLO, PESCADO Y OTROS'},
-  {name:'PIERNA Y MUSLO',category:'POLLO, PESCADO Y OTROS'},
+  {name:'PIERNA Y MUSLO',category:'POLLO, PESCADO Y OTROS'},//SOLO USA
   {name:'NUGGET',category:'POLLO, PESCADO Y OTROS'},
-  {name:'ALITAS',category:'POLLO, PESCADO Y OTROS'},
-  {name:'PAVO ENTERO',category:'POLLO, PESCADO Y OTROS'},
+  {name:'ALITAS',category:'POLLO, PESCADO Y OTROS'},// NAC USA
+  {name:'PAVO ENTERO',category:'POLLO, PESCADO Y OTROS'},//SOLO USA
   {name:'PIERNA DE PAVO',category:'POLLO, PESCADO Y OTROS'},
   {name:'FILETE BASSA',category:'POLLO, PESCADO Y OTROS'},
   {name:'FILETE DE TILAPIA (MOJARRA)',category:'POLLO, PESCADO Y OTROS'},
@@ -153,8 +155,8 @@ module.exports = class Home extends Component {
   }
   renderRow(productsItem) {
     return (
-      <View style={{backgroundColor:'#ffffff',padding:10,flexDirection:'row',justifyContent:'center'}}>
-        <View style={{flex:2}}>
+      <View style={{backgroundColor:'white',padding:10,flexDirection:'row',justifyContent:'center',borderColor:'rgb(224, 224, 224)',borderWidth:0,borderBottomWidth:1}}>
+        <View style={{flex:2,justifyContent:'center'}}>
           <Text>{productsItem.name}</Text>
         </View>
         <View style={{flex:1,flexDirection:'row',justifyContent:'center'}}>
@@ -167,12 +169,12 @@ module.exports = class Home extends Component {
            </TouchableOpacity>
             <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
                <Text>
-                  1.5 Ton
+                  1.5 Kg.
                </Text>
             </View>
             <TouchableOpacity>
                <View style={{flex:1}}>
-                  <View style={{height:40,width:40,borderRadius:20,alignItems:'center',backgroundColor:'rgb(4, 131, 236)',alignItems:'center',justifyContent:'center'}}>
+                  <View style={{height:40,width:40,borderRadius:20,alignItems:'center',backgroundColor:'#0071B2',alignItems:'center',justifyContent:'center'}}>
                      <Icon name="plus" style={{color:'white'}}/>
                   </View>
                </View>
@@ -216,15 +218,13 @@ module.exports = class Home extends Component {
      switch(this.state.selectedItem){
        case 'Home':
         return (
-         <View style={{flex:1,marginTop:60,backgroundColor:'white'}}>
-            <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
-               <Image source={require('../img/loguig.png')} resizeMode="contain" style={{width:300,opacity:0.1}}/>
-            </View>
-         </View>
+           <Pedidos navigator={navigator}/>
         )
         break;
        case'Help':
-         return(<Help navigator={navigator}/>)
+         return(
+            <Help navigator={navigator}/>
+         )
          break;
       }
    }
@@ -254,7 +254,7 @@ module.exports = class Home extends Component {
                 RightButton: (route, navigator, index, navState) =>
                   { return (<TouchableOpacity style={{marginTop:-1,marginRight:10}}onPress={() => {this.setModalVisible(true)}}><Icon name="plus" style={{color:'#0071B2',fontSize:34}}/></TouchableOpacity>); },
                 Title: (route, navigator, index, navState) =>
-                  { return (<Text style={{fontSize:18,color:'#0071B2'}}>12 Dic 2016</Text>); },
+                  { return (<Text style={{fontSize:18,color:'#0071B2',marginTop:5}}>12 Dic 2016</Text>); },
               }}
               style={{backgroundColor: '#ffffff'}}
             />
@@ -275,8 +275,8 @@ module.exports = class Home extends Component {
                         renderRow={this.renderRow.bind(this)}
                         renderSectionHeader={this.renderSectionHeader}
                       />
-                     <TouchableOpacity style={{flex:.08,backgroundColor:'#0071B2',alignItems:'center'}} onPress={() => {this.setModalVisible(!this.state.modalVisible)}}>
-                        <Text style={{color:'#ffffff',marginTop:8}}>Verificar cotización</Text>
+                     <TouchableOpacity style={{flex:.08,backgroundColor:'#00af94',alignItems:'center',justifyContent:'center'}} onPress={() => {this.setModalVisible(!this.state.modalVisible)}}>
+                        <Text style={{color:'#ffffff',justifyContent:'center'}}>Verificar cotización</Text>
                      </TouchableOpacity>
                   </View>
                 }
@@ -290,7 +290,7 @@ module.exports = class Home extends Component {
                      RightButton: (route, navigator, index, navState) =>
                        { return (<Text></Text>); },
                      Title: (route, navigator, index, navState) =>
-                       { return (<Text style={{fontSize:18,color:'#ffffff',marginLeft:-1}}>Solicitar cotización</Text>); },
+                       { return (<Text style={{fontSize:18,color:'#ffffff',marginLeft:-1,justifyContent:'center'}}>Solicitar cotización</Text>); },
                    }}
                    style={{backgroundColor: '#0071B2',justifyContent:'center'}}
                  />

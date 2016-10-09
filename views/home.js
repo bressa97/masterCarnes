@@ -158,6 +158,11 @@ module.exports = class Home extends Component {
       <View style={{backgroundColor:'white',padding:10,flexDirection:'row',justifyContent:'center',borderColor:'rgb(224, 224, 224)',borderWidth:0,borderBottomWidth:1}}>
         <View style={{flex:2,justifyContent:'center'}}>
           <Text>{productsItem.name}</Text>
+          <View style={{flexDirection:'row',marginTop:5}}>
+            <Icon name="bank"style={{color:'grey'}}/>
+            <Icon name="bank"style={{color:'grey',marginLeft:5}}/>
+            <Icon name="bank"style={{color:'grey',marginLeft:5}}/>
+          </View>
         </View>
         <View style={{flex:1,flexDirection:'row',justifyContent:'center'}}>
             <TouchableOpacity>
@@ -169,7 +174,7 @@ module.exports = class Home extends Component {
            </TouchableOpacity>
             <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
                <Text>
-                  1.5 Kg.
+                  1.5 Kg
                </Text>
             </View>
             <TouchableOpacity>

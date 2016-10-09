@@ -3,7 +3,7 @@
  * https://github.com/facebook/react-native
  * @flow
  */
-
+import * as firebase from 'firebase';
 import React, { Component } from 'react';
 
 import {
@@ -16,6 +16,14 @@ import {
 
 import LogIn from './views/logIn';
 import Home from './views/home';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDCVpFUNpTfvXy4AFkUBx0WpegkUh42ek8",
+  authDomain: "mastercarnes-9b9db.firebaseapp.com",
+  databaseURL: "https://mastercarnes-9b9db.firebaseio.com",
+  storageBucket: "",
+};
+const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 class masterCarnesNative extends Component {
   constructor(props){

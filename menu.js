@@ -66,7 +66,7 @@ module.exports = class Menu extends Component {
 
   render() {
     return (
-      <LinearGradient colors={['#31A3DD', '#022470']}>
+      <LinearGradient colors={['#0071B2', '#022470']}>
       <ScrollView scrollsToTop={false} style={styles.menu}>
         <View style={styles.avatarContainer}style={{marginTop:15,marginBottom:20}}>
           <Image

@@ -21,6 +21,7 @@ module.exports = class LogIn extends Component{
      this.setState({modalVisibleRegistro: visible});
    }
    logIn(email,password){
+      var self=this
      console.log(email,password);
      if(!email||!password){
        Platform.select({
@@ -37,7 +38,7 @@ module.exports = class LogIn extends Component{
         if(user){
            user.getToken().then(function(token) {
               AsyncStorage.setItem('@auth:user',token);
-              this.props.navigator.push({
+              self.props.navigator.push({
                 id: 'home'
               });
            })
@@ -68,7 +69,7 @@ module.exports = class LogIn extends Component{
 
    render(){
       return(
-         <LinearGradient colors={['#31A3DD', '#022470']} style={styles.linearGradient}>
+         <LinearGradient colors={['#0071B2', '#022470']} style={styles.linearGradient}>
             <View style={{width:300}}>
                <Image source={require('../img/logui.png')} resizeMode="contain" style={{width:300,marginTop:-25,marginBottom:80}}/>
                <Hideo

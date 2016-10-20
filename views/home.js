@@ -94,9 +94,9 @@ module.exports = class Home extends Component {
             <Navigator.NavigationBar
               routeMapper={{
                 LeftButton: (route, navigator, index, navState) =>
-                 { return (<TouchableOpacity onPress={()=>{this.toggle()}}><Iconi name="menu" style={{marginLeft:10,fontSize:34,color:'#0071B2'}}/></TouchableOpacity>); },
+                 { return (<TouchableOpacity onPress={()=>{this.toggle()}}><Iconi name="menu" style={{marginLeft:10,fontSize:34,color:'#0071B2',marginTop:7}}/></TouchableOpacity>); },
                 RightButton: (route, navigator, index, navState) =>
-                  { return (<TouchableOpacity style={{marginTop:-1,marginRight:10}}onPress={() => {this.setModalVisible(true)}}><Iconi name="add-circle" style={{color:'#0071B2',fontSize:34}}/></TouchableOpacity>); },
+                  { return (<TouchableOpacity style={{marginTop:7,marginRight:10}}onPress={() => {this.setModalVisible(true)}}><Iconi name="add-circle" style={{color:'#0071B2',fontSize:34}}/></TouchableOpacity>); },
                 Title: (route, navigator, index, navState) =>
                   { return (
                      <View style={{justifyContent:'center'}}>
@@ -105,7 +105,7 @@ module.exports = class Home extends Component {
                      </View>
                   ); },
               }}
-              style={{backgroundColor: '#ffffff'}}
+              style={{backgroundColor: '#ffffff',marginBottom:0}}
             />
             }
          />

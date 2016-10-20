@@ -46,7 +46,7 @@ class masterCarnesNative extends Component {
   render() {
     return (
       <Navigator
-        initialRoute={{id:'logIn'}}
+        initialRoute={{id:'home'}}
         renderScene={this.renderScene.bind(this)}
       ></Navigator>
     );

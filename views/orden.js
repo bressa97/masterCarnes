@@ -398,7 +398,7 @@ module.exports = class Orden extends Component {
 
       renderSectionHeader(sectionData, category) {
             return (
-               <View style={{backgroundColor:'#f1f1f1',height:28,justifyContent:'center',marginTop:0,marginBottom:3}}>
+               <View style={{backgroundColor:'#f1f1f1',height:28,justifyContent:'center',marginTop:0,marginBottom:0}}>
                   <Text style={{fontWeight:"700",marginLeft:5,color:'rgb(79, 78, 78)'}}>{category}</Text>
                </View>
             )

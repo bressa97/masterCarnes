@@ -19,8 +19,7 @@ const uri = 'http://pickaface.net/includes/themes/clean/img/slide2.png';
 const styles = StyleSheet.create({
   menu: {
     flex: 1,
-    width: window.width,
-    height: window.height,
+    flexDirection:'column',
     padding: 0,
   },
   avatarContainer: {
@@ -28,28 +27,31 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   avatar: {
-    width: 48,
-    height: 48,
     borderRadius: 24,
-    flex: 1,
   },
   name: {
-    position: 'absolute',
-    fontSize:18,
-    marginLeft:45,
-    top: 20,
+    textAlign:'center',
+    fontSize:22,
     color:'white',
   },
   item: {
-    fontSize: 14,
+    fontSize: 18,
     fontWeight: '300',
     paddingTop: 5,
     color:'white',
     marginLeft:10,
   },
+  item2: {
+    fontSize: 18,
+    fontWeight: '300',
+    paddingTop: 5,
+    color:'white',
+    marginLeft:10,
+    textAlign:'center'
+  },
   correo: {
-    fontSize:11,
-    marginLeft:36,
+    fontSize:16,
+    textAlign:'center',
     color:'white'
   }
 });
@@ -66,43 +68,42 @@ module.exports = class Menu extends Component {
 
   render() {
     return (
-      <LinearGradient colors={['#0071B2', '#022470']}>
+      <LinearGradient colors={['#0071B2', '#022470']}style={{height:window.height,flexDirection:'column'}}>
       <ScrollView scrollsToTop={false} style={styles.menu}>
+      <View style={{height:window.height,flexDirection:'column'}}>
         <View style={styles.avatarContainer}style={{marginTop:15,marginBottom:20}}>
-          <Image
-            style={styles.avatar}
-            source={{ uri, }}/>
           <Text style={styles.name}>Donald Morton</Text>
           <Text style={styles.correo}>r_fonseca_8@hotmail.com</Text>
-          <View style={{height:1,backgroundColor:'white',marginTop:40,width:180,marginLeft:15}}/>
+          <View style={{flex:1,height:1,backgroundColor:'white',marginTop:40,marginLeft:15,marginRight:17}}/>
         </View>
 
         <View style={{marginBottom:10}}>
-        <TouchableOpacity style={{width:window.width,flexDirection:'row'}} onPress={()=>{this.props.onItemSelected('Home')}}>
+        <TouchableOpacity onPress={()=>{this.props.onItemSelected('Home')}}>
           <Text
             style={styles.item}>
-            <Icon name="fax"/> Pedidos
+            <Icon name="fax"size={20}/> Pedidos
           </Text>
         </TouchableOpacity>
         </View>
 
         <View style={{marginBottom:10}}>
-        <TouchableOpacity style={{width:window.width,flexDirection:'row'}}onPress={()=>{this.props.onItemSelected('Help')}}>
+        <TouchableOpacity onPress={()=>{this.props.onItemSelected('Help')}}>
           <Text
             style={styles.item}>
-            <Icon name="comments-o"/> Chat
+            <Icon name="comments-o"size={20}/> Chat
           </Text>
         </TouchableOpacity>
         </View>
 
-        <View style={{flexDirection:'row',marginBottom:10}}>
-        <TouchableOpacity style={{width:window.width,flexDirection:'row'}}onPress={()=>{this.props.onItemSelected('LogIn')}}>
+        <View style={{flex:1,marginBottom:35,justifyContent:'flex-end'}}>
+        <TouchableOpacity onPress={()=>{this.props.onItemSelected('LogIn')}}>
          <Text
-            style={styles.item}>
-            <Icon name="sign-out"/> Cerrar sesión
+            style={styles.item2}>
+            <Icon name="sign-out"size={20}/> Cerrar sesión
           </Text>
         </TouchableOpacity>
         </View>
+      </View>
       </ScrollView>
       </LinearGradient>
     );

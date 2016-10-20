@@ -18,7 +18,7 @@ module.exports = class Help extends Component {
       return(
          <WebView
         source={{uri: 'http://s3-us-west-2.amazonaws.com/mastercnrs/chat.html'}}
-        style={{marginTop: 60}}
+        style={{marginTop: 56}}
       />
       )
    }

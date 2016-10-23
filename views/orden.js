@@ -359,11 +359,13 @@ module.exports = class Orden extends Component {
      var res = []
      this.state.products.map(function(item) {
        if(item.selected){
+         item.inyect = false,
+         item.national = false,
+         item.international = false,
          item.kilos = 0
          res.push(item)
        }
      })
-     console.log(res);
      return res
    }
 

@@ -54,7 +54,44 @@ module.exports = class Home extends Component {
      this.setState({dataSource:dataSource.cloneWithRows(this.props.dataSource)})
    }
 
+   selectInyect(row){
+     var dataSource = new ListView.DataSource({
+       rowHasChanged: (r1, r2) => r1 !== r2,
+       sectionHeaderHasChanged: (s1, s2) => s1 !== s2
+     });
+     this.props.dataSource[row].inyect=!this.props.dataSource[row].inyect;
+     this.setState({dataSource:dataSource.cloneWithRows(this.props.dataSource)});
+   }
+   selectNational(row){
+     var dataSource = new ListView.DataSource({
+       rowHasChanged: (r1, r2) => r1 !== r2,
+       sectionHeaderHasChanged: (s1, s2) => s1 !== s2
+     });
+     this.props.dataSource[row].national=!this.props.dataSource[row].national;
+     this.setState({dataSource:dataSource.cloneWithRows(this.props.dataSource)});
+   }
+   selectInternational(row){
+     var dataSource = new ListView.DataSource({
+       rowHasChanged: (r1, r2) => r1 !== r2,
+       sectionHeaderHasChanged: (s1, s2) => s1 !== s2
+     });
+     this.props.dataSource[row].international=!this.props.dataSource[row].international;
+     this.setState({dataSource:dataSource.cloneWithRows(this.props.dataSource)});
+   }
+
    renderRow(item){
+     if(item.inyect){
+       var colorInyect = '#0071B2'
+     }else if(item.national){
+       var colorNational = '#0071B2'
+     }else if(item.international){
+       var colorInternational = '#0071B2'
+     }else{
+       var colorInyect = 'rgb(163, 163, 163)'
+       var colorNaitonal = 'rgb(163, 163, 163)'
+       var colorInternational = 'rgb(163, 163, 163)'
+     }
+
       return(
          <View style={{margin:10,backgroundColor:'white',borderRadius:3,padding:10}}>
          <View style={{flexDirection:'row',alignItems:'center'}}>
@@ -68,9 +105,15 @@ module.exports = class Home extends Component {
                <View style={{flexDirection:'row'}}>
                   <View style={{flex:4,flexDirection:'row'}}>
                         <View style={{flexDirection:'row',marginTop:5}}>
-                           <Iconi size={20} name="language"style={{color:'rgb(163, 163, 163)'}}/>
-                           <Iconi size={20} name="home"style={{color:'rgb(163, 163, 163)',marginLeft:5}}/>
-                           <Iconi size={20} name="label"style={{color:'rgb(163, 163, 163)',marginLeft:5}}/>
+                           <TouchableOpacity onPress={()=>{this.selectInternational(this.props.dataSource.indexOf(item))}}>
+                              <Iconi size={20} name="language"style={{color:colorInternational}}/>
+                           </TouchableOpacity>
+                           <TouchableOpacity onPress={()=>{this.selectNational(this.props.dataSource.indexOf(item))}}>
+                              <Iconi size={20} name="home"style={{color:colorNational,marginLeft:5}}/>
+                           </TouchableOpacity>
+                           <TouchableOpacity onPress={()=>{this.selectInyect(this.props.dataSource.indexOf(item))}}>
+                              <Iconi size={20} name="label"style={{color:colorInyect,marginLeft:5}}/>
+                           </TouchableOpacity>
                         </View>
                   </View>
                </View>

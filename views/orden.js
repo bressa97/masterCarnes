@@ -355,6 +355,18 @@ module.exports = class Orden extends Component {
       this.props.hide()
    }
 
+   dataToSend(){
+     var res = []
+     this.state.products.map(function(item) {
+       if(item.selected){
+         item.kilos = 0
+         res.push(item)
+       }
+     })
+     console.log(res);
+     return res
+   }
+
    select(row){
           var dataSource = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2,
@@ -415,14 +427,14 @@ module.exports = class Orden extends Component {
                     renderRow={this.renderRow.bind(this)}
                     renderSectionHeader={this.renderSectionHeader}
                   />
-                 <TouchableOpacity style={{flex:.08,flexDirection:'row',backgroundColor:'#03d282',alignItems:'center',justifyContent:'center'}} onPress={() => {navigator.push({ title: 'Awesome Scene', index: 1 })}}>
+                 <TouchableOpacity style={{flex:.08,flexDirection:'row',backgroundColor:'#03d282',alignItems:'center',justifyContent:'center'}} onPress={() => {navigator.push({ title: 'Awesome Scene', index: 1,dataSource:this.dataToSend() })}}>
                     <Text style={{color:'#ffffff',justifyContent:'center'}}>Verificar cotización </Text><Iconi name="arrow-forward" color="white"/>
                  </TouchableOpacity>
               </View>
             )
          if(route.index==1)
          return(
-            <ConfigurarOrden navigator={navigator} hide={()=>{this.close()}} dataSource={this.state.dataSource}/>
+            <ConfigurarOrden navigator={navigator} hide={()=>{this.close()}} dataSource={route.dataSource}/>
          )
 
          if(route.index==2){

@@ -30,7 +30,28 @@ module.exports = class Home extends Component {
          rowHasChanged: (r1, r2) => r1 !== r2,
          sectionHeaderHasChanged: (s1, s2) => s1 !== s2
       });
-      this.setState({dataSource:this.props.dataSource})
+      this.setState({dataSource:dataSource.cloneWithRows(this.props.dataSource)})
+   }
+
+   sumaKilos(index){
+     this.props.dataSource[index].kilos= this.props.dataSource[index].kilos+1
+     var dataSource = new ListView.DataSource({
+        rowHasChanged: (r1, r2) => r1 !== r2,
+        sectionHeaderHasChanged: (s1, s2) => s1 !== s2
+     });
+     this.setState({dataSource:dataSource.cloneWithRows(this.props.dataSource)})
+   }
+
+   restaKilos(index){
+     if(this.props.dataSource[index].kilos == 0){
+       return;
+     }
+     this.props.dataSource[index].kilos = this.props.dataSource[index].kilos-1
+     var dataSource = new ListView.DataSource({
+        rowHasChanged: (r1, r2) => r1 !== r2,
+        sectionHeaderHasChanged: (s1, s2) => s1 !== s2
+     });
+     this.setState({dataSource:dataSource.cloneWithRows(this.props.dataSource)})
    }
 
    renderRow(item){
@@ -56,14 +77,14 @@ module.exports = class Home extends Component {
             </View>
             <View style={{flex:4,flexDirection:'row',alignItems:'center'}}>
                <View style={{flex:2,flexDirection:'row',alignItems:'center',marginTop:8}}>
-                   <TouchableOpacity style={{alignItems:'center'}}>
+                   <TouchableOpacity onPress={()=>{this.restaKilos(this.props.dataSource.indexOf(item))}}style={{alignItems:'center'}}>
                     <View style={{flex:1,alignItems:'center',alignItems:'center'}}>
                         <View style={{height:40,width:40,borderRadius:3,alignItems:'center',backgroundColor:'rgb(219, 69, 69)',alignItems:'center',justifyContent:'center'}}>
                            <Icon name="minus" style={{color:'white'}}/>
                         </View>
                     </View>
                  </TouchableOpacity>
-                  <TouchableOpacity>
+                  <TouchableOpacity onPress={()=>{this.sumaKilos(this.props.dataSource.indexOf(item))}}>
                      <View style={{flex:1,alignItems:'center'}}>
                         <View style={{height:40,width:40,marginLeft:5,borderRadius:3,alignItems:'center',backgroundColor:'#0071B2',alignItems:'center',justifyContent:'center'}}>
                            <Icon name="plus" style={{color:'white'}}/>
@@ -73,7 +94,7 @@ module.exports = class Home extends Component {
                </View>
                <View style={{flex:1,flexDirection:'row'}}>
                   <Text style={{fontSize:35,color:'rgb(55, 55, 55)'}}>
-                     15
+                     {item.kilos}
                   </Text>
                   <Text style={{fontSize:10}}>
                       kg.

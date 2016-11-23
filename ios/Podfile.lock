@@ -1,0 +1,25 @@
+PODS:
+  - Intercom (3.0.17)
+  - React (0.11.0):
+    - React/Core (= 0.11.0)
+  - react-native-intercom (4.0.0):
+    - Intercom (> 3)
+    - React
+  - React/Core (0.11.0)
+
+DEPENDENCIES:
+  - Intercom
+  - react-native-intercom (from `../node_modules/react-native-intercom`)
+
+EXTERNAL SOURCES:
+  react-native-intercom:
+    :path: "../node_modules/react-native-intercom"
+
+SPEC CHECKSUMS:
+  Intercom: 96e2ee799db55c04e7ece023756ddd70e0cf7390
+  React: ab1a2e21deb34965c38328d5ec40cc7d12c6050a
+  react-native-intercom: d2d88f976f6d2fc19f1d3222f3ce316f8deb22c5
+
+PODFILE CHECKSUM: d82e9bc2aa4838befa24aed9f6367dd26371710f
+
+COCOAPODS: 1.0.1

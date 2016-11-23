@@ -3,7 +3,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import LinearGradient from 'react-native-linear-gradient';
 import ConfigurarOrden from './configurarOrden'
 import Iconi from 'react-native-vector-icons/MaterialIcons';
-
+import * as firebase from 'firebase';
 
 import {
    AppRegistry,
@@ -380,7 +380,6 @@ module.exports = class Orden extends Component {
       this.setState({dataSource: dataSource.cloneWithRowsAndSections(this.convertFoodArrayToMap())})
    }
       renderRow(productsItem,section,row) {
-
          if(productsItem.selected){
             var textSel = (<Icon name="check"style={{color:'white'}}/>)
             var backgroundColor = '#0071B2'
@@ -390,16 +389,12 @@ module.exports = class Orden extends Component {
             var textColor='rgb(130, 130, 130)'
             var backgroundColor = 'white'
          }
-
          return (
             <TouchableHighlight onPress={()=>{this.select(this.state.products.indexOf(productsItem))}}>
             <View style={{backgroundColor:backgroundColor,padding:10,flexDirection:'row',justifyContent:'center',borderColor:'rgb(224, 224, 224)',borderWidth:0,borderBottomWidth:1}}>
                <View style={{flex:2,justifyContent:'center'}}>
                   <Text style={{color:textColor}}>{productsItem.name}</Text>
                   <View style={{flexDirection:'row',marginTop:5}}>
-                     <Iconi  size={20} name="language"style={{color:textColor}}/>
-                     <Iconi  size={20} name="home"style={{color:textColor,marginLeft:5}}/>
-                     <Iconi  size={20} name="label"style={{color:textColor,marginLeft:5}}/>
                   </View>
                </View>
                <View style={{flex:1,justifyContent:'center',alignItems:'flex-end'}}>
@@ -412,8 +407,8 @@ module.exports = class Orden extends Component {
 
       renderSectionHeader(sectionData, category) {
             return (
-               <View style={{backgroundColor:'#f1f1f1',height:28,justifyContent:'center',marginTop:0,marginBottom:0}}>
-                  <Text style={{fontWeight:"700",marginLeft:5,color:'rgb(79, 78, 78)'}}>{category}</Text>
+               <View style={{backgroundColor:'#f1f1f1',height:35,justifyContent:'center',marginTop:0,marginBottom:0}}>
+                  <Text style={{fontWeight:"700",marginLeft:5,marginTop:15,marginBottom:10,color:'rgb(79, 78, 78)',fontSize:15}}>{category}</Text>
                </View>
             )
       }
@@ -441,7 +436,9 @@ module.exports = class Orden extends Component {
 
          if(route.index==2){
             setTimeout(function () {
-               self.props.hide()
+               var user = firebase.auth().currentUser;
+              firebase.database().ref('ordenes/' + user.uid).push({date:Date.now(),order:route.order});
+                 self.props.hide()
             }, 3000);
             return(
                <View style={{backgroundColor:'#0071B2',flex:1,justifyContent:'center',alignItems:'center'}}>

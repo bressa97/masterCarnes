@@ -7,6 +7,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Help from './pagetwo'
 import Pedidos from './pedidos'
 import Orden from './orden'
+import * as firebase from 'firebase';
 
 import {
    AppRegistry,
@@ -17,6 +18,7 @@ import {
    ListView,
    Navigator,
    Platform,
+   AsyncStorage,
    TouchableHighlight,
    TouchableNativeFeedback,
    TouchableOpacity,
@@ -35,6 +37,10 @@ module.exports = class Home extends Component {
       modalVisible:false
       }
     }
+
+   componentWillMount(){
+
+   }
 
    setModalVisible(visible) {
       this.setState({modalVisible: visible});

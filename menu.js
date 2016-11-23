@@ -11,6 +11,8 @@ const {
 const { Component } = React;
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Iconi from 'react-native-vector-icons/MaterialIcons';
+
 
 
 const window = Dimensions.get('window');
@@ -21,6 +23,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection:'column',
     padding: 0,
+    marginTop:20
   },
   avatarContainer: {
     marginBottom: 20,
@@ -31,15 +34,17 @@ const styles = StyleSheet.create({
   },
   name: {
     textAlign:'center',
-    fontSize:22,
+    fontSize:19,
     color:'white',
   },
   item: {
     fontSize: 18,
     fontWeight: '300',
-    paddingTop: 5,
+    paddingTop: 10,
     color:'white',
     marginLeft:10,
+   alignItems:'center'
+
   },
   item2: {
     fontSize: 18,
@@ -50,7 +55,7 @@ const styles = StyleSheet.create({
     textAlign:'center'
   },
   correo: {
-    fontSize:16,
+    fontSize:14,
     textAlign:'center',
     color:'white'
   }
@@ -71,17 +76,16 @@ module.exports = class Menu extends Component {
       <LinearGradient colors={['#0071B2', '#022470']}style={{height:window.height,flexDirection:'column'}}>
       <ScrollView scrollsToTop={false} style={styles.menu}>
       <View style={{height:window.height,flexDirection:'column'}}>
-        <View style={styles.avatarContainer}style={{marginTop:15,marginBottom:20}}>
+        <View style={styles.avatarContainer}style={{marginTop:-5,padding:10,marginBottom:20,backgroundColor:'rgba(254, 254, 254, 0.23)'}}>
           <Text style={styles.name}>Donald Morton</Text>
           <Text style={styles.correo}>r_fonseca_8@hotmail.com</Text>
-          <View style={{flex:1,height:1,backgroundColor:'white',marginTop:40,marginLeft:15,marginRight:17}}/>
         </View>
 
         <View style={{marginBottom:10}}>
         <TouchableOpacity onPress={()=>{this.props.onItemSelected('Home')}}>
           <Text
             style={styles.item}>
-            <Icon name="fax"size={20}/> Pedidos
+            <Iconi name="assignment"size={24}/> Pedidos
           </Text>
         </TouchableOpacity>
         </View>
@@ -90,7 +94,7 @@ module.exports = class Menu extends Component {
         <TouchableOpacity onPress={()=>{this.props.onItemSelected('Help')}}>
           <Text
             style={styles.item}>
-            <Icon name="comments-o"size={20}/> Chat
+            <Iconi name="chat-bubble"size={24}/> Chat
           </Text>
         </TouchableOpacity>
         </View>
@@ -99,7 +103,7 @@ module.exports = class Menu extends Component {
         <TouchableOpacity onPress={()=>{this.props.onItemSelected('LogIn')}}>
          <Text
             style={styles.item2}>
-            <Icon name="sign-out"size={20}/> Cerrar sesión
+            <Iconi name="exit-to-app" size={15}/> Cerrar sesión
           </Text>
         </TouchableOpacity>
         </View>

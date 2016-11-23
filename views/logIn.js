@@ -10,16 +10,18 @@ module.exports = class LogIn extends Component{
    constructor(props){
       super(props);
       this.state ={
-        modalVisibleRegistro: false,
-        name:'',
-        apellido:'',
-        email:'',
-        password:''
+         modalVisibleRegistro: false,
+         name:'',
+         apellido:'',
+         email:'',
+         password:''
       };
    }
+
    setModalRegistroVisible(visible) {
-     this.setState({modalVisibleRegistro: visible});
+      this.setState({modalVisibleRegistro: visible});
    }
+
    logIn(email,password){
       var self=this
      console.log(email,password);
@@ -31,13 +33,16 @@ module.exports = class LogIn extends Component{
        return;
      }
      var user = firebase.auth().signInWithEmailAndPassword(email,password).catch(function(error) {
+        console.log(error);
+      console.log('No Login');
        var errorCode = error.code;
        var errorMessage = error.message;
      });
+
      user.then(function(user) {
         if(user){
            user.getToken().then(function(token) {
-              AsyncStorage.setItem('@auth:user',token);
+              //AsyncStorage.setItem('@auth:user',JSON.stringify(user));
               self.props.navigator.push({
                 id: 'home'
               });
@@ -133,13 +138,13 @@ module.exports = class LogIn extends Component{
                  onChangeText={(apellido) => this.setState({apellido})}
                />
                 <Madoka
-                 label={'Correo'}
+                 label={'Empresa'}
                  // this is used as active and passive border color
                  borderColor={'#aee2c9'}
                  labelStyle={{ color: '#fcfffe' }}
                  inputStyle={{ color: '#ffffff' }}
-                 value={this.state.email}
-                 onChangeText={(email) => this.setState({email})}
+                 value={this.state.empresa}
+                 onChangeText={(empresa) => this.setState({empresa})}
                />
                 <Madoka
                 secureTextEntry={true}

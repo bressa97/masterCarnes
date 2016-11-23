@@ -16,10 +16,13 @@ module.exports = class Help extends Component {
 
    render(){
       return(
+         <View style={{flex:1,backgroundColor:'#3394b8'}}>
          <WebView
-        source={{uri: 'http://s3-us-west-2.amazonaws.com/mastercnrs/chat.html'}}
-        style={{marginTop: 56}}
-      />
+            source={{uri: 'http://s3-us-west-2.amazonaws.com/mastercnrs/chat.html'}}
+            style={{marginTop: 56,backgroundColor:'#7176f2'}}
+            injectedJavaScript=""
+         />
+      </View>
       )
    }
 }

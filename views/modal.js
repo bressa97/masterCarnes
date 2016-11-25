@@ -1,4 +1,4 @@
-<Modal animationType={"slide"} transparent={false} visible={this.state.modalVisible} onRequestClose={() => {alert("Modal has been closed.")}}>
+<Modal animationType={"slide"} transparent={false} visible={this.state.modalVisible} onRequestClose={() => {console.log("Modal has been closed.")}}>
    <View style={{marginTop: 22}}>
       <View>
          <Text>Hello World!</Text>

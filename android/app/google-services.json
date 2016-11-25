@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "894188988277",
+    "firebase_url": "https://mastercarnes-9b9db.firebaseio.com",
+    "project_id": "mastercarnes-9b9db",
+    "storage_bucket": "mastercarnes-9b9db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:894188988277:android:b7615b0acd62398f",
+        "android_client_info": {
+          "package_name": "com.mastercarnesnative"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "894188988277-2l06l0feq3k5jjp4nj3n01pq0p4nprbe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPwJfzSNnIyOjwAWGxR8y7PPjTu50BVdc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -7,6 +7,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Help from './pagetwo'
 import Pedidos from './pedidos'
 import Orden from './orden'
+import FCM from 'react-native-fcm';
 import * as firebase from 'firebase';
 
 import {
@@ -40,6 +41,16 @@ module.exports = class Home extends Component {
 
    componentWillMount(){
 
+   }
+
+   componentDidMount() {
+      FCM.requestPermissions(); // for iOS
+      FCM.getFCMToken().then(token => {
+         console.log(token)
+        //  notifications.sendDeviceToken(token,function() {
+        //     console.log('device sent',token);
+        //  })
+      });
    }
 
    setModalVisible(visible) {

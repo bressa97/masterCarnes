@@ -114,7 +114,7 @@ module.exports = class LogIn extends Component{
                  </TouchableOpacity>
                </View>
           </View>
-          <Modal animationType={"slide"}transparent={false}visible={this.state.modalVisibleRegistro}onRequestClose={() => {alert("Modal has been closed.")}}>
+          <Modal animationType={"slide"}transparent={false}visible={this.state.modalVisibleRegistro}onRequestClose={() => {console.log("Modal has been closed.")}}>
           <View style={{flex:1}}>
           <LinearGradient colors={['#31A3DD', '#022470']} style={styles.linearGradient}>
              <View style={{width:300}}>
@@ -138,13 +138,13 @@ module.exports = class LogIn extends Component{
                  onChangeText={(apellido) => this.setState({apellido})}
                />
                 <Madoka
-                 label={'Empresa'}
+                 label={'Correo electrónico'}
                  // this is used as active and passive border color
                  borderColor={'#aee2c9'}
                  labelStyle={{ color: '#fcfffe' }}
                  inputStyle={{ color: '#ffffff' }}
-                 value={this.state.empresa}
-                 onChangeText={(empresa) => this.setState({empresa})}
+                 value={this.state.email}
+                 onChangeText={(email) => this.setState({email})}
                />
                 <Madoka
                 secureTextEntry={true}

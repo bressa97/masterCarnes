@@ -458,7 +458,7 @@ module.exports = class Orden extends Component {
 
       render(){
          var self = this
-         return(<Modal animationType={"slide"} transparent={false} visible={this.props.modalVisible} onRequestClose={() => {alert("Modal has been closed.")}}>
+         return(<Modal animationType={"slide"} transparent={false} visible={this.props.modalVisible} onRequestClose={() => {console.log("Modal has been closed.")}}>
       <StatusBar
        backgroundColor="#bfbfbf"
             barStyle="light-content"

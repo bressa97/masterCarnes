@@ -5,7 +5,6 @@ import * as firebase from 'firebase';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { CheckboxField, Checkbox } from 'react-native-checkbox-field';
-var Intercom = require('react-native-intercom');
 
 
 var productosPedidos = [
@@ -35,7 +34,6 @@ module.exports = class Help extends Component {
         noOrders: true,
         orderDetailsModal:false,
         dataSource: ds.cloneWithRows(productosPedidos),
-        userCode:"Intercom('show');"
       }
    }
 
@@ -192,7 +190,7 @@ module.exports = class Help extends Component {
       }else{
          if(this.state.orderDetailsModal){
             var modal = (
-            <Modal animationType={"slide"} transparent={false} visible={this.state.orderDetailsModal} onRequestClose={() => {alert("Modal has been closed.")}}>
+            <Modal animationType={"slide"} transparent={false} visible={this.state.orderDetailsModal} onRequestClose={() => {console.log("Modal has been closed.")}}>
               <View style={{flex:10,flexDirection:'column',backgroundColor:'#0071B2'}}>
                 <View style={{backgroundColor:'#0071B2',marginTop:12,flex:1,flexDirection:'row',alignItems:'center'}}>
                   <Text style={{color:'#FFFFFF',flex:9,marginLeft:10,fontSize:16}}>{this.state.orderDetails.date}</Text>

@@ -94,7 +94,7 @@ module.exports = class Menu extends Component {
         <TouchableOpacity onPress={()=>{this.props.onItemSelected('Help')}}>
           <Text
             style={styles.item}>
-            <Iconi name="chat-bubble"size={24}/> Chat
+            <Iconi name="assignment-turned-in"size={24}/> Pedidos cotizados
           </Text>
         </TouchableOpacity>
         </View>

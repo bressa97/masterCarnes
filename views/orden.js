@@ -20,7 +20,9 @@ import {
    Modal,
    NavigatorIOS,
    Image,
-   StatusBar
+   StatusBar,
+   AlertIOS,
+   ToastAndroid
 } from 'react-native';
 
 var products = [
@@ -327,7 +329,8 @@ module.exports = class Orden extends Component {
    constructor(props){
       super(props)
       this.state={
-         products:products
+         products:products,
+         productCounter:0
       }
    }
 
@@ -374,10 +377,11 @@ module.exports = class Orden extends Component {
             rowHasChanged: (r1, r2) => r1 !== r2,
             sectionHeaderHasChanged: (s1, s2) => s1 !== s2
           });
-
+      var productCounterPlus = this.productCounter+1
       this.state.products[row].selected=!this.state.products[row].selected
       this.setState({products:this.state.products});
       this.setState({dataSource: dataSource.cloneWithRowsAndSections(this.convertFoodArrayToMap())})
+      this.setState({productCounter:1})
    }
       renderRow(productsItem,section,row) {
          if(productsItem.selected){
@@ -413,6 +417,18 @@ module.exports = class Orden extends Component {
             )
       }
 
+      validate(navigator,productCounter){
+        if(productCounter == 0){
+          Platform.select({
+           ios:()=>AlertIOS.alert('Porfavor seleccione al menos un producto'),
+           android:()=>ToastAndroid.show('Porfavor seleccione al menos un producto', ToastAndroid.SHORT)
+         })()
+          return;
+        }else{
+          navigator.push({ title: 'Awesome Scene', index: 1,dataSource:this.dataToSend() })
+        }
+      }
+
       renderScene(route, navigator){
          var self= this
          if(route.index==0)
@@ -424,7 +440,7 @@ module.exports = class Orden extends Component {
                     renderRow={this.renderRow.bind(this)}
                     renderSectionHeader={this.renderSectionHeader}
                   />
-                 <TouchableOpacity style={{flex:.08,flexDirection:'row',backgroundColor:'#03d282',alignItems:'center',justifyContent:'center'}} onPress={() => {navigator.push({ title: 'Awesome Scene', index: 1,dataSource:this.dataToSend() })}}>
+                 <TouchableOpacity style={{flex:.08,flexDirection:'row',backgroundColor:'#03d282',alignItems:'center',justifyContent:'center'}} onPress={() => {this.validate(navigator,this.state.productCounter)}}>
                     <Text style={{color:'#ffffff',justifyContent:'center'}}>Verificar cotización </Text><Iconi name="arrow-forward" color="white"/>
                  </TouchableOpacity>
               </View>

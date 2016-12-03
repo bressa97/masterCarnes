@@ -330,7 +330,6 @@ module.exports = class Orden extends Component {
       super(props)
       this.state={
          products:products,
-         productCounter:0
       }
    }
 
@@ -377,11 +376,9 @@ module.exports = class Orden extends Component {
             rowHasChanged: (r1, r2) => r1 !== r2,
             sectionHeaderHasChanged: (s1, s2) => s1 !== s2
           });
-      var productCounterPlus = this.productCounter+1
       this.state.products[row].selected=!this.state.products[row].selected
       this.setState({products:this.state.products});
       this.setState({dataSource: dataSource.cloneWithRowsAndSections(this.convertFoodArrayToMap())})
-      this.setState({productCounter:1})
    }
       renderRow(productsItem,section,row) {
          if(productsItem.selected){
@@ -417,8 +414,9 @@ module.exports = class Orden extends Component {
             )
       }
 
-      validate(navigator,productCounter){
-        if(productCounter == 0){
+      validate(navigator){
+        self = this;
+        if(self.dataToSend().length == 0){
           Platform.select({
            ios:()=>AlertIOS.alert('Porfavor seleccione al menos un producto'),
            android:()=>ToastAndroid.show('Porfavor seleccione al menos un producto', ToastAndroid.SHORT)
@@ -440,7 +438,7 @@ module.exports = class Orden extends Component {
                     renderRow={this.renderRow.bind(this)}
                     renderSectionHeader={this.renderSectionHeader}
                   />
-                 <TouchableOpacity style={{flex:.08,flexDirection:'row',backgroundColor:'#03d282',alignItems:'center',justifyContent:'center'}} onPress={() => {this.validate(navigator,this.state.productCounter)}}>
+                 <TouchableOpacity style={{flex:.08,flexDirection:'row',backgroundColor:'#03d282',alignItems:'center',justifyContent:'center'}} onPress={() => {this.validate(navigator)}}>
                     <Text style={{color:'#ffffff',justifyContent:'center'}}>Verificar cotización </Text><Iconi name="arrow-forward" color="white"/>
                  </TouchableOpacity>
               </View>

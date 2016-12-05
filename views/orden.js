@@ -199,9 +199,6 @@ var products = [
      name:'CABEZA DE FILETE',category:'CORTES FINOS RES'},
   {
      selected:false,
-     name:'AHUJA NORTEÑA',category:'CORTES FINOS RES'},//SE REPITE //INYECTADA
-  {
-     selected:false,
      name:'COSTILLA DE RIB EYE',category:'CORTES FINOS RES'},
   {
      selected:false,
@@ -364,7 +361,9 @@ module.exports = class Orden extends Component {
          item.inyect = false,
          item.national = false,
          item.international = false,
-         item.kilos = 0
+         item.toneladas = false,
+         item.kilos = 0,
+         item.cantidadTotal = 0
          res.push(item)
        }
      })
@@ -515,7 +514,7 @@ module.exports = class Orden extends Component {
                      if(route.index==2)
                      return(
                         <View style={{justifyContent:'center'}}>
-                        <Text style={{fontSize:18,color:'#ffffff',marginTop:5,marginLeft:-1,justifyContent:'center'}}>Completa Enviada</Text>
+                        <Text style={{fontSize:18,color:'#ffffff',marginTop:5,marginLeft:-1,justifyContent:'center'}}>Cotizacion Enviada</Text>
                         <Text style={{fontSize:10,color:'#ffffff',textAlign:'center',marginLeft:-1,justifyContent:'center'}}>Regresa al inicio</Text>
                         </View>)
                      }

@@ -85,10 +85,10 @@ module.exports = class Help extends Component {
       var arr = []
       snap.forEach(function(order) {
          var o = order.val();
-         o.kilos = 0
+         o.cantidadTotal = 0
          d = moment.unix(o.date/1000);
          for(i in o.order){
-            o.kilos+=o.order[i].kilos;
+            o.cantidadTotal+=o.order[i].cantidadTotal;
          }
          o.date = d.format("LLL");
          arr.push(o)
@@ -107,7 +107,7 @@ module.exports = class Help extends Component {
            </View>
            <View style={{flex:3}}>
              <Text style={{fontSize:34,textAlign:'right',color:'#8c8c8c'}}>{item.order.length}<Iconi size={25} name="assignment"/></Text>
-             <Text style={{fontSize:14,textAlign:'right',color:'#8c8c8c'}}>{item.kilos} Kilos</Text>
+             <Text style={{fontSize:14,textAlign:'right',color:'#8c8c8c'}}>{item.cantidadTotal/1000} Toneladas</Text>
            </View>
          </View>
       )

@@ -38,24 +38,56 @@ module.exports = class Home extends Component {
    }
 
    sumaKilos(index){
-     this.props.dataSource[index].kilos= this.props.dataSource[index].kilos+5
-     var dataSource = new ListView.DataSource({
-        rowHasChanged: (r1, r2) => r1 !== r2,
-        sectionHeaderHasChanged: (s1, s2) => s1 !== s2
-     });
-     this.setState({dataSource:dataSource.cloneWithRows(this.props.dataSource)})
+     if(this.props.dataSource[index].toneladas==true){
+       this.props.dataSource[index].kilos= this.props.dataSource[index].kilos+1
+       this.props.dataSource[index].cantidadTotal = this.props.dataSource[index].kilos*1000;
+       var dataSource = new ListView.DataSource({
+          rowHasChanged: (r1, r2) => r1 !== r2,
+          sectionHeaderHasChanged: (s1, s2) => s1 !== s2
+       });
+       this.setState({dataSource:dataSource.cloneWithRows(this.props.dataSource)})
+     }else{
+       this.props.dataSource[index].kilos= this.props.dataSource[index].kilos+5
+       this.props.dataSource[index].cantidadTotal = this.props.dataSource[index].kilos;
+       var dataSource = new ListView.DataSource({
+          rowHasChanged: (r1, r2) => r1 !== r2,
+          sectionHeaderHasChanged: (s1, s2) => s1 !== s2
+       });
+       this.setState({dataSource:dataSource.cloneWithRows(this.props.dataSource)})
+     }
    }
 
    restaKilos(index){
      if(this.props.dataSource[index].kilos == 0){
        return;
      }
-     this.props.dataSource[index].kilos = this.props.dataSource[index].kilos-5
-     var dataSource = new ListView.DataSource({
-        rowHasChanged: (r1, r2) => r1 !== r2,
-        sectionHeaderHasChanged: (s1, s2) => s1 !== s2
-     });
-     this.setState({dataSource:dataSource.cloneWithRows(this.props.dataSource)})
+     if(this.props.dataSource[index].toneladas==true){
+       this.props.dataSource[index].kilos = this.props.dataSource[index].kilos-1
+       this.props.dataSource[index].cantidadTotal = this.props.dataSource[index].kilos*1000;
+       var dataSource = new ListView.DataSource({
+          rowHasChanged: (r1, r2) => r1 !== r2,
+          sectionHeaderHasChanged: (s1, s2) => s1 !== s2
+       });
+       this.setState({dataSource:dataSource.cloneWithRows(this.props.dataSource)})
+     }else{
+       if(this.props.dataSource[index].kilos <= 4){
+         this.props.dataSource[index].kilos = this.props.dataSource[index].kilos-1
+         this.props.dataSource[index].cantidadTotal = this.props.dataSource[index].kilos;
+         var dataSource = new ListView.DataSource({
+            rowHasChanged: (r1, r2) => r1 !== r2,
+            sectionHeaderHasChanged: (s1, s2) => s1 !== s2
+         });
+         this.setState({dataSource:dataSource.cloneWithRows(this.props.dataSource)})
+         return;
+       }
+       this.props.dataSource[index].kilos = this.props.dataSource[index].kilos-5
+       this.props.dataSource[index].cantidadTotal = this.props.dataSource[index].kilos;
+       var dataSource = new ListView.DataSource({
+          rowHasChanged: (r1, r2) => r1 !== r2,
+          sectionHeaderHasChanged: (s1, s2) => s1 !== s2
+       });
+       this.setState({dataSource:dataSource.cloneWithRows(this.props.dataSource)})
+     }
    }
 
    selectInyect(row){
@@ -84,6 +116,22 @@ module.exports = class Home extends Component {
      this.props.dataSource[row].international=value
      this.setState({dataSource:dataSource.cloneWithRows(this.props.dataSource)});
    }
+   selectUnity(row,toneladas){
+     var dataSource = new ListView.DataSource({
+       rowHasChanged: (r1, r2) => r1 !== r2,
+       sectionHeaderHasChanged: (s1, s2) => s1 !== s2
+     });
+     this.props.dataSource[row].toneladas=toneladas
+     if (this.props.dataSource[row].toneladas == true) {
+       this.props.dataSource[row].cantidadTotal=this.props.dataSource[row].kilos*1000;
+     }else{
+       this.props.dataSource[row].cantidadTotal=this.props.dataSource[row].kilos;
+     }
+     this.setState({dataSource:dataSource.cloneWithRows(this.props.dataSource)});
+   }
+   sendOrder(index){
+     this.props.navigator.push({index:2,order:this.props.dataSource})
+   }
    renderRow(item){
      if(item.inyect){
        var colorInyect = '#0071B2'
@@ -101,6 +149,16 @@ module.exports = class Home extends Component {
          var textInternational=' (IMP.)'
          var imageInternational = <Image style={{opacity:0.15,height:110,width:190,position:'absolute',left:20,bottom:-80}} resizeMode="contain" source={{uri:'http://previews.123rf.com/images/carmenbobo/carmenbobo1501/carmenbobo150100014/35179260-Sello-de-goma-con-la-palabra-importada-interior-ilustraci-n-vectorial-Foto-de-archivo.jpg'}}/>
       }
+      if(item.toneladas){
+        var textToneladas='ton'
+      }else{
+        var textToneladas='kg'
+      }
+      if(item.toneladas){
+        var textToneladasTitulo=' (TON.)'
+      }else{
+        var textToneladasTitulo=' (KG.)'
+      }
 
 
       return(
@@ -108,7 +166,7 @@ module.exports = class Home extends Component {
          <View style={{flexDirection:'row',alignItems:'center'}}>
             <View style={{flex:4}}>
                <Text style={{color:'rgb(55, 55, 55)'}}>
-                  {item.name}{textInternational}
+                  {item.name}{textInternational}{textToneladasTitulo}
                </Text>
                <Text style={{fontSize:10,color:'rgb(136, 136, 136)'}}>
                   {item.category}
@@ -139,7 +197,7 @@ module.exports = class Home extends Component {
                      {item.kilos}
                   </Text>
                   <Text style={{fontSize:10,backgroundColor:'transparent'}}>
-                      kg.
+                      {textToneladas}
                   </Text>
                </View>
             </View>
@@ -151,6 +209,10 @@ module.exports = class Home extends Component {
                      onValueChange={(value) => {this.selectInternational(this.props.dataSource.indexOf(item),value)}}
                      style={{marginBottom: 0}}
                      value={item.international} />
+                     <Switch
+                     onValueChange={(toneladas) => {this.selectUnity(this.props.dataSource.indexOf(item),toneladas)}}
+                     style={{marginBottom: 0}}
+                     value={item.toneladas} />
                   </View>
                   <View style={{flexDirection:'column',marginTop:-14,marginLeft:-13}}>
                      <CheckboxField
@@ -177,7 +239,7 @@ module.exports = class Home extends Component {
                dataSource={this.state.dataSource}
                renderRow={this.renderRow.bind(this)}
              />
-          <TouchableOpacity style={{flex:.08,backgroundColor:'#03d282',alignItems:'center',justifyContent:'center'}} onPress={() => {this.props.navigator.push({index:2,order:this.props.dataSource})}}>
+          <TouchableOpacity style={{flex:.08,backgroundColor:'#03d282',alignItems:'center',justifyContent:'center'}} onPress={() => {this.sendOrder()}}>
             <Text style={{color:'#ffffff',justifyContent:'center'}}>3. Enviar cotización</Text>
          </TouchableOpacity>
          </View>

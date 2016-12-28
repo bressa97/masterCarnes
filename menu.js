@@ -12,8 +12,7 @@ const { Component } = React;
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Iconi from 'react-native-vector-icons/MaterialIcons';
-
-
+import * as firebase from 'firebase';
 
 const window = Dimensions.get('window');
 const uri = 'http://pickaface.net/includes/themes/clean/img/slide2.png';
@@ -64,6 +63,20 @@ const styles = StyleSheet.create({
 module.exports = class Menu extends Component {
   constructor(props){
     super(props);
+    this.state = {
+      correo:'',
+      name:'',
+      apellido:'',
+    };
+  }
+
+  componentDidMount(){
+    var self = this;
+    var current = firebase.auth().currentUser;
+    firebase.database().ref('users/' + current.uid).on('value',function(snap) {
+      console.log(snap.val());
+       self.setState({name:snap.val().name,apellido:snap.val().apellido,correo:snap.val().email});
+    });
   }
 
   static propTypes = {
@@ -76,8 +89,8 @@ module.exports = class Menu extends Component {
       <ScrollView scrollsToTop={false} style={styles.menu}>
       <View style={{height:window.height,flexDirection:'column'}}>
         <View style={styles.avatarContainer}style={{marginTop:-5,padding:10,marginBottom:20,backgroundColor:'rgba(254, 254, 254, 0.23)'}}>
-          <Text style={styles.name}>Donald Morton</Text>
-          <Text style={styles.correo}>r_fonseca_8@hotmail.com</Text>
+          <Text style={styles.name}>{this.state.name} {this.state.apellido}</Text>
+          <Text style={styles.correo}>{this.state.correo}</Text>
         </View>
 
         <View style={{marginBottom:10}}>

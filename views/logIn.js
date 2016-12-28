@@ -9,12 +9,13 @@ import Home from './home';
 module.exports = class LogIn extends Component{
    constructor(props){
       super(props);
+      var user = firebase.auth().currentUser;
       this.state ={
          modalVisibleRegistro: false,
          name:'',
          apellido:'',
          email:'',
-         password:''
+         password:'',
       };
    }
 
@@ -24,7 +25,6 @@ module.exports = class LogIn extends Component{
 
    logIn(email,password){
       var self=this
-     console.log(email,password);
      if(!email||!password){
        Platform.select({
         ios:()=>AlertIOS.alert('Porfavor llene los campos solicitados'),
@@ -33,8 +33,8 @@ module.exports = class LogIn extends Component{
        return;
      }
      var user = firebase.auth().signInWithEmailAndPassword(email,password).catch(function(error) {
-        console.log(error);
-      console.log('No Login');
+       console.log(error);
+       console.log('No Login');
        var errorCode = error.code;
        var errorMessage = error.message;
      });
@@ -42,7 +42,7 @@ module.exports = class LogIn extends Component{
      user.then(function(user) {
         if(user){
            user.getToken().then(function(token) {
-              //AsyncStorage.setItem('@auth:user',JSON.stringify(user));
+              AsyncStorage.setItem('@auth:user',JSON.stringify(user));
               self.props.navigator.push({
                 id: 'home'
               });
@@ -53,23 +53,31 @@ module.exports = class LogIn extends Component{
      });
    }
    signUp(name,apellido,email,password){
+     var self = this;
     if(!name||!apellido||!email||!password){
       Platform.select({
        ios:()=>AlertIOS.alert('Porfavor llene los campos solicitados'),
        android:()=>ToastAndroid.show('Porfavor llene los campos solicitados', ToastAndroid.SHORT)
      })()
     }else{
-     firebase.auth().createUserWithEmailAndPassword(email,password).catch(function(error) {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log(errorCode);
-      console.log(errorMessage);
-    });
-    this.setModalRegistroVisible(!this.state.modalVisibleRegistro);
-    this.props.navigator.push({
-          id: 'home'
-        });
+    firebase.auth().createUserWithEmailAndPassword(email,password).then(function(user) {
+      if(user){
+        var self = this;
+        var current = firebase.auth().currentUser;
+        console.log(current.uid+"uid login");
+        firebase.database().ref('users/'+current.uid).set({name:name,apellido:apellido,email:email});
+      }else{
+
       }
+    });
+    setTimeout(function () {
+      self.setModalRegistroVisible(!self.state.modalVisibleRegistro);
+      self.props.navigator.push({
+            id: 'home'
+          });
+      }, 2000);
+      }
+
     }
 
    render(){

@@ -6,6 +6,7 @@ import Iconi from 'react-native-vector-icons/MaterialIcons';
 import LinearGradient from 'react-native-linear-gradient';
 import Help from './pagetwo'
 import Pedidos from './pedidos'
+import LogIn from './logIn'
 import Orden from './orden'
 import FCM from 'react-native-fcm';
 import * as firebase from 'firebase';
@@ -35,22 +36,32 @@ module.exports = class Home extends Component {
    this.state = {
       isOpen: false,
       selectedItem: 'Home',
-      modalVisible:false
+      modalVisible:false,
+      day:''
       }
     }
 
-   componentWillMount(){
-
-   }
-
    componentDidMount() {
-      FCM.requestPermissions(); // for iOS
-      FCM.getFCMToken().then(token => {
+     const self = this;
+     var today = new Date();
+     var dd = today.getDate();
+     var mm = today.getMonth()+1; //January is 0!
+     var yyyy = today.getFullYear();
+     if(dd<10) {
+        dd='0'+dd;
+     }
+     if(mm<10) {
+        mm='0'+mm;
+     }
+
+     FCM.requestPermissions(); // for iOS
+     FCM.getFCMToken().then(token => {
          console.log(token)
         //  notifications.sendDeviceToken(token,function() {
         //     console.log('device sent',token);
         //  })
       });
+     self.setState({day:mm+'/'+dd+'/'+yyyy});
    }
 
    setModalVisible(visible) {
@@ -87,6 +98,11 @@ module.exports = class Home extends Component {
             <Help navigator={navigator}/>
          )
          break;
+         case 'LogIn':
+           return(
+              <LogIn navigator={navigator}/>
+           )
+           break;
       }
    }
 
@@ -119,7 +135,7 @@ module.exports = class Home extends Component {
                   { return (
                      <View style={{justifyContent:'center'}}>
                         <Text style={{fontSize:18,color:'#0071B2',marginTop:5,marginLeft:-1,justifyContent:'center'}}>Mastercarnes</Text>
-                        <Text style={{fontSize:10,color:'#0071B2',textAlign:'center',marginLeft:-1,justifyContent:'center'}}>13 Oct 2016</Text>
+                        <Text style={{fontSize:10,color:'#0071B2',textAlign:'center',marginLeft:-1,justifyContent:'center'}}>{this.state.day}</Text>
                      </View>
                   ); },
               }}

@@ -112,7 +112,7 @@ module.exports = class Menu extends Component {
         </View>
 
         <View style={{flex:1,marginBottom:35,justifyContent:'flex-end'}}>
-        <TouchableOpacity onPress={()=>{this.props.navigator1.replace({id:'logIn'})}}>
+        <TouchableOpacity onPress={()=>{this.props.onItemSelected('LogIn')}}>
          <Text
             style={styles.item2}>
             <Iconi name="exit-to-app" size={15}/> Cerrar sesión

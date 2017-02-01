@@ -79,6 +79,13 @@ module.exports = class Menu extends Component {
     });
   }
 
+  logOut(){
+    firebase.auth().signOut();
+    this.props.navigator1.replace({
+      id:'logIn'
+    });
+  }
+
   static propTypes = {
     onItemSelected: React.PropTypes.func.isRequired,
   };
@@ -111,8 +118,8 @@ module.exports = class Menu extends Component {
         </TouchableOpacity>
         </View>
 
-        <View style={{flex:1,marginBottom:35,justifyContent:'flex-end'}}>
-        <TouchableOpacity onPress={()=>{this.props.onItemSelected('LogIn')}}>
+        <View style={{flex:1,marginBottom:45,justifyContent:'flex-end'}}>
+        <TouchableOpacity onPress={()=>{this.logOut()}}>
          <Text
             style={styles.item2}>
             <Iconi name="exit-to-app" size={15}/> Cerrar sesión

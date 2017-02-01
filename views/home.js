@@ -37,11 +37,15 @@ module.exports = class Home extends Component {
       isOpen: false,
       selectedItem: 'Home',
       modalVisible:false,
-      day:''
+      day:'',
+      ref2:''
       }
     }
 
    componentDidMount() {
+     var navigatorr = this.refs.ref2;
+     this.setState({ref2:navigatorr})
+     console.log(this.state.ref2);
      const self = this;
      var today = new Date();
      var dd = today.getDate();
@@ -86,23 +90,23 @@ module.exports = class Home extends Component {
       });
    }
 
-   renderScene(route, navigator){
+   renderScene(route){
      switch(this.state.selectedItem){
        case 'Home':
         return (
-           <Pedidos navigator={navigator}/>
+           <Pedidos navigator2={this.state.ref2}/>
         )
         break;
        case 'Help':
          return(
-            <Help navigator={navigator}/>
+            <Help navigator2={this.state.ref2}/>
          )
          break;
-         case 'LogIn':
-           return(
-              <LogIn navigator={navigator}/>
-           )
-           break;
+       case 'logIn':
+         return(
+            <LogIn navigator1={this.props.navigator1}navigator2={this.state.ref2}/>
+         )
+         break;
       }
    }
 
@@ -113,7 +117,7 @@ module.exports = class Home extends Component {
          TouchableElement = TouchableNativeFeedback;
       }
 
-      const menu = <Menu onItemSelected={this.onMenuItemSelected.bind(this)}/>;
+      const menu = <Menu onItemSelected={this.onMenuItemSelected.bind(this)}navigator1={this.props.navigator1}/>;
 
       return (
          <SideMenu menu={menu} isOpen={this.state.isOpen} onChange={(isOpen) => this.updateMenuState(isOpen)}>
@@ -121,7 +125,7 @@ module.exports = class Home extends Component {
           backgroundColor="#bfbfbf"
          />
          <Navigator
-           ref="navigator2"
+           ref="ref2"
            initialRoute={{ id: 'Home'}}
            renderScene={this.renderScene.bind(this)}
            navigationBar={

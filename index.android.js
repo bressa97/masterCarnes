@@ -28,17 +28,24 @@ const firebaseApp = firebase.initializeApp(firebaseConfig);
 class masterCarnesNative extends Component {
   constructor(props){
     super(props);
+    this.state = {
+      ref1:''
+    }
   }
-
-  renderScene(route, navigator){
+  componentDidMount(){
+    var navigator = this.refs.ref1;
+    this.setState({ref1:navigator})
+    console.log(this.state.ref1);
+  }
+  renderScene(route){
     switch(route.id){
 
       case 'logIn':
-       return (<LogIn navigator={navigator}/>)
+       return (<LogIn navigator1={this.state.ref1}/>)
        break;
 
       case 'home':
-        return(<Home navigator={navigator}/>)
+        return(<Home navigator1={this.state.ref1}/>)
         break;
      }
   }
@@ -46,7 +53,7 @@ class masterCarnesNative extends Component {
   render() {
     return (
       <Navigator
-        ref="navigator1"
+        ref='ref1'
         initialRoute={{id:'logIn'}}
         renderScene={this.renderScene.bind(this)}
       ></Navigator>

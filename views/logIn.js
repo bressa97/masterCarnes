@@ -20,12 +20,7 @@ module.exports = class LogIn extends Component{
    }
 
    componentDidMount(){
-     const self = this;
-     firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {
-        self.props.navigator.replace({id:'home'})
-      }
-    });
+
    }
 
    setModalRegistroVisible(visible) {
@@ -52,7 +47,7 @@ module.exports = class LogIn extends Component{
         if(user){
            user.getToken().then(function(token) {
               AsyncStorage.setItem('@auth:user',JSON.stringify(user));
-              self.props.navigator.push({
+              self.props.navigator1.push({
                 id: 'home'
               });
            })
@@ -81,7 +76,7 @@ module.exports = class LogIn extends Component{
     });
     setTimeout(function () {
       self.setModalRegistroVisible(!self.state.modalVisibleRegistro);
-      self.props.navigator.push({
+      self.props.navigator1.push({
             id: 'home'
           });
       }, 2000);

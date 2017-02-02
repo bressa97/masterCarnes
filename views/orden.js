@@ -371,26 +371,27 @@ module.exports = class Orden extends Component {
    }
 
    select(row){
-          var dataSource = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1 !== r2,
-            sectionHeaderHasChanged: (s1, s2) => s1 !== s2
-          });
+      var dataSource = new ListView.DataSource({
+         rowHasChanged: (r1, r2) => r1 !== r2,
+         sectionHeaderHasChanged: (s1, s2) => s1 !== s2
+      });
       this.state.products[row].selected=!this.state.products[row].selected
       this.setState({products:this.state.products});
       this.setState({dataSource: dataSource.cloneWithRowsAndSections(this.convertFoodArrayToMap())})
    }
-      renderRow(productsItem,section,row) {
-         if(productsItem.selected){
-            var textSel = (<Icon name="check"style={{color:'white'}}/>)
-            var backgroundColor = '#0071B2'
-            var textColor='white'
-         }else{
-            var textSel = null;
-            var textColor='rgb(130, 130, 130)'
-            var backgroundColor = 'white'
-         }
-         return (
-            <TouchableHighlight onPress={()=>{this.select(this.state.products.indexOf(productsItem))}}>
+
+   renderRow(productsItem,section,row) {
+      if(productsItem.selected){
+         var textSel = (<Icon name="check"style={{color:'white'}}/>)
+         var backgroundColor = '#0071B2'
+         var textColor='white'
+      }else{
+         var textSel = null;
+         var textColor='rgb(130, 130, 130)'
+         var backgroundColor = 'white'
+      }
+      return (
+         <TouchableHighlight onPress={()=>{this.select(this.state.products.indexOf(productsItem))}}>
             <View style={{backgroundColor:backgroundColor,padding:10,flexDirection:'row',justifyContent:'center',borderColor:'rgb(224, 224, 224)',borderWidth:0,borderBottomWidth:1}}>
                <View style={{flex:2,justifyContent:'center'}}>
                   <Text style={{color:textColor}}>{productsItem.name}</Text>
@@ -401,71 +402,71 @@ module.exports = class Orden extends Component {
                   {textSel}
                </View>
             </View>
-            </TouchableHighlight>
-         )
-      }
+         </TouchableHighlight>
+      )
+   }
 
-      renderSectionHeader(sectionData, category) {
-            return (
-               <View style={{backgroundColor:'#f1f1f1',height:35,justifyContent:'center',marginTop:0,marginBottom:0}}>
-                  <Text style={{fontWeight:"700",marginLeft:5,marginTop:15,marginBottom:10,color:'rgb(79, 78, 78)',fontSize:15}}>{category}</Text>
-               </View>
-            )
-      }
+   renderSectionHeader(sectionData, category) {
+      return (
+         <View style={{backgroundColor:'#f1f1f1',height:35,justifyContent:'center',marginTop:0,marginBottom:0}}>
+            <Text style={{fontWeight:"700",marginLeft:5,marginTop:15,marginBottom:10,color:'rgb(79, 78, 78)',fontSize:15}}>{category}</Text>
+         </View>
+      )
+   }
 
-      validate(navigator){
-        self = this;
-        if(self.dataToSend().length == 0){
-          Platform.select({
-           ios:()=>AlertIOS.alert('Porfavor seleccione al menos un producto'),
-           android:()=>ToastAndroid.show('Porfavor seleccione al menos un producto', ToastAndroid.SHORT)
+   validate(navigator){
+      self = this;
+      if(self.dataToSend().length == 0){
+         Platform.select({
+            ios:()=>AlertIOS.alert('Porfavor seleccione al menos un producto'),
+            android:()=>ToastAndroid.show('Porfavor seleccione al menos un producto', ToastAndroid.SHORT)
          })()
-          return;
-        }else{
-          navigator.push({ title: 'Awesome Scene', index: 1,dataSource:this.dataToSend() })
-        }
+         return;
+      }else{
+         navigator.push({ title: 'Awesome Scene', index: 1,dataSource:this.dataToSend() })
       }
+   }
 
-      renderScene(route, navigator){
-         var self= this
-         if(route.index==0)
-            return(
-               <View style={{flex:1}}>
-                 <ListView
-                    style={{flex:.9}}
-                    dataSource={this.state.dataSource}
-                    renderRow={this.renderRow.bind(this)}
-                    renderSectionHeader={this.renderSectionHeader}
-                  />
-                 <TouchableOpacity style={{flex:.08,flexDirection:'row',backgroundColor:'#03d282',alignItems:'center',justifyContent:'center'}} onPress={() => {this.validate(navigator)}}>
-                    <Text style={{color:'#ffffff',justifyContent:'center'}}>Verificar cotización </Text><Iconi name="arrow-forward" color="white"/>
-                 </TouchableOpacity>
-              </View>
-            )
-         if(route.index==1)
+   renderScene(route, navigator){
+      var self= this
+      if(route.index==0)
          return(
-            <ConfigurarOrden navigator={navigator} hide={()=>{this.close()}} dataSource={route.dataSource}/>
+            <View style={{flex:1}}>
+              <ListView
+                 style={{flex:.9}}
+                 dataSource={this.state.dataSource}
+                 renderRow={this.renderRow.bind(this)}
+                 renderSectionHeader={this.renderSectionHeader}
+               />
+              <TouchableOpacity style={{flex:.08,flexDirection:'row',backgroundColor:'#03d282',alignItems:'center',justifyContent:'center'}} onPress={() => {this.validate(navigator)}}>
+                 <Text style={{color:'#ffffff',justifyContent:'center'}}>Verificar cotización </Text><Iconi name="arrow-forward" color="white"/>
+              </TouchableOpacity>
+           </View>
          )
+      if(route.index==1)
+      return(
+         <ConfigurarOrden navigator={navigator} hide={()=>{this.close()}} dataSource={route.dataSource}/>
+      )
 
-         if(route.index==2){
-            setTimeout(function () {
-               var user = firebase.auth().currentUser;
-              firebase.database().ref('ordenes/' + user.uid).push({date:Date.now(),order:route.order});
-                 self.props.hide()
-            }, 3000);
-            return(
-               <View style={{backgroundColor:'#0071B2',flex:1,justifyContent:'center',alignItems:'center'}}>
-               <Iconi name="assignment" color="white" size={70}/>
-               <Text style={{color:'white',textAlign:'center',fontSize:30}}>
-               Cotizacion Enviada!
-               </Text>
-               <Text style={{color:'white',textAlign:'center',fontSize:15}}>
-               Recibira un correo con los precios solicitados
-               </Text>
-               </View>
-            )
-         }
+      if(route.index==2){
+         setTimeout(function () {
+            var user = firebase.auth().currentUser;
+           firebase.database().ref('ordenes/' + user.uid).push({date:Date.now(),order:route.order});
+              self.props.hide()
+         }, 3000);
+         return(
+            <View style={{backgroundColor:'#0071B2',flex:1,justifyContent:'center',alignItems:'center'}}>
+            <Iconi name="assignment" color="white" size={70}/>
+            <Text style={{color:'white',textAlign:'center',fontSize:30}}>
+            Cotizacion Enviada!
+            </Text>
+            <Text style={{color:'white',textAlign:'center',fontSize:15}}>
+            Recibira un correo con los precios solicitados
+            </Text>
+            </View>
+         )
       }
+   }
 
 
 

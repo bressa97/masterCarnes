@@ -12,6 +12,7 @@
     "javascript-time-ago": "^0.4.3",
     "react": "15.3.1",
     "react-native": "0.33",
+    "react-native-LoopAnimation": "^0.1.0",
     "react-native-check-box": "^1.0.1",
     "react-native-checkbox-field": "^1.1.0",
     "react-native-console-panel": "^0.1.0",

@@ -21,6 +21,7 @@ import {
    Navigator,
    Platform,
    AsyncStorage,
+   AlertIOS,
    TouchableHighlight,
    TouchableNativeFeedback,
    TouchableOpacity,
@@ -31,37 +32,42 @@ import {
 } from 'react-native';
 
 module.exports = class Home extends Component {
-  constructor(props){
-    super(props);
-   this.state = {
-      isOpen: false,
-      selectedItem: 'Home',
-      modalVisible:false,
-      day:''
+   constructor(props){
+      super(props);
+      this.state = {
+         isOpen: false,
+         selectedItem: 'Home',
+         modalVisible:false,
+         day:''
       }
-    }
+      firebase.auth().signOut().then(function() {
+        // Sign-out successful.
+      }, function(error) {
+        // An error happened.
+      });
+   }
 
    componentDidMount() {
-     const self = this;
-     var today = new Date();
-     var dd = today.getDate();
-     var mm = today.getMonth()+1; //January is 0!
-     var yyyy = today.getFullYear();
-     if(dd<10) {
-        dd='0'+dd;
-     }
-     if(mm<10) {
-        mm='0'+mm;
-     }
+      const self = this;
+      var today = new Date();
+      var dd = today.getDate();
+      var mm = today.getMonth()+1; //January is 0!
+      var yyyy = today.getFullYear();
 
-     FCM.requestPermissions(); // for iOS
-     FCM.getFCMToken().then(token => {
-         console.log(token)
-        //  notifications.sendDeviceToken(token,function() {
-        //     console.log('device sent',token);
-        //  })
+      if(dd<10) {
+         dd='0'+dd;
+      }
+
+      if(mm<10) {
+         mm='0'+mm;
+      }
+
+      FCM.requestPermissions(); // for iOS
+      FCM.getFCMToken().then(token => {
+         //AsyncStorage.setItem('device', token);
+         console.log('token');
       });
-     self.setState({day:mm+'/'+dd+'/'+yyyy});
+      self.setState({day:mm+'/'+dd+'/'+yyyy});
    }
 
    setModalVisible(visible) {
@@ -87,22 +93,22 @@ module.exports = class Home extends Component {
    }
 
    renderScene(route, navigator){
-     switch(this.state.selectedItem){
-       case 'Home':
-        return (
-           <Pedidos navigator={navigator}/>
-        )
-        break;
-       case 'Help':
+      switch(this.state.selectedItem){
+         case 'Home':
+         return (
+            <Pedidos navigator={navigator}/>
+         )
+         break;
+         case 'Help':
          return(
             <Help navigator={navigator}/>
          )
          break;
          case 'LogIn':
-           return(
-              <LogIn navigator={navigator}/>
-           )
-           break;
+         return(
+            <LogIn navigator={navigator}/>
+         )
+         break;
       }
    }
 

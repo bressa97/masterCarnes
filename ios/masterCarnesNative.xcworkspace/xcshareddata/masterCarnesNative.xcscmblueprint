@@ -1,16 +1,16 @@
 {
-  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "D43F126BA2E13065F41E28FE03CC79AC30F58DB5",
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "AFC3F775E9AB6E38AEB4C34E0B185C40FE6264E3",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "E645F5C8BDC25D90C7683567EF612B12520883F3" : 9223372036854775807,
-    "D43F126BA2E13065F41E28FE03CC79AC30F58DB5" : 9223372036854775807
+    "AFC3F775E9AB6E38AEB4C34E0B185C40FE6264E3" : 9223372036854775807,
+    "E645F5C8BDC25D90C7683567EF612B12520883F3" : 9223372036854775807
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "B3416B53-082E-4EA6-886A-4B2D9F30EAD2",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "E645F5C8BDC25D90C7683567EF612B12520883F3" : "..",
-    "D43F126BA2E13065F41E28FE03CC79AC30F58DB5" : "masterCarnes\/"
+    "AFC3F775E9AB6E38AEB4C34E0B185C40FE6264E3" : "masterCarnes\/",
+    "E645F5C8BDC25D90C7683567EF612B12520883F3" : ".."
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "masterCarnesNative",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
@@ -19,7 +19,7 @@
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/bressa97\/masterCarnes.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "D43F126BA2E13065F41E28FE03CC79AC30F58DB5"
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "AFC3F775E9AB6E38AEB4C34E0B185C40FE6264E3"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/git.heroku.com\/clingo-test.git",

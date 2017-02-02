@@ -17,6 +17,7 @@ import {
 //iuusmawo
 import LogIn from './views/logIn';
 import Home from './views/home';
+
 const firebaseConfig = {
   apiKey: "AIzaSyDCVpFUNpTfvXy4AFkUBx0WpegkUh42ek8",
   authDomain: "mastercarnes-9b9db.firebaseapp.com",

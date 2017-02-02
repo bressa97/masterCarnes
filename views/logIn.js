@@ -96,7 +96,7 @@ module.exports = class LogIn extends Component{
       return(
          <LinearGradient colors={['#1c91d5', '#000000', '#000000', '#000000']} style={styles.linearGradient}>
             <StatusBar backgroundColor="blue" barStyle="light-content"/>
-            <LoopAnimation source={require('../img/meat.jpg')} type={Easing.ease.inOut} style={{top:0,left:-150,opacity:0.55,height:Window.height}} duration={500000}/>
+            <LoopAnimation source={require('../img/meat.jpg')} type={Easing.ease.inOut} style={{top:0,left:-150,opacity:0.35,height:Window.height}} duration={500000}/>
             <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
             <View style={{width:300}}>
             <Image source={require('../img/logui.png')} resizeMode="contain" style={{width:300,marginTop:-25,marginBottom:80}}/>

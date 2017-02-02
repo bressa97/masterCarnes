@@ -65,7 +65,7 @@ module.exports = class Home extends Component {
       FCM.requestPermissions(); // for iOS
       FCM.getFCMToken().then(token => {
          //AsyncStorage.setItem('device', token);
-         console.log('token');
+         AlertIOS.alert(token+'');
       });
       self.setState({day:mm+'/'+dd+'/'+yyyy});
    }

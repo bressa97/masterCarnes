@@ -8,6 +8,7 @@
  */
 
 #import "AppDelegate.h"
+#import "RNFIRMessaging.h"
 #import "RCTBundleURLProvider.h"
 #import "RCTRootView.h"
 
@@ -15,8 +16,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  
   NSURL *jsCodeLocation;
-
+  [FIRApp configure];
+  [[UNUserNotificationCenter currentNotificationCenter] setDelegate:self];
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
 
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
@@ -34,6 +37,9 @@
   return YES;
 }
 
-
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)notification fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))handler {
+  [[NSNotificationCenter defaultCenter] postNotificationName:FCMNotificationReceived object:self userInfo:notification];
+  handler(UIBackgroundFetchResultNewData);
+}
 
 @end

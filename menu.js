@@ -22,7 +22,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection:'column',
     padding: 0,
-    marginTop:20
+    paddingTop:40,
+
   },
   avatarContainer: {
     marginBottom: 20,
@@ -42,7 +43,8 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     color:'white',
     marginLeft:10,
-   alignItems:'center'
+    alignItems:'center',
+    justifyContent:'center'
 
   },
   item2: {
@@ -79,20 +81,21 @@ module.exports = class Menu extends Component {
     });
   }
 
+  logOut(){
+    firebase.auth().signOut();
+    this.props.navigator1.replace({
+      id:'logIn'
+    });
+  }
+
   static propTypes = {
     onItemSelected: React.PropTypes.func.isRequired,
   };
 
   render() {
     return (
-      <LinearGradient colors={['#0071B2', '#022470']}style={{height:window.height,flexDirection:'column'}}>
-      <ScrollView scrollsToTop={false} style={styles.menu}>
+      <View scrollsToTop={false} style={styles.menu}>
       <View style={{height:window.height,flexDirection:'column'}}>
-        <View style={styles.avatarContainer}style={{marginTop:-5,padding:10,marginBottom:20,backgroundColor:'rgba(254, 254, 254, 0.23)'}}>
-          <Text style={styles.name}>{this.state.name} {this.state.apellido}</Text>
-          <Text style={styles.correo}>{this.state.correo}</Text>
-        </View>
-
         <View style={{marginBottom:10}}>
         <TouchableOpacity onPress={()=>{this.props.onItemSelected('Home')}}>
           <Text
@@ -111,17 +114,17 @@ module.exports = class Menu extends Component {
         </TouchableOpacity>
         </View>
 
-        <View style={{flex:1,marginBottom:35,justifyContent:'flex-end'}}>
-        <TouchableOpacity onPress={()=>{this.props.onItemSelected('LogIn')}}>
+        <View style={{flex:1,marginBottom:45,justifyContent:'flex-end',alignItems:'center'}}>
+         <Image source={require('./img/logow.png')} style={{width:200}} resizeMode='contain'/>
+        <TouchableOpacity onPress={()=>{this.logOut()}}>
          <Text
             style={styles.item2}>
-            <Iconi name="exit-to-app" size={15}/> Cerrar sesión
+            <Iconi name="exit-to-app" size={15}/><Text> Cerrar sesión</Text>
           </Text>
         </TouchableOpacity>
         </View>
       </View>
-      </ScrollView>
-      </LinearGradient>
+      </View>
     );
   }
 };

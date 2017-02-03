@@ -5,7 +5,6 @@
  */
 import * as firebase from 'firebase';
 import React, { Component } from 'react';
-import DragDebuger from 'react-debbuger';
 
 import {
   AppRegistry,
@@ -14,7 +13,7 @@ import {
   View,
   Navigator
 } from 'react-native';
-//iuusmawo
+
 import LogIn from './views/logIn';
 import Home from './views/home';
 
@@ -24,34 +23,40 @@ const firebaseConfig = {
   databaseURL: "https://mastercarnes-9b9db.firebaseio.com",
   storageBucket: "",
 };
-
 const firebaseApp = firebase.initializeApp(firebaseConfig);
-var user = firebase.auth().currentUser;
 
 class masterCarnesNative extends Component {
   constructor(props){
     super(props);
+    this.state = {
+      ref1:''
+    }
   }
-
-  renderScene(route, navigator){
+  componentDidMount(){
+    var navigator = this.refs.ref1;
+    this.setState({ref1:navigator})
+    console.log(this.state.ref1);
+  }
+  renderScene(route){
     switch(route.id){
 
       case 'logIn':
-       return (<LogIn navigator={navigator}/>)
+       return (<LogIn navigator1={this.state.ref1}/>)
        break;
 
-      case'home':
-        return(<Home navigator={navigator}/>)
+      case 'home':
+        return(<Home navigator1={this.state.ref1}/>)
         break;
      }
   }
 
   render() {
     return (
-         <Navigator
-           initialRoute={{id:'logIn'}}
-           renderScene={this.renderScene.bind(this)}
-         ></Navigator>
+      <Navigator
+        ref='ref1'
+        initialRoute={{id:'logIn'}}
+        renderScene={this.renderScene.bind(this)}
+      ></Navigator>
     );
   }
 }

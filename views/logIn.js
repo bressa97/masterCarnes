@@ -1,6 +1,6 @@
 import * as firebase from 'firebase';
 import React, { Component } from 'react';
-import{View, Text, StyleSheet,TouchableOpacity,Dimensions,StatusBar,Easing,Image,Modal,ToastAndroid,Platform,AlertIOS,AsyncStorage}from 'react-native';
+import{View, Text, KeyboardAvoidingView,StyleSheet,TouchableOpacity,Dimensions,StatusBar,Easing,Image,Modal,ToastAndroid,Platform,AlertIOS,AsyncStorage}from 'react-native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { Hoshi,Hideo } from 'react-native-textinput-effects';
 import LinearGradient from 'react-native-linear-gradient';
@@ -19,6 +19,7 @@ module.exports = class LogIn extends Component{
          apellido:'',
          email:'',
          password:'',
+         loading:false
       };
    }
 
@@ -36,6 +37,7 @@ module.exports = class LogIn extends Component{
    }
 
    logIn(email,password){
+      this.setState({loading:true})
       var self=this
       if(!email||!password){
          Platform.select({
@@ -45,21 +47,25 @@ module.exports = class LogIn extends Component{
          return;
       }
       var user = firebase.auth().signInWithEmailAndPassword(email,password).catch(function(error) {
-         console.log(error);
-         console.log('No Login');
+         Platform.select({
+            ios:()=>AlertIOS.alert('Accesos incorrectos'),
+            android:()=>ToastAndroid.show('Accesos incorrectos', ToastAndroid.SHORT)
+         })()
+         self.setState({loading:false})
          var errorCode = error.code;
          var errorMessage = error.message;
       });
 
-      user.then(function(user) {
-         if(user){
-            user.getToken().then(function(token) {
-               AsyncStorage.setItem('@auth:user',JSON.stringify(user));
-               self.props.navigator.push({
-                  id: 'home'
-               });
-            })
-         }else{
+     user.then(function(user) {
+        self.setState({loading:false})
+        if(user){
+           user.getToken().then(function(token) {
+              AsyncStorage.setItem('@auth:user',JSON.stringify(user));
+              self.props.navigator1.push({
+                id: 'home'
+              });
+           })
+        }else{
 
          }
       });
@@ -90,16 +96,53 @@ module.exports = class LogIn extends Component{
             });
          }, 2000);
       }
+
+      setTimeout(function () {
+         self.setModalRegistroVisible(!self.state.modalVisibleRegistro);
+         self.props.navigator1.push({
+            id: 'home'
+         });
+      }, 2000);
+   }
+
+   getRandomImage(){
+      images = [
+      require('../img/meat.jpg'),
+      require('../img/meat3.jpg')
+      ]
+      var r = Math.floor(Math.random() * 2)
+      return(images[r])
+   }
+
+   renderButton(){
+      if(this.state.loading==false){
+         return(
+            <TouchableOpacity onPress={()=>{this.logIn(this.state.email,this.state.password)}} style={{backgroundColor:'rgba(214, 159, 34, 0)',marginTop:75}}>
+               <View style={{flex:1,borderRadius:2,backgroundColor:'#086b9e',padding:20}}>
+                  <Text style={{color:'white',justifyContent:'center',textAlign:'center'}}>Iniciar sesión</Text>
+               </View>
+            </TouchableOpacity>
+         )
+      }else{
+         return(
+            <TouchableOpacity style={{backgroundColor:'rgba(214, 159, 34, 0)',marginTop:75}}>
+               <View style={{flex:1,borderRadius:2,backgroundColor:'#086b9e',padding:20}}>
+                  <Text style={{color:'white',justifyContent:'center',textAlign:'center'}}>Loading</Text>
+               </View>
+            </TouchableOpacity>
+         )
+      }
    }
 
    render(){
       return(
-         <LinearGradient colors={['#1c91d5', '#000000', '#000000', '#000000']} style={styles.linearGradient}>
+         <LinearGradient colors={['#086b9e', '#000000', '#000000', '#000000']} style={styles.linearGradient}>
             <StatusBar backgroundColor="blue" barStyle="light-content"/>
-            <LoopAnimation source={require('../img/meat.jpg')} type={Easing.ease.inOut} style={{top:0,left:-150,opacity:0.35,height:Window.height}} duration={500000}/>
+            <LoopAnimation source={require('../img/meat2.jpg')} type={Easing.ease.inOut} style={{top:0,left:-850,opacity:0.35,height:Window.height}} duration={300000}/>
             <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-            <View style={{width:300}}>
-            <Image source={require('../img/logui.png')} resizeMode="contain" style={{width:300,marginTop:-25,marginBottom:80}}/>
+            <KeyboardAvoidingView behavior='padding'>
+            <View style={{flex:1}}>
+            <Image source={require('../img/logow.png')} resizeMode="contain" style={{width:300,marginTop:-25,marginBottom:80}}/>
             <Hoshi
             label={'Correo'}
             // this is used as active and passive border color
@@ -123,12 +166,8 @@ module.exports = class LogIn extends Component{
             onChangeText={(password) => this.setState({password})}
             />
 
+            {this.renderButton()}
 
-            <TouchableOpacity onPress={()=>{this.logIn(this.state.email,this.state.password)}} style={{backgroundColor:'rgba(214, 159, 34, 0)',marginTop:75}}>
-               <View style={{flex:1,borderRadius:2,backgroundColor:'#31A3DD',padding:20}}>
-                  <Text style={{color:'white',justifyContent:'center',textAlign:'center'}}>Iniciar sesión</Text>
-               </View>
-            </TouchableOpacity>
             <View style={{flex:1,flexDirection:'row',marginTop:15}}>
                <Text style={{flex:0.6,textAlign:'right',color:'#ffffff'}}>
                   No tienes una cuenta?
@@ -138,7 +177,10 @@ module.exports = class LogIn extends Component{
                </TouchableOpacity>
             </View>
          </View>
+         </KeyboardAvoidingView>
+
          </View>
+
           <Modal animationType={"slide"}transparent={false}visible={this.state.modalVisibleRegistro}onRequestClose={() => {console.log("Modal has been closed.")}}>
           <View style={{flex:1}}>
           <LinearGradient colors={['#31A3DD', '#022470']} style={styles.linearGradient}>

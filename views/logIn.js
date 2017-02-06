@@ -19,17 +19,9 @@ module.exports = class LogIn extends Component{
          apellido:'',
          email:'',
          password:'',
-         loading:false
+         loading:false,
+         id:''
       };
-   }
-
-   componentDidMount(){
-      const self = this;
-      firebase.auth().onAuthStateChanged(function(user) {
-         if (user) {
-            self.props.navigator.replace({id:'home'})
-         }
-      });
    }
 
    setModalRegistroVisible(visible) {
@@ -91,18 +83,11 @@ module.exports = class LogIn extends Component{
          });
          setTimeout(function () {
             self.setModalRegistroVisible(!self.state.modalVisibleRegistro);
-            self.props.navigator.push({
+            self.props.navigator1.push({
                id: 'home'
             });
          }, 2000);
       }
-
-      setTimeout(function () {
-         self.setModalRegistroVisible(!self.state.modalVisibleRegistro);
-         self.props.navigator1.push({
-            id: 'home'
-         });
-      }, 2000);
    }
 
    getRandomImage(){
@@ -133,123 +118,135 @@ module.exports = class LogIn extends Component{
          )
       }
    }
+   statusBar(){
+     if(Platform.OS == 'android'){
+       return(
+         <StatusBar backgroundColor="#086b9e" barStyle="light-content"/>
+       )
+     }else{
+       return(
+         <StatusBar backgroundColor="blue" barStyle="light-content"/>
+       )
+     }
+   }
 
    render(){
       return(
-         <LinearGradient colors={['#086b9e', '#000000', '#000000', '#000000']} style={styles.linearGradient}>
-            <StatusBar backgroundColor="blue" barStyle="light-content"/>
-            <LoopAnimation source={require('../img/meat2.jpg')} type={Easing.ease.inOut} style={{top:0,left:-850,opacity:0.35,height:Window.height}} duration={300000}/>
-            <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-            <KeyboardAvoidingView behavior='padding'>
-            <View style={{flex:1}}>
-            <Image source={require('../img/logow.png')} resizeMode="contain" style={{width:300,marginTop:-25,marginBottom:80}}/>
-            <Hoshi
-            label={'Correo'}
-            // this is used as active and passive border color
-            borderColor={'#aee2c9'}
-            labelStyle={{ color: '#fcfffe' }}
-            inputStyle={{ color: '#ffffff' }}
-            value={this.state.email}
-            onChangeText={(email) => this.setState({email})}
-            />
-            <Hoshi
-            style={{marginTop:10}}
-            secureTextEntry={true}
-            label={'Contraseña'}
-            // this is used as active and passive border color
-            borderColor={'#aee2c9'}
-            labelStyle={{ color: '#fcfffe' }}
-            inputStyle={{ color: '#ffffff' }}
-            value={this.state.email}
-            onChangeText={(email) => this.setState({email})}
-            value={this.state.password}
-            onChangeText={(password) => this.setState({password})}
-            />
+      <LinearGradient colors={['#086b9e', '#000000', '#000000', '#000000']} style={styles.linearGradient}>
+         {this.statusBar()}
+         <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+         <KeyboardAvoidingView behavior='padding'>
+         <View style={{flex:1}}>
+         <Image source={require('../img/logow.png')} resizeMode="contain" style={{width:300,marginTop:-25}}/>
+         <Hoshi
+         label={'Correo'}
+         // this is used as active and passive border color
+         borderColor={'#aee2c9'}
+         labelStyle={{ color: '#fcfffe' }}
+         inputStyle={{ color: '#ffffff' }}
+         value={this.state.email}
+         onChangeText={(email) => this.setState({email})}
+         />
+         <Hoshi
+         style={{marginTop:10}}
+         secureTextEntry={true}
+         label={'Contraseña'}
+         // this is used as active and passive border color
+         borderColor={'#aee2c9'}
+         labelStyle={{ color: '#fcfffe' }}
+         inputStyle={{ color: '#ffffff' }}
+         value={this.state.email}
+         onChangeText={(email) => this.setState({email})}
+         value={this.state.password}
+         onChangeText={(password) => this.setState({password})}
+         />
 
-            {this.renderButton()}
+         {this.renderButton()}
 
-            <View style={{flex:1,flexDirection:'row',marginTop:15}}>
+         <View style={{flex:1,flexDirection:'row',marginTop:15}}>
+            <Text style={{flex:0.6,textAlign:'right',color:'#ffffff'}}>
+               No tienes una cuenta?
+            </Text>
+            <TouchableOpacity style={{flex:0.4}}>
+               <Text style={{textDecorationLine:'underline',color:'#ffffff'}}onPress={() => {this.setModalRegistroVisible(true)}}> Regístrate</Text>
+            </TouchableOpacity>
+         </View>
+      </View>
+      </KeyboardAvoidingView>
+
+      </View>
+
+       <Modal animationType={"slide"}transparent={false}visible={this.state.modalVisibleRegistro}onRequestClose={() => {console.log("Modal has been closed.")}}>
+       <View style={{flex:1}}>
+       <LinearGradient colors={['#31A3DD', '#022470']} style={styles.linearGradient}>
+          <View style={{width:300}}>
+             <Image source={require('../img/logui.png')} resizeMode="contain" style={{width:300,marginTop:-25}}/>
+             <Hoshi
+              label={'Nombre'}
+              // this is used as active and passive border color
+              borderColor={'#aee2c9'}
+              labelStyle={{ color: '#fcfffe' }}
+              inputStyle={{ color: '#ffffff' }}
+              value={this.state.name}
+              onChangeText={(name) => this.setState({name})}
+            />
+             <Hoshi
+              label={'Apellido'}
+              // this is used as active and passive border color
+              borderColor={'#aee2c9'}
+              labelStyle={{ color: '#fcfffe' }}
+              inputStyle={{ color: '#ffffff' }}
+              value={this.state.apellido}
+              onChangeText={(apellido) => this.setState({apellido})}
+            />
+             <Hoshi
+              label={'Correo electrónico'}
+              // this is used as active and passive border color
+              borderColor={'#aee2c9'}
+              labelStyle={{ color: '#fcfffe' }}
+              inputStyle={{ color: '#ffffff' }}
+              value={this.state.email}
+              onChangeText={(email) => this.setState({email})}
+            />
+             <Hoshi
+             secureTextEntry={true}
+              label={'Contraseña'}
+              // this is used as active and passive border color
+              borderColor={'#aee2c9'}
+              labelStyle={{ color: '#fcfffe' }}
+              inputStyle={{ color: '#ffffff' }}
+              value={this.state.email}
+              onChangeText={(email) => this.setState({email})}
+              value={this.state.password}
+              onChangeText={(password) => this.setState({password})}
+            />
+             <TouchableOpacity onPress={() => {this.signUp(this.state.name,this.state.apellido,this.state.email,this.state.password)}} style={{backgroundColor:'rgba(214, 159, 34, 0)',marginTop:15}}>
+                <View style={{flex:1,borderRadius:2,backgroundColor:'#31A3DD',padding:20}}>
+                   <Text style={{color:'white',justifyContent:'center',textAlign:'center'}}>Registrarte</Text>
+                </View>
+             </TouchableOpacity>
+             <View style={{flex:1,flexDirection:'row',marginTop:15,backgroundColor:'transparent'}}>
                <Text style={{flex:0.6,textAlign:'right',color:'#ffffff'}}>
-                  No tienes una cuenta?
+                Cuentas con una cuenta
                </Text>
                <TouchableOpacity style={{flex:0.4}}>
-                  <Text style={{textDecorationLine:'underline',color:'#ffffff'}}onPress={() => {this.setModalRegistroVisible(true)}}> Regístrate</Text>
+                <Text style={{textDecorationLine:'underline',color:'#ffffff'}}onPress={() => {this.setModalRegistroVisible(!this.state.modalVisibleRegistro)}}> Iniciar sesión</Text>
                </TouchableOpacity>
-            </View>
-         </View>
-         </KeyboardAvoidingView>
-
-         </View>
-
-          <Modal animationType={"slide"}transparent={false}visible={this.state.modalVisibleRegistro}onRequestClose={() => {console.log("Modal has been closed.")}}>
-          <View style={{flex:1}}>
-          <LinearGradient colors={['#31A3DD', '#022470']} style={styles.linearGradient}>
-             <View style={{width:300}}>
-                <Image source={require('../img/logui.png')} resizeMode="contain" style={{width:300,marginTop:-25}}/>
-                <Hoshi
-                 label={'Nombre'}
-                 // this is used as active and passive border color
-                 borderColor={'#aee2c9'}
-                 labelStyle={{ color: '#fcfffe' }}
-                 inputStyle={{ color: '#ffffff' }}
-                 value={this.state.name}
-                 onChangeText={(name) => this.setState({name})}
-               />
-                <Hoshi
-                 label={'Apellido'}
-                 // this is used as active and passive border color
-                 borderColor={'#aee2c9'}
-                 labelStyle={{ color: '#fcfffe' }}
-                 inputStyle={{ color: '#ffffff' }}
-                 value={this.state.apellido}
-                 onChangeText={(apellido) => this.setState({apellido})}
-               />
-                <Hoshi
-                 label={'Correo electrónico'}
-                 // this is used as active and passive border color
-                 borderColor={'#aee2c9'}
-                 labelStyle={{ color: '#fcfffe' }}
-                 inputStyle={{ color: '#ffffff' }}
-                 value={this.state.email}
-                 onChangeText={(email) => this.setState({email})}
-               />
-                <Hoshi
-                secureTextEntry={true}
-                 label={'Contraseña'}
-                 // this is used as active and passive border color
-                 borderColor={'#aee2c9'}
-                 labelStyle={{ color: '#fcfffe' }}
-                 inputStyle={{ color: '#ffffff' }}
-                 value={this.state.email}
-                 onChangeText={(email) => this.setState({email})}
-                 value={this.state.password}
-                 onChangeText={(password) => this.setState({password})}
-               />
-                <TouchableOpacity onPress={() => {this.signUp(this.state.name,this.state.apellido,this.state.email,this.state.password)}} style={{backgroundColor:'rgba(214, 159, 34, 0)',marginTop:15}}>
-                   <View style={{flex:1,borderRadius:2,backgroundColor:'#31A3DD',padding:20}}>
-                      <Text style={{color:'white',justifyContent:'center',textAlign:'center'}}>Registrarte</Text>
-                   </View>
-                </TouchableOpacity>
-                <View style={{flex:1,flexDirection:'row',marginTop:15,backgroundColor:'transparent'}}>
-                  <Text style={{flex:0.6,textAlign:'right',color:'#ffffff'}}>
-                   Cuentas con una cuenta
-                  </Text>
-                  <TouchableOpacity style={{flex:0.4}}>
-                   <Text style={{textDecorationLine:'underline',color:'#ffffff'}}onPress={() => {this.setModalRegistroVisible(!this.state.modalVisibleRegistro)}}> Iniciar sesión</Text>
-                  </TouchableOpacity>
-                </View>
-           </View>
-           </LinearGradient>
-           </View>
-          </Modal>
-         </LinearGradient>
-      );
+             </View>
+        </View>
+        </LinearGradient>
+        </View>
+       </Modal>
+      </LinearGradient>
+    );
   }
 }
 
 // Later on in your styles..
 var styles = StyleSheet.create({
   linearGradient: {
-    flex: 1
+    flex: 1,
+    justifyContent:'center',
+    alignItems:'center'
    }
 });

@@ -69,16 +69,17 @@ module.exports = class Menu extends Component {
       correo:'',
       name:'',
       apellido:'',
+      currentt:''
     };
   }
 
-  componentDidMount(){
+  componentWillMount(){
     var self = this;
     var current = firebase.auth().currentUser;
-    firebase.database().ref('users/' + current.uid).on('value',function(snap) {
-      console.log(snap.val());
-       self.setState({name:snap.val().name,apellido:snap.val().apellido,correo:snap.val().email});
-    });
+    /*console.log(current.uid+"log");
+      firebase.database().ref('users/'+current.uid).on('value',function(snap) {
+         self.setState({name:snap.val().name,apellido:snap.val().apellido,correo:snap.val().email});
+      });*/
   }
 
   logOut(){
@@ -114,8 +115,8 @@ module.exports = class Menu extends Component {
         </TouchableOpacity>
         </View>
 
-        <View style={{flex:1,marginBottom:45,justifyContent:'flex-end',alignItems:'center'}}>
-         <Image source={require('./img/logow.png')} style={{width:200}} resizeMode='contain'/>
+        <View style={{marginBottom:10,justifyContent:'flex-end',alignItems:'center',marginTop:35}}>
+         <Image source={require('./img/logow.png')} style={{width:200,marginTop:35}} resizeMode='contain'/>
         <TouchableOpacity onPress={()=>{this.logOut()}}>
          <Text
             style={styles.item2}>

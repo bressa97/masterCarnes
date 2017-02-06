@@ -415,7 +415,7 @@ module.exports = class Orden extends Component {
    }
 
    validate(navigator){
-      self = this;
+      var self = this;
       if(self.dataToSend().length == 0){
          Platform.select({
             ios:()=>AlertIOS.alert('Porfavor seleccione al menos un producto'),

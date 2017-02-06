@@ -58,7 +58,6 @@ module.exports = class Home extends Component {
    componentDidMount() {
      var navigatorr = this.refs.ref2;
      this.setState({ref2:navigatorr})
-     console.log(this.state.ref2);
      const self = this;
      var today = new Date();
      var dd = today.getDate();
@@ -73,7 +72,6 @@ module.exports = class Home extends Component {
 
      FCM.requestPermissions(); // for iOS
      FCM.getFCMToken().then(token => {
-         console.log(token)
          AlertIOS.alert(token+'')
       });
       self.setState({day:mm+'/'+dd+'/'+yyyy});
@@ -84,7 +82,6 @@ module.exports = class Home extends Component {
    }
 
    toggle() {
-      console.log('TOGGLEE');
       this.setState({
          isOpen: !this.state.isOpen,
       });
@@ -127,6 +124,15 @@ module.exports = class Home extends Component {
          selectedItem: item,
       });
    }
+   loopAnimation(){
+     if (Platform.OS == 'android') {
+       return;
+     }else{
+       return(
+         <LoopAnimation source={require('../img/meat.jpg')} type={Easing.ease.inOut} style={{top:0,left:-850,opacity:0.3,height:Window.height}} duration={300000}/>
+       )
+     }
+   }
 
    renderScene(route){
      switch(this.state.selectedItem){
@@ -159,7 +165,6 @@ module.exports = class Home extends Component {
 
       return (
          <LinearGradient colors={['rgba(0, 139, 221, 1)', 'rgba(0, 0, 0, 0.9)']}style={{flex:1,flexDirection:'column'}}>
-            <LoopAnimation source={require('../img/meat.jpg')} type={Easing.ease.inOut} style={{top:0,left:-850,opacity:0.3,height:Window.height}} duration={300000}/>
             <SideMenu menu={menu} isOpen={this.state.isOpen} onChange={(isOpen) => this.updateMenuState(isOpen)}>
                <StatusBar
                   backgroundColor="#bfbfbf"

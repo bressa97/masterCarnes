@@ -34,6 +34,7 @@ module.exports = class Help extends Component {
         noOrders: true,
         orderDetailsModal:false,
         dataSource: ds.cloneWithRows(productosPedidos),
+        user:''
       }
    }
 
@@ -75,8 +76,8 @@ module.exports = class Help extends Component {
          sectionHeaderHasChanged: (s1, s2) => s1 !== s2
       });
       var user = firebase.auth().currentUser;
-      this.setState({user:user})
-      firebase.database().ref('ordenes/' + user.uid).on('value',function(snap) {
+      self.setState({user:user})
+      firebase.database().ref('ordenes/'+this.state.uid).on('value',function(snap) {
          self.setState({noOrders:false,dataSource: dataSource.cloneWithRows(self.mapOrders(snap))})
       });
    }

@@ -35,7 +35,6 @@ class masterCarnesNative extends Component {
   componentDidMount(){
     var navigator = this.refs.ref1;
     this.setState({ref1:navigator})
-    console.log(this.state.ref1);
   }
   renderScene(route){
     switch(route.id){

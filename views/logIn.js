@@ -129,11 +129,19 @@ module.exports = class LogIn extends Component{
        )
      }
    }
+   loopAnimation(){
+     if (Platform.OS == 'android') {
+      return;
+    }else{
+      <LoopAnimation source={require('../img/meat2.jpg')} type={Easing.ease.inOut} style={{top:0,left:-850,opacity:0.35,height:Window.height}} duration={300000}/>
+    }
+   }
 
    render(){
       return(
       <LinearGradient colors={['#086b9e', '#000000', '#000000', '#000000']} style={styles.linearGradient}>
          {this.statusBar()}
+         {this.loopAnimation()}
          <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
          <KeyboardAvoidingView behavior='padding'>
          <View style={{flex:1}}>
@@ -179,7 +187,7 @@ module.exports = class LogIn extends Component{
        <Modal animationType={"slide"}transparent={false}visible={this.state.modalVisibleRegistro}onRequestClose={() => {console.log("Modal has been closed.")}}>
        <View style={{flex:1}}>
        <LinearGradient colors={['#31A3DD', '#022470']} style={styles.linearGradient}>
-          <View style={{width:300}}>
+          <View style={{width:300,backgroundColor:'transparent'}}>
              <Image source={require('../img/logui.png')} resizeMode="contain" style={{width:300,marginTop:-25}}/>
              <Hoshi
               label={'Nombre'}

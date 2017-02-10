@@ -56,23 +56,28 @@ module.exports = class Home extends Component {
    }
 
    componentDidMount() {
-     var navigatorr = this.refs.ref2;
-     this.setState({ref2:navigatorr})
-     const self = this;
-     var today = new Date();
-     var dd = today.getDate();
-     var mm = today.getMonth()+1; //January is 0!
-     var yyyy = today.getFullYear();
-     if(dd<10) {
-        dd='0'+dd;
-     }
-     if(mm<10) {
-        mm='0'+mm;
-     }
+      var navigatorr = this.refs.ref2;
+      this.setState({ref2:navigatorr})
+      const self = this;
+      var today = new Date();
+      var dd = today.getDate();
+      var mm = today.getMonth()+1; //January is 0!
+      var yyyy = today.getFullYear();
+      if(dd<10) {
+         dd='0'+dd;
+      }
+      if(mm<10) {
+         mm='0'+mm;
+      }
 
-     FCM.requestPermissions(); // for iOS
-     FCM.getFCMToken().then(token => {
-         AlertIOS.alert(token+'')
+      FCM.requestPermissions(); // for iOS
+      FCM.getFCMToken().then(token => {
+         var user = firebase.auth().currentUser;
+         AsyncStorage.getItem('@auth:user',function(key,value) {
+            AlertIOS.alert(''+value)
+         });
+
+         firebase.database().ref().child('devices').child(token).set(true);
       });
       self.setState({day:mm+'/'+dd+'/'+yyyy});
    }

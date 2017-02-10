@@ -4,6 +4,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import ConfigurarOrden from './configurarOrden'
 import Iconi from 'react-native-vector-icons/MaterialIcons';
 import * as firebase from 'firebase';
+import FCM from 'react-native-fcm';
 
 import {
    AppRegistry,
@@ -20,6 +21,7 @@ import {
    Modal,
    NavigatorIOS,
    Image,
+   AsyncStorage,
    StatusBar,
    AlertIOS,
    ToastAndroid
@@ -450,8 +452,13 @@ module.exports = class Orden extends Component {
 
       if(route.index==2){
          setTimeout(function () {
-            var user = firebase.auth().currentUser;
-           firebase.database().ref('ordenes/' + user.uid).push({date:Date.now(),order:route.order});
+            //var user = firebase.auth().currentUser;
+            FCM.getFCMToken().then(token => {
+            AsyncStorage.getItem('@auth:user',function(key,value) {
+              user = JSON.parse(value)
+              firebase.database().ref('ordenes/' + user.uid).push({device:token||'null',date:Date.now(),order:route.order});
+            })
+            })
               self.props.hide()
          }, 3000);
          return(

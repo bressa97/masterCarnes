@@ -170,6 +170,7 @@ module.exports = class Home extends Component {
 
       return (
          <LinearGradient colors={['rgba(0, 139, 221, 1)', 'rgba(0, 0, 0, 0.9)']}style={{flex:1,flexDirection:'column'}}>
+           {this.loopAnimation()}
             <SideMenu menu={menu} isOpen={this.state.isOpen} onChange={(isOpen) => this.updateMenuState(isOpen)}>
                <StatusBar
                   backgroundColor="#bfbfbf"

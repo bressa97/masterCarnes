@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View,ListView,Text,StyleSheet,WebView,Image,TouchableOpacity,Modal,Switch} from 'react-native';
+import { View,ListView,AsyncStorage,Text,StyleSheet,WebView,RefreshControl,Image,TouchableOpacity,Modal,Switch} from 'react-native';
 import Iconi from 'react-native-vector-icons/MaterialIcons';
 import * as firebase from 'firebase';
 import moment from 'moment';
@@ -32,6 +32,7 @@ module.exports = class Help extends Component {
       const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
       this.state = {
         noOrders: true,
+        refreshing:false,
         orderDetailsModal:false,
         dataSource: ds.cloneWithRows(productosPedidos),
         user:''
@@ -76,11 +77,18 @@ module.exports = class Help extends Component {
          sectionHeaderHasChanged: (s1, s2) => s1 !== s2
       });
       var user = firebase.auth().currentUser;
-      self.setState({user:user})
-      firebase.database().ref('ordenes/'+this.state.uid).on('value',function(snap) {
-         self.setState({noOrders:false,dataSource: dataSource.cloneWithRows(self.mapOrders(snap))})
-      });
+      AsyncStorage.getItem('@auth:user',function(key,value) {
+      self.setState({user:JSON.parse(value),refreshing:true})
+         firebase.database().ref('ordenes_abiertas').orderByChild('user').equalTo(self.state.user.uid).on('value',function(snap) {
+            self.setState({refreshing:false})
+            self.setState({noOrders:false,dataSource: dataSource.cloneWithRows(self.mapOrders(snap))})
+         });
+      })
    }
+
+   _onRefresh() {
+      this.componentDidMount()
+    }
 
    mapOrders(snap){
       var arr = []
@@ -212,11 +220,17 @@ module.exports = class Help extends Component {
             var modal = null;
          }
         return(
-          <View style={{flex:1,backgroundColor:'#e6e6e6',paddingTop:55}}>
+          <View style={{flex:1,backgroundColor:'#e6e6e6',paddingTop:65}}>
             <ListView
                style={{flex:1}}
                dataSource={this.state.dataSource}
                renderRow={this.renderRow.bind(this)}
+               refreshControl={
+        <RefreshControl
+          refreshing={this.state.refreshing}
+          onRefresh={this._onRefresh.bind(this)}
+        />
+        }
              />
              {modal}
           </View>

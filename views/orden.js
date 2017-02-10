@@ -453,13 +453,23 @@ module.exports = class Orden extends Component {
       if(route.index==2){
          setTimeout(function () {
             //var user = firebase.auth().currentUser;
-            FCM.getFCMToken().then(token => {
-            AsyncStorage.getItem('@auth:user',function(key,value) {
-              user = JSON.parse(value)
-              firebase.database().ref('ordenes/' + user.uid).push({device:token||'null',date:Date.now(),order:route.order});
+            firebase.database().ref('pedido').once('value',function (pedidoSnap) {
+               var pedidokey = pedidoSnap.val()+1
+               FCM.getFCMToken().then(token => {
+                  AsyncStorage.getItem('@auth:user',function(key,value) {
+                    user = JSON.parse(value)
+                    firebase.database().ref('ordenes_abiertas/' + pedidokey).set({
+                        device:token||'null',
+                        date:Date.now(),
+                        user:user.uid,
+                        id:pedidokey,
+                        email:user.email,
+                        order:route.order});
+                  })
+                  pedidoSnap.ref.set(pedidokey);
+               })
             })
-            })
-              self.props.hide()
+            self.props.hide()
          }, 3000);
          return(
             <View style={{backgroundColor:'#0071B2',flex:1,justifyContent:'center',alignItems:'center'}}>

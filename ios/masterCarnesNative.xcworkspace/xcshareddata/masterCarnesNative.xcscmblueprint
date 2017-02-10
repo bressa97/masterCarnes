@@ -4,11 +4,13 @@
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "F45C36BB494DE24353FD47C839253BC74B3C9527" : 9223372036854775807,
     "AFC3F775E9AB6E38AEB4C34E0B185C40FE6264E3" : 9223372036854775807,
     "E645F5C8BDC25D90C7683567EF612B12520883F3" : 9223372036854775807
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "B3416B53-082E-4EA6-886A-4B2D9F30EAD2",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "F45C36BB494DE24353FD47C839253BC74B3C9527" : "",
     "AFC3F775E9AB6E38AEB4C34E0B185C40FE6264E3" : "masterCarnes\/",
     "E645F5C8BDC25D90C7683567EF612B12520883F3" : ".."
   },
@@ -25,6 +27,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/git.heroku.com\/clingo-test.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "E645F5C8BDC25D90C7683567EF612B12520883F3"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/git.heroku.com\/lit-brushlands-90123.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "F45C36BB494DE24353FD47C839253BC74B3C9527"
     }
   ]
 }

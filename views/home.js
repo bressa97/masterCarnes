@@ -76,7 +76,6 @@ module.exports = class Home extends Component {
          AsyncStorage.getItem('@auth:user',function(key,value) {
             AlertIOS.alert(''+value)
          });
-
          firebase.database().ref().child('devices').child(token).set(true);
       });
       self.setState({day:mm+'/'+dd+'/'+yyyy});
@@ -129,14 +128,15 @@ module.exports = class Home extends Component {
          selectedItem: item,
       });
    }
+
    loopAnimation(){
-     if (Platform.OS == 'android') {
-       return;
-     }else{
-       return(
-         <LoopAnimation source={require('../img/meat.jpg')} type={Easing.ease.inOut} style={{top:0,left:-850,opacity:0.3,height:Window.height}} duration={300000}/>
-       )
-     }
+      if (Platform.OS == 'android') {
+         return;
+      }else{
+         return(
+            null
+         )
+      }
    }
 
    renderScene(route){
@@ -169,7 +169,7 @@ module.exports = class Home extends Component {
       const menu = <Menu onItemSelected={this.onMenuItemSelected.bind(this)}navigator1={this.props.navigator1}/>;
 
       return (
-         <LinearGradient colors={['rgba(0, 139, 221, 1)', 'rgba(0, 0, 0, 0.9)']}style={{flex:1,flexDirection:'column'}}>
+         <LinearGradient colors={['#0071B2', '#0071B2']}style={{flex:1,flexDirection:'column'}}>
            {this.loopAnimation()}
             <SideMenu menu={menu} isOpen={this.state.isOpen} onChange={(isOpen) => this.updateMenuState(isOpen)}>
                <StatusBar

@@ -74,7 +74,7 @@ module.exports = class Home extends Component {
       FCM.getFCMToken().then(token => {
          var user = firebase.auth().currentUser;
          AsyncStorage.getItem('@auth:user',function(key,value) {
-            AlertIOS.alert(''+value)
+            //AlertIOS.alert(''+token)
          });
          firebase.database().ref().child('devices').child(token).set(true);
       });

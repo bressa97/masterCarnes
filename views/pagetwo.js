@@ -6,7 +6,7 @@ import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { CheckboxField, Checkbox } from 'react-native-checkbox-field';
 
-function formatMoney(n,c, d, t){
+function formatMoney(n,c,d,t){
 var n = n,
     c = isNaN(c = Math.abs(c)) ? 2 : c,
     d = d == undefined ? "." : d,
@@ -18,14 +18,14 @@ var n = n,
  };
 
 var productosPedidos = [
-  {nombre:'Cabeza de lomo',cantidad:15},
-  {nombre:'Cabeza de lomo',cantidad:15},
-  {nombre:'Cabeza de lomo',cantidad:15},
-  {nombre:'Cabeza de lomo',cantidad:15},
-  {nombre:'Cabeza de lomo',cantidad:15},
-  {nombre:'Cabeza de lomo',cantidad:15},
-  {nombre:'Cabeza de lomo',cantidad:15},
-  {nombre:'Cabeza de lomo',cantidad:15},
+   {nombre:'Cabeza de lomo',cantidad:15},
+   {nombre:'Cabeza de lomo',cantidad:15},
+   {nombre:'Cabeza de lomo',cantidad:15},
+   {nombre:'Cabeza de lomo',cantidad:15},
+   {nombre:'Cabeza de lomo',cantidad:15},
+   {nombre:'Cabeza de lomo',cantidad:15},
+   {nombre:'Cabeza de lomo',cantidad:15},
+   {nombre:'Cabeza de lomo',cantidad:15},
 ]
 
 var pedidos = [
@@ -72,11 +72,11 @@ module.exports = class Help extends Component {
    }
 
    renderRow(rowData){
-     return(
-       <View style={{flex:10,flexDirection:'row'}}>
-         <Text style={{flex:7,fontSize:14}}>{rowData.nombre}</Text>
-         <Text style={{flex:3,textAlign:'right',fontSize:14}}>{rowData.cantidad} Kg</Text>
-       </View>
+      return(
+         <View style={{flex:10,flexDirection:'row'}}>
+            <Text style={{flex:7,fontSize:14}}>{rowData.nombre}</Text>
+            <Text style={{flex:3,textAlign:'right',fontSize:14}}>{rowData.cantidad} Kg</Text>
+         </View>
      );
    }
 

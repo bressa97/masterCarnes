@@ -5,6 +5,8 @@ import * as firebase from 'firebase';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { CheckboxField, Checkbox } from 'react-native-checkbox-field';
+import Communications from 'react-native-communications';
+
 
 function formatMoney(n,c,d,t){
 var n = n,
@@ -60,6 +62,7 @@ module.exports = class Help extends Component {
          for(i in item.order ){
             items.push(item.order[i]);
          }
+
 
          this.setState({
             orderDetailsModal: visible,
@@ -117,18 +120,18 @@ module.exports = class Help extends Component {
 
    renderRow(item){
       return(
-         <View style={{flexDirection:'row',borderRadius:3,padding:10,marginLeft:10,marginRight:10,marginTop:10,elevation:2,backgroundColor:'#fff',borderColor:'rgba(25, 120, 231, 0.48)',borderWidth:1}}>
+          <TouchableOpacity style={{borderRadius:3}}onPress={()=>this.setModalVisible(true,item)}>
+         <View style={{flexDirection:'row',borderRadius:3,padding:10,marginLeft:10,marginRight:10,marginTop:10,elevation:2,backgroundColor:'#fff',borderColor:'rgba(25, 120, 231, 0.2)',borderWidth:1}}>
            <View style={{flex:5}}>
              <Text style={{fontSize:16,color:'#373737'}}>{item.date}</Text>
-             <TouchableOpacity style={{marginTop:10,borderRadius:3}}onPress={()=>this.setModalVisible(true,item)}>
-               <Text style={{color:'#0071B2',padding:3}}><Iconi name="assignment"/> Ver Cotizacion</Text>
-             </TouchableOpacity>
+               <Text style={{fontSize:27,color:'#0071B2',padding:3}}>Orden #{item.id}</Text>
            </View>
            <View style={{flex:3}}>
              <Text style={{fontSize:34,textAlign:'right',color:'#8c8c8c'}}>{item.order.length}<Iconi size={25} name="assignment"/></Text>
              <Text style={{fontSize:14,textAlign:'right',color:'#8c8c8c'}}>{formatMoney(item.cantidadTotal)} Kg</Text>
            </View>
          </View>
+             </TouchableOpacity>
       )
    }
 
@@ -251,19 +254,24 @@ module.exports = class Help extends Component {
             <Modal animationType={"slide"} transparent={false} visible={this.state.orderDetailsModal} onRequestClose={() => {console.log("Modal has been closed.")}}>
               <View style={{flex:10,flexDirection:'column',backgroundColor:'#0071B2'}}>
                 <View style={{backgroundColor:'#0071B2',marginTop:12,flex:1,flexDirection:'row',alignItems:'center'}}>
-                  <Text style={{color:'#FFFFFF',flex:9,marginLeft:10,fontSize:16}}>{this.state.orderDetails.date}</Text>
+                  <Text style={{color:'#FFFFFF',flex:9,marginLeft:20,fontSize:20}}>Orden #{this.state.orderDetails.id}</Text>
                   <TouchableOpacity style={{flex:5}}onPress={() => {this.setModalVisible(false,null)}}>
-                    <Text style={{textAlign:'right',color:'#FFFFFF',marginRight:10,fontSize:16}}><Iconi size={20} name="close"/></Text>
+                    <Text style={{textAlign:'right',color:'#FFFFFF',marginRight:20,fontSize:16}}><Iconi size={20} name="close"/></Text>
                   </TouchableOpacity>
                 </View>
-                <ListView style={{flex:8,margin:10}}dataSource={this.state.dataSourceDetail}renderRow={this.renderRowDetai.bind(this)}/>
-                <View style={{flex:1,margin:10,alignItems:'center',flexDirection:'column'}}>
-                  <View style={{flexDirection:'row'}}>
-                    <Text style={{flex:5,color:'#0071B2',fontSize:20}}>TOTAL</Text>
-                    <Text style={{flex:5,color:'#0071B2',fontSize:20,textAlign:'right'}}>180 Kilogramos</Text>
-                  </View>
-                </View>
+                <ListView style={{flex:8,margin:10}}dataSource={this.state.dataSourceDetail}renderRow={this.renderRowDetai.bind(this)} renderFooter={ ()=><View style={{flexDirection:'column',borderRadius:3,padding:10,marginLeft:10,marginRight:10,marginTop:10,elevation:2,backgroundColor:'#fff',borderColor:'rgba(25, 120, 231, 0.2)',borderWidth:1}}>
+                  <Text style={{flex:1,fontSize:12,color:'rgb(143, 143, 143)'}}>COMENTARIO</Text>
+                  <Text style={{flex:1}}>{this.state.orderDetails.comentario}</Text>
+                  </View>}/>
               </View>
+              <TouchableOpacity onPress={()=>Communications.phonecall('0123456789', true)} style={{height:70,backgroundColor:'#03d282',alignItems:'center',justifyContent:'center'}}>
+                  <Text style={{color:'white',fontSize:23}}>
+                     <Iconi name="phone" size={23}/> Llamar Para Confirmar
+                  </Text>
+                  <Text style={{color:'white',fontSize:13}}>
+                     Disponible 9:00 AM - 6:00PM Lunes-Sabado
+                  </Text>
+              </TouchableOpacity>
             </Modal>)
          }else {
             var modal = null;

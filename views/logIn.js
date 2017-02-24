@@ -133,7 +133,7 @@ module.exports = class LogIn extends Component{
      if (Platform.OS == 'android') {
       return;
     }else{
-      <LoopAnimation source={require('../img/meat2.jpg')} type={Easing.ease.inOut} style={{top:0,left:-850,opacity:0.35,height:Window.height}} duration={300000}/>
+      return <LoopAnimation source={require('../img/meat2.jpg')} type={Easing.ease.inOut} style={{top:0,left:-850,opacity:0.35,height:Window.height}} duration={300000}/>
     }
    }
 

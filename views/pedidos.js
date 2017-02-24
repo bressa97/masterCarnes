@@ -107,18 +107,18 @@ module.exports = class Help extends Component {
 
    renderRow(item){
       return(
+         <TouchableOpacity style={{marginTop:10,borderRadius:3}}onPress={()=>this.setModalVisible(true,item)}>
          <View style={{flexDirection:'row',backgroundColor:'white',borderRadius:3,padding:10,marginLeft:10,marginRight:10,marginTop:10,elevation:2}}>
            <View style={{flex:5}}>
              <Text style={{fontSize:16,color:'#373737'}}>{item.date}</Text>
-             <TouchableOpacity style={{marginTop:10,borderRadius:3}}onPress={()=>this.setModalVisible(true,item)}>
                <Text style={{color:'#0071B2',padding:3}}><Iconi name="info"/> Más información</Text>
-             </TouchableOpacity>
            </View>
            <View style={{flex:3}}>
              <Text style={{fontSize:34,textAlign:'right',color:'#8c8c8c'}}>{item.order.length}<Iconi size={25} name="assignment"/></Text>
              <Text style={{fontSize:14,textAlign:'right',color:'#8c8c8c'}}>{item.cantidadTotal/1000} Toneladas</Text>
            </View>
          </View>
+         </TouchableOpacity>
       )
    }
 

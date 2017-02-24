@@ -24,7 +24,7 @@
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		1AB614952E114C2D90FB7F88 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B97C4414B7F0482E9CA7F62E /* Zocial.ttf */; };
 		200805C0C246458E8FF6F04A /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD19D083563948C29C0FCD95 /* libBVLinearGradient.a */; };
-		40A6DA771E53A31900FF7826 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 40A6DA761E53A31900FF7826 /* GoogleService-Info.plist */; };
+		40B19A141E60938F000CBDA4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 40B19A131E60938F000CBDA4 /* GoogleService-Info.plist */; };
 		54A0DCF767F24AF38B727A13 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE4B2B19D1824C99AF0FDDBF /* Entypo.ttf */; };
 		5BDD12A1A28A453B9773E125 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1B0D25E028BE45568C48F405 /* Foundation.ttf */; };
 		63D43827B38613C2FC3CC6F6 /* Pods_masterCarnesNativeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 687342D163F4ED5CD00C9930 /* Pods_masterCarnesNativeTests.framework */; };
@@ -165,7 +165,7 @@
 		1B0D25E028BE45568C48F405 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		3F02E243652C41A4A57500F6 /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = BVLinearGradient.xcodeproj; path = "../node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; };
 		401DC8EA2CE74BFEB7E799FF /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
-		40A6DA761E53A31900FF7826 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		40B19A131E60938F000CBDA4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "masterCarnesNative/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		40E724DA1E43007000089F52 /* masterCarnesNative.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = masterCarnesNative.entitlements; path = masterCarnesNative/masterCarnesNative.entitlements; sourceTree = "<group>"; };
 		62320D814E14F98F8CAF7199 /* Pods-masterCarnesNativeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-masterCarnesNativeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-masterCarnesNativeTests/Pods-masterCarnesNativeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6437BA450E834AA4936D7B7B /* RNFIRMessaging.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFIRMessaging.xcodeproj; path = "../node_modules/react-native-fcm/ios/RNFIRMessaging.xcodeproj"; sourceTree = "<group>"; };
@@ -304,7 +304,7 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
-				40A6DA761E53A31900FF7826 /* GoogleService-Info.plist */,
+				40B19A131E60938F000CBDA4 /* GoogleService-Info.plist */,
 			);
 			name = masterCarnesNative;
 			sourceTree = "<group>";
@@ -695,10 +695,10 @@
 				54A0DCF767F24AF38B727A13 /* Entypo.ttf in Resources */,
 				DCA351A42DA7407E9B424371 /* EvilIcons.ttf in Resources */,
 				E3D3AB4457B3427D9C1F1F6F /* FontAwesome.ttf in Resources */,
+				40B19A141E60938F000CBDA4 /* GoogleService-Info.plist in Resources */,
 				5BDD12A1A28A453B9773E125 /* Foundation.ttf in Resources */,
 				80A119F47C714E218963251A /* Ionicons.ttf in Resources */,
 				BCF5BE8D10094678AA37BF91 /* MaterialIcons.ttf in Resources */,
-				40A6DA771E53A31900FF7826 /* GoogleService-Info.plist in Resources */,
 				B2B7952C548E4763BC2219AC /* Octicons.ttf in Resources */,
 				1AB614952E114C2D90FB7F88 /* Zocial.ttf in Resources */,
 			);

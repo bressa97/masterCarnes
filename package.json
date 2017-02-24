@@ -1,27 +1,28 @@
 {
-  "name": "masterCarnesNative",
-  "version": "0.0.1",
-  "private": true,
-  "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start"
-  },
-  "dependencies": {
-    "firebase": "^3.4.1",
-    "intercom-client": "^2.8.5",
-    "intl-messageformat": "^1.3.0",
-    "javascript-time-ago": "^0.4.3",
-    "react": "15.3.1",
-    "react-native": "0.33",
-    "react-native-LoopAnimation": "^0.1.0",
-    "react-native-check-box": "^1.0.1",
-    "react-native-checkbox-field": "^1.1.0",
-    "react-native-console-panel": "^0.1.0",
-    "react-native-fcm": "^2.5.6",
-    "react-native-flip-view": "^1.0.5",
-    "react-native-linear-gradient": "^1.5.12",
-    "react-native-side-menu": "^0.20.0",
-    "react-native-textinput-effects": "^0.1.3",
-    "react-native-vector-icons": "^2.1.0",
-    "undefined": "^0.1.0"
-  }
+   "name": "masterCarnesNative",
+   "version": "0.0.1",
+   "private": true,
+   "scripts": {
+      "start": "node node_modules/react-native/local-cli/cli.js start"
+   },
+   "dependencies": {
+      "firebase": "^3.4.1",
+      "intercom-client": "^2.8.5",
+      "intl-messageformat": "^1.3.0",
+      "javascript-time-ago": "^0.4.3",
+      "react": "15.3.1",
+      "react-native": "0.33",
+      "react-native-LoopAnimation": "^0.1.0",
+      "react-native-check-box": "^1.0.1",
+      "react-native-checkbox-field": "^1.1.0",
+      "react-native-console-panel": "^0.1.0",
+      "react-native-fcm": "^2.5.6",
+      "react-native-communications": "2.2.1",
+      "react-native-flip-view": "^1.0.5",
+      "react-native-linear-gradient": "^1.5.12",
+      "react-native-side-menu": "^0.20.0",
+      "react-native-textinput-effects": "^0.1.3",
+      "react-native-vector-icons": "^2.1.0",
+      "undefined": "^0.1.0"
+   }
 }

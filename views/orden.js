@@ -458,13 +458,18 @@ module.exports = class Orden extends Component {
                FCM.getFCMToken().then(token => {
                   AsyncStorage.getItem('@auth:user',function(key,value) {
                     user = JSON.parse(value)
-                    firebase.database().ref('ordenes_abiertas/' + pedidokey).set({
-                        device:token||'null',
-                        date:Date.now(),
-                        user:user.uid,
-                        id:pedidokey,
-                        email:user.email,
-                        order:route.order});
+                    firebase.database().ref('users/'+user.uid).once('value',function(data){
+                      var userInfo = data.val();
+                      firebase.database().ref('ordenes_abiertas/' + pedidokey).set({
+                          device:token||'null',
+                          date:Date.now(),
+                          user:user.uid,
+                          empresa:userInfo.empresa,
+                          telefono:userInfo.telefono,
+                          id:pedidokey,
+                          email:user.email,
+                          order:route.order});
+                    })
                   })
                   pedidoSnap.ref.set(pedidokey);
                })

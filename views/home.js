@@ -48,11 +48,6 @@ module.exports = class Home extends Component {
       scale: new Animated.Value(1),
 
       }
-      firebase.auth().signOut().then(function() {
-        // Sign-out successful.
-      }, function(error) {
-        // An error happened.
-      });
    }
 
    componentDidMount() {

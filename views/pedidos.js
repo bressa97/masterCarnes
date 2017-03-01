@@ -79,10 +79,14 @@ module.exports = class Help extends Component {
       var user = firebase.auth().currentUser;
       AsyncStorage.getItem('@auth:user',function(key,value) {
       self.setState({user:JSON.parse(value),refreshing:true})
-         firebase.database().ref('ordenes_abiertas').orderByChild('user').equalTo(self.state.user.uid).on('value',function(snap) {
-            self.setState({refreshing:false})
-            self.setState({noOrders:false,dataSource: dataSource.cloneWithRows(self.mapOrders(snap))})
-         });
+      if (!self.state.user.uid) {
+        return;
+      }else{
+        firebase.database().ref('ordenes_abiertas').orderByChild('user').equalTo(self.state.user.uid).on('value',function(snap) {
+           self.setState({refreshing:false})
+           self.setState({noOrders:false,dataSource: dataSource.cloneWithRows(self.mapOrders(snap))})
+        });
+      }
       })
    }
 

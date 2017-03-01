@@ -29,6 +29,16 @@ module.exports = class LogIn extends Component{
       };
    }
 
+   componentWillMount(){
+     const self = this;
+     firebase.auth().onAuthStateChanged(function(user) {
+       console.log(user);
+      if (user) {
+        self.props.navigator1.replace({id:'home'})
+      }
+    });
+   }
+
    setModalRegistroVisible(visible) {
       this.setState({modalVisibleRegistro: visible});
    }

@@ -132,6 +132,16 @@ module.exports = class Orden extends Component {
       }
    }
 
+   goBack(){
+     const self = this;
+     var resetProducts = this.state.products;
+     for (var i = 0; i < resetProducts.length; i++) {
+       if (resetProducts[i].selected==true) {
+         resetProducts[i].selected = false;
+       }
+     }
+   }
+
    renderScene(route, navigator){
       var self= this
       if(route.index==0)
@@ -213,10 +223,10 @@ module.exports = class Orden extends Component {
                 routeMapper={{
                    LeftButton: function(route, navigator, index, navState){
                       if(route.index==0)
-                      return (<TouchableOpacity onPress={() => {self.props.hide()}}><Iconi name="clear" style={{fontSize:20,marginLeft:10,marginTop:10,color:'white'}}/></TouchableOpacity>);
+                      return (<TouchableOpacity onPress={() => {self.props.hide()}}><Iconi name="clear" style={{fontSize:30,marginLeft:10,marginTop:10,color:'white'}}/></TouchableOpacity>);
 
                       if(route.index==1)
-                      return (<TouchableOpacity onPress={() => {navigator.pop()}}><Iconi name="arrow-back" style={{fontSize:20,marginLeft:10,marginTop:10,color:'white'}}/></TouchableOpacity>);
+                      return (<TouchableOpacity onPress={() => {self.goBack(),navigator.pop()}}><Iconi name="arrow-back" style={{fontSize:30,marginLeft:10,marginTop:10,color:'white'}}/></TouchableOpacity>);
                    },
                    RightButton: function(route, navigator, index, navState){
                       return (<Text></Text>);

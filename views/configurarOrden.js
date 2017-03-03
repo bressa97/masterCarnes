@@ -132,6 +132,17 @@ module.exports = class Home extends Component {
    sendOrder(index){
      this.props.navigator.push({index:2,order:this.props.dataSource})
    }
+
+   deleteItem(item){
+      var newData = this.props.dataSource
+      newData.splice(item,1);
+      var dataSource = new ListView.DataSource({
+        rowHasChanged: (r1, r2) => r1 !== r2,
+        sectionHeaderHasChanged: (s1, s2) => s1 !== s2
+      });
+      this.setState({dataSource:dataSource.cloneWithRows(newData)});
+   }
+
    renderRow(item){
      if(item.inyect){
        var colorInyect = '#0071B2'
@@ -227,6 +238,9 @@ module.exports = class Home extends Component {
                         <Icon color="#fff" name="tint"/>
                      </CheckboxField>
                   </View>
+                  <TouchableOpacity onPress={()=>{this.deleteItem(this.props.dataSource.indexOf(item))}}>
+                    <Iconi name="clear" style={{fontSize:20,marginLeft:30,marginTop:10,color:'black'}}/>
+                  </TouchableOpacity>
             </View>
          </View>
       </View>)

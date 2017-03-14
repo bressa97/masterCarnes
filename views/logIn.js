@@ -23,9 +23,12 @@ module.exports = class LogIn extends Component{
          password:'',
          telefono:'',
          empresa:'',
+         email2:'',
+         password2:'',
          loading:false,
          id:'',
          block:true,
+         logOk:false,
       };
    }
 
@@ -86,22 +89,27 @@ module.exports = class LogIn extends Component{
             android:()=>ToastAndroid.show('Porfavor llene los campos solicitados', ToastAndroid.SHORT)
          })()
       }else{
-         firebase.auth().createUserWithEmailAndPassword(email,password).then(function(user) {
+         firebase.auth().createUserWithEmailAndPassword(email,password).catch(function(error){
+           var errorCode = error.code;
+           var errorMessage = error.message;
+           console.log(errorCode);
+           console.log(errorMessage);
+           if (errorCode) {
+             Platform.select({
+              ios:()=>AlertIOS.alert('El correo ya ha sido ingresado anteriormente'),
+              android:()=>ToastAndroid.show('El correo ya ha sido ingresado anteriormente', ToastAndroid.SHORT)
+            })()
+            return;
+          }
+         }).then(function(user) {
             if(user){
                var self = this;
                var current = firebase.auth().currentUser;
                console.log(current.uid+"uid login");
                firebase.database().ref('users/'+current.uid).set({name:name,apellido:apellido,email:email,empresa:empresa,telefono:telefono});
             }else{
-
             }
-         });
-         setTimeout(function () {
-            self.setModalRegistroVisible(!self.state.modalVisibleRegistro);
-            self.props.navigator1.push({
-               id: 'home'
-            });
-         }, 2000);
+         })
       }
    }
 
@@ -244,8 +252,8 @@ module.exports = class LogIn extends Component{
               borderColor={'#aee2c9'}
               labelStyle={{ color: '#fcfffe' }}
               inputStyle={{ color: '#ffffff' }}
-              value={this.state.email}
-              onChangeText={(email) => this.setState({email})}
+              value={this.state.email2}
+              onChangeText={(email2) => this.setState({email2})}
             />
               <Hoshi
                label={'Empresa'}
@@ -272,10 +280,8 @@ module.exports = class LogIn extends Component{
               borderColor={'#aee2c9'}
               labelStyle={{ color: '#fcfffe' }}
               inputStyle={{ color: '#ffffff' }}
-              value={this.state.email}
-              onChangeText={(email) => this.setState({email})}
-              value={this.state.password}
-              onChangeText={(password) => this.setState({password})}
+              value={this.state.password2}
+              onChangeText={(password2) => this.setState({password2})}
             />
         </View>
             <View style={{flex:1}}>
@@ -284,7 +290,7 @@ module.exports = class LogIn extends Component{
               </TouchableOpacity>
             </View>
           </View>
-          <TouchableOpacity onPress={() => {this.signUp(this.state.name,this.state.apellido,this.state.email,this.state.password,this.state.empresa,this.state.telefono)}} style={{backgroundColor:'rgba(214, 159, 34, 0)',marginTop:15}}>
+          <TouchableOpacity onPress={() => {this.signUp(this.state.name,this.state.apellido,this.state.email2,this.state.password2,this.state.empresa,this.state.telefono)}} style={{backgroundColor:'rgba(214, 159, 34, 0)',marginTop:15}}>
                 <View style={{flex:1,borderRadius:2,backgroundColor:'#31A3DD',padding:20}}>
                    <Text style={{color:'white',justifyContent:'center',textAlign:'center'}}>Registrarte</Text>
                 </View>

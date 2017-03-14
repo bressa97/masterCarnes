@@ -72,17 +72,18 @@ module.exports = class Help extends Component {
 
    componentDidMount(){
       var self = this;
-      var dataSource = new ListView.DataSource({
-         rowHasChanged: (r1, r2) => r1 !== r2,
-         sectionHeaderHasChanged: (s1, s2) => s1 !== s2
-      });
       var user = firebase.auth().currentUser;
       AsyncStorage.getItem('@auth:user',function(key,value) {
       self.setState({user:JSON.parse(value),refreshing:true})
-      if (!self.state.user.uid) {
+      console.log(user);
+      if (!user.uid) {
         return;
       }else{
-        firebase.database().ref('ordenes_abiertas').orderByChild('user').equalTo(self.state.user.uid).on('value',function(snap) {
+        var dataSource = new ListView.DataSource({
+           rowHasChanged: (r1, r2) => r1 !== r2,
+           sectionHeaderHasChanged: (s1, s2) => s1 !== s2
+        });
+        firebase.database().ref('ordenes_abiertas').orderByChild('user').equalTo(user.uid).on('value',function(snap) {
            self.setState({refreshing:false})
            self.setState({noOrders:false,dataSource: dataSource.cloneWithRows(self.mapOrders(snap))})
         });

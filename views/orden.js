@@ -165,12 +165,10 @@ module.exports = class Orden extends Component {
 
       if(route.index==2){
          setTimeout(function () {
-            //var user = firebase.auth().currentUser;
             firebase.database().ref('pedido').once('value',function (pedidoSnap) {
                var pedidokey = pedidoSnap.val()+1
                FCM.getFCMToken().then(token => {
-                  AsyncStorage.getItem('@auth:user',function(key,value) {
-                    user = JSON.parse(value)
+                  var user = firebase.auth().currentUser;
                     firebase.database().ref('users/'+user.uid).once('value',function(data){
                       var userInfo = data.val();
                       firebase.database().ref('ordenes_abiertas/' + pedidokey).set({
@@ -183,7 +181,6 @@ module.exports = class Orden extends Component {
                           email:user.email,
                           order:route.order});
                     })
-                  })
                   pedidoSnap.ref.set(pedidokey);
                })
             })

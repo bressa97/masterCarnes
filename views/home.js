@@ -442,12 +442,12 @@ module.exports = class Home extends Component {
      switch(this.state.selectedItem){
        case 'Home':
         return (
-           <Pedidos navigator2={this.state.ref2}/>
+           <Pedidos navigator2={this.state.ref2}data={this.state.products}/>
         )
         break;
        case 'Help':
          return(
-            <Help navigator2={this.state.ref2}/>
+            <Help navigator2={this.state.ref2}data={this.state.products}/>
          )
          break;
        case 'logIn':

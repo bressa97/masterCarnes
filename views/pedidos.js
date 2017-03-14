@@ -5,7 +5,7 @@ import * as firebase from 'firebase';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { CheckboxField, Checkbox } from 'react-native-checkbox-field';
-
+import Orden from './orden'
 
 var productosPedidos = [
   {nombre:'Cabeza de lomo',cantidad:15},
@@ -34,6 +34,7 @@ module.exports = class Help extends Component {
         noOrders: true,
         refreshing:false,
         orderDetailsModal:false,
+        modalVisible:false,
         dataSource: ds.cloneWithRows(productosPedidos),
         user:''
       }
@@ -84,8 +85,12 @@ module.exports = class Help extends Component {
            sectionHeaderHasChanged: (s1, s2) => s1 !== s2
         });
         firebase.database().ref('ordenes_abiertas').orderByChild('user').equalTo(user.uid).on('value',function(snap) {
-           self.setState({refreshing:false})
-           self.setState({noOrders:false,dataSource: dataSource.cloneWithRows(self.mapOrders(snap))})
+            if (snap.val() == null) {
+              self.setState({noOrders:true,refreshing:false})
+            }else{
+              self.setState({refreshing:false})
+              self.setState({noOrders:false,dataSource: dataSource.cloneWithRows(self.mapOrders(snap))})
+            }
         });
       }
       })
@@ -187,18 +192,30 @@ module.exports = class Help extends Component {
       )
    }
 
+   setModalVisibleOrders(visible) {
+    var productsP = this.props.data
+      this.setState({modalVisible: visible});
+      for (var i = 0; i < productsP.length; i++) {
+        if (productsP[i].selected==true) {
+          productsP[i].selected = false;
+        }
+      }
+      this.setState({products:productsP})
+   }
+
    render(){
       if(this.state.noOrders){
         return(
         <View style={{flex:1,marginTop:56,backgroundColor:'white'}}>
            <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
               <Image source={require('../img/loguig.png')} resizeMode="contain" style={{width:300,opacity:0.3}}/>
-              <Text style={{color:'#bebebe'}}>Realiza tu primer cotlizacion!</Text>
-               <TouchableOpacity style={{padding:7,flexDirection:'row',justifyContent:'center',alignItems:'center',borderColor:'#0071B2',borderWidth:2,marginTop:10,borderRadius:3}}onPress={()=>this.setModalVisible(true)}>
-                  <TouchableOpacity onPress={() => {this.setModalVisible(true)}}><Iconi name="add-circle" style={{color:'#0071B2',fontSize:28}}/></TouchableOpacity>
+              <Text style={{color:'#bebebe'}}>Realiza tu cotlizacion!</Text>
+               <TouchableOpacity style={{padding:7,flexDirection:'row',justifyContent:'center',alignItems:'center',borderColor:'#0071B2',borderWidth:2,marginTop:10,borderRadius:3,width:130}}onPress={()=>this.setModalVisibleOrders(true)}>
+                  <TouchableOpacity onPress={() => {this.setModalVisibleOrders(true)}}><Iconi name="add-circle" style={{color:'#0071B2',fontSize:28}}/></TouchableOpacity>
                   <Text style={{color:'#0071B2',textAlign:'center'}}>Cotizar</Text>
                </TouchableOpacity>
            </View>
+           <Orden modalVisible={this.state.modalVisible} data={this.props.data}hide={()=>{this.setModalVisibleOrders(false)}}/>
         </View>
       );
       }else{

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {TextInput} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Iconi from 'react-native-vector-icons/MaterialIcons';
 import { CheckboxField, Checkbox } from 'react-native-checkbox-field';
@@ -27,6 +28,9 @@ import {
 module.exports = class Home extends Component {
    constructor(props){
       super(props)
+      this.state = {
+        cantidadTotal:0,
+      }
    }
 
    componentWillMount(){
@@ -35,59 +39,6 @@ module.exports = class Home extends Component {
          sectionHeaderHasChanged: (s1, s2) => s1 !== s2
       });
       this.setState({dataSource:dataSource.cloneWithRows(this.props.dataSource)})
-   }
-
-   sumaKilos(index){
-     if(this.props.dataSource[index].toneladas==true){
-       this.props.dataSource[index].kilos= this.props.dataSource[index].kilos+1
-       this.props.dataSource[index].cantidadTotal = this.props.dataSource[index].kilos*1000;
-       var dataSource = new ListView.DataSource({
-          rowHasChanged: (r1, r2) => r1 !== r2,
-          sectionHeaderHasChanged: (s1, s2) => s1 !== s2
-       });
-       this.setState({dataSource:dataSource.cloneWithRows(this.props.dataSource)})
-     }else{
-       this.props.dataSource[index].kilos= this.props.dataSource[index].kilos+5
-       this.props.dataSource[index].cantidadTotal = this.props.dataSource[index].kilos;
-       var dataSource = new ListView.DataSource({
-          rowHasChanged: (r1, r2) => r1 !== r2,
-          sectionHeaderHasChanged: (s1, s2) => s1 !== s2
-       });
-       this.setState({dataSource:dataSource.cloneWithRows(this.props.dataSource)})
-     }
-   }
-
-   restaKilos(index){
-     if(this.props.dataSource[index].kilos == 0){
-       return;
-     }
-     if(this.props.dataSource[index].toneladas==true){
-       this.props.dataSource[index].kilos = this.props.dataSource[index].kilos-1
-       this.props.dataSource[index].cantidadTotal = this.props.dataSource[index].kilos*1000;
-       var dataSource = new ListView.DataSource({
-          rowHasChanged: (r1, r2) => r1 !== r2,
-          sectionHeaderHasChanged: (s1, s2) => s1 !== s2
-       });
-       this.setState({dataSource:dataSource.cloneWithRows(this.props.dataSource)})
-     }else{
-       if(this.props.dataSource[index].kilos <= 4){
-         this.props.dataSource[index].kilos = this.props.dataSource[index].kilos-1
-         this.props.dataSource[index].cantidadTotal = this.props.dataSource[index].kilos;
-         var dataSource = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1 !== r2,
-            sectionHeaderHasChanged: (s1, s2) => s1 !== s2
-         });
-         this.setState({dataSource:dataSource.cloneWithRows(this.props.dataSource)})
-         return;
-       }
-       this.props.dataSource[index].kilos = this.props.dataSource[index].kilos-5
-       this.props.dataSource[index].cantidadTotal = this.props.dataSource[index].kilos;
-       var dataSource = new ListView.DataSource({
-          rowHasChanged: (r1, r2) => r1 !== r2,
-          sectionHeaderHasChanged: (s1, s2) => s1 !== s2
-       });
-       this.setState({dataSource:dataSource.cloneWithRows(this.props.dataSource)})
-     }
    }
 
    selectInyect(row){
@@ -131,6 +82,11 @@ module.exports = class Home extends Component {
    }
    sendOrder(index){
      this.props.navigator.push({index:2,order:this.props.dataSource})
+   }
+
+   editValue(index,cantidadTotal){
+     this.setState({cantidadTotal:cantidadTotal});
+     this.props.dataSource[index].kilos = cantidadTotal;
    }
 
    deleteItem(item){
@@ -185,28 +141,13 @@ module.exports = class Home extends Component {
             </View>
             <View style={{flex:4,flexDirection:'row',alignItems:'center'}}>
                {imageInternational}
-               <View style={{flex:2,flexDirection:'row',alignItems:'center',justifyContent:'center',marginTop:0}}>
-                  <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
-                   <TouchableOpacity onPress={()=>{this.restaKilos(this.props.dataSource.indexOf(item))}}style={{alignItems:'center'}}>
-                    <View style={{flex:1,alignItems:'center',alignItems:'center'}}>
-                        <View style={{height:40,width:40,borderRadius:3,alignItems:'center',backgroundColor:'rgb(219, 69, 69)',alignItems:'center',justifyContent:'center'}}>
-                           <Icon name="minus" style={{color:'white'}}/>
-                        </View>
-                    </View>
-                 </TouchableOpacity>
-                  <TouchableOpacity onPress={()=>{this.sumaKilos(this.props.dataSource.indexOf(item))}}>
-                     <View style={{flex:1,alignItems:'center'}}>
-                        <View style={{height:40,width:40,marginLeft:5,borderRadius:3,alignItems:'center',backgroundColor:'#0071B2',alignItems:'center',justifyContent:'center'}}>
-                           <Icon name="plus" style={{color:'white'}}/>
-                        </View>
-                     </View>
-                  </TouchableOpacity>
-                  </View>
-               </View>
+                  <TextInput
+                    keyboardType={'numeric'}
+                    style={{flex:2,height: 40, backgroundColor:'#cccccc', borderWidth: 1}}
+                    onChangeText={(cantidadTotal) => {this.editValue(this.props.dataSource.indexOf(item),cantidadTotal)}}
+                    value={this.state.cantidadTotal}
+                  />
                <View style={{flex:1,flexDirection:'row'}}>
-                  <Text style={{fontSize:35,color:'rgb(55, 55, 55)',backgroundColor:'transparent'}}>
-                     {item.kilos}
-                  </Text>
                   <Text style={{fontSize:10,backgroundColor:'transparent'}}>
                       {textToneladas}
                   </Text>

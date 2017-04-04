@@ -278,8 +278,10 @@ module.exports = class Help extends Component {
                   <Text style={{flex:1,fontSize:12,color:'rgb(143, 143, 143)'}}>COMENTARIO</Text>
                   <Text style={{flex:1}}>{this.state.orderDetails.comentario}</Text>
                   </View>}/>
+
+                <Text style={{color:'#ffffff',textAlign:'center',padding:10,fontSize:16}}>Precios sujetos a cambio</Text>
               </View>
-              <TouchableOpacity onPress={()=>Communications.phonecall('0123456789', true)} style={{height:70,backgroundColor:'#03d282',alignItems:'center',justifyContent:'center'}}>
+              <TouchableOpacity onPress={()=>Communications.phonecall('89896312', true)} style={{height:70,backgroundColor:'#03d282',alignItems:'center',justifyContent:'center'}}>
                   <Text style={{color:'white',fontSize:23}}>
                      <Iconi name="phone" size={23}/> Llamar Para Confirmar
                   </Text>

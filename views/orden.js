@@ -169,8 +169,10 @@ module.exports = class Orden extends Component {
                var pedidokey = pedidoSnap.val()+1
                FCM.getFCMToken().then(token => {
                   var user = firebase.auth().currentUser;
+                  console.log(user);
                     firebase.database().ref('users/'+user.uid).once('value',function(data){
                       var userInfo = data.val();
+                      console.log(userInfo);
                       firebase.database().ref('ordenes_abiertas/' + pedidokey).set({
                           device:token||'null',
                           date:Date.now(),

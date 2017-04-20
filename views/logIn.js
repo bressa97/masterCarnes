@@ -96,8 +96,8 @@ module.exports = class LogIn extends Component{
            console.log(errorMessage);
            if (errorCode) {
              Platform.select({
-              ios:()=>AlertIOS.alert('El correo ya ha sido ingresado anteriormente'),
-              android:()=>ToastAndroid.show('El correo ya ha sido ingresado anteriormente', ToastAndroid.SHORT)
+              ios:()=>AlertIOS.alert('El correo ya ha sido ingresado anteriormente, o la contraseña es menor a 8 caracteres'),
+              android:()=>ToastAndroid.show('El correo ya ha sido ingresado anteriormente, o la contraseña es menor a 8 caracteres', ToastAndroid.SHORT)
             })()
             return;
           }

@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import {TextInput} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Iconi from 'react-native-vector-icons/MaterialIcons';
 import { CheckboxField, Checkbox } from 'react-native-checkbox-field';
 import * as firebase from 'firebase';
+import Input from './input';
 
 
 import {
@@ -27,6 +29,9 @@ import {
 module.exports = class Home extends Component {
    constructor(props){
       super(props)
+      this.state = {
+        cantidadTotal:0,
+      }
    }
 
    componentWillMount(){
@@ -35,59 +40,6 @@ module.exports = class Home extends Component {
          sectionHeaderHasChanged: (s1, s2) => s1 !== s2
       });
       this.setState({dataSource:dataSource.cloneWithRows(this.props.dataSource)})
-   }
-
-   sumaKilos(index){
-     if(this.props.dataSource[index].toneladas==true){
-       this.props.dataSource[index].kilos= this.props.dataSource[index].kilos+1
-       this.props.dataSource[index].cantidadTotal = this.props.dataSource[index].kilos*1000;
-       var dataSource = new ListView.DataSource({
-          rowHasChanged: (r1, r2) => r1 !== r2,
-          sectionHeaderHasChanged: (s1, s2) => s1 !== s2
-       });
-       this.setState({dataSource:dataSource.cloneWithRows(this.props.dataSource)})
-     }else{
-       this.props.dataSource[index].kilos= this.props.dataSource[index].kilos+5
-       this.props.dataSource[index].cantidadTotal = this.props.dataSource[index].kilos;
-       var dataSource = new ListView.DataSource({
-          rowHasChanged: (r1, r2) => r1 !== r2,
-          sectionHeaderHasChanged: (s1, s2) => s1 !== s2
-       });
-       this.setState({dataSource:dataSource.cloneWithRows(this.props.dataSource)})
-     }
-   }
-
-   restaKilos(index){
-     if(this.props.dataSource[index].kilos == 0){
-       return;
-     }
-     if(this.props.dataSource[index].toneladas==true){
-       this.props.dataSource[index].kilos = this.props.dataSource[index].kilos-1
-       this.props.dataSource[index].cantidadTotal = this.props.dataSource[index].kilos*1000;
-       var dataSource = new ListView.DataSource({
-          rowHasChanged: (r1, r2) => r1 !== r2,
-          sectionHeaderHasChanged: (s1, s2) => s1 !== s2
-       });
-       this.setState({dataSource:dataSource.cloneWithRows(this.props.dataSource)})
-     }else{
-       if(this.props.dataSource[index].kilos <= 4){
-         this.props.dataSource[index].kilos = this.props.dataSource[index].kilos-1
-         this.props.dataSource[index].cantidadTotal = this.props.dataSource[index].kilos;
-         var dataSource = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1 !== r2,
-            sectionHeaderHasChanged: (s1, s2) => s1 !== s2
-         });
-         this.setState({dataSource:dataSource.cloneWithRows(this.props.dataSource)})
-         return;
-       }
-       this.props.dataSource[index].kilos = this.props.dataSource[index].kilos-5
-       this.props.dataSource[index].cantidadTotal = this.props.dataSource[index].kilos;
-       var dataSource = new ListView.DataSource({
-          rowHasChanged: (r1, r2) => r1 !== r2,
-          sectionHeaderHasChanged: (s1, s2) => s1 !== s2
-       });
-       this.setState({dataSource:dataSource.cloneWithRows(this.props.dataSource)})
-     }
    }
 
    selectInyect(row){
@@ -129,6 +81,7 @@ module.exports = class Home extends Component {
      }
      this.setState({dataSource:dataSource.cloneWithRows(this.props.dataSource)});
    }
+
    sendOrder(index){
      this.props.navigator.push({index:2,order:this.props.dataSource})
    }
@@ -141,6 +94,17 @@ module.exports = class Home extends Component {
         sectionHeaderHasChanged: (s1, s2) => s1 !== s2
       });
       this.setState({dataSource:dataSource.cloneWithRows(newData)});
+   }
+
+   setCantidad(index,cantidad){
+     var dataSource = new ListView.DataSource({
+       rowHasChanged: (r1, r2) => r1 !== r2,
+       sectionHeaderHasChanged: (s1, s2) => s1 !== s2
+     });
+     this.props.dataSource[index].kilos = cantidad
+     this.props.dataSource[index].cantidadTotal = cantidad
+     var newData = this.props.dataSource
+     this.setState({dataSource:dataSource.cloneWithRows(newData)});
    }
 
    renderRow(item){
@@ -161,9 +125,9 @@ module.exports = class Home extends Component {
          var imageInternational = <Image style={{opacity:0.15,height:110,width:190,position:'absolute',left:20,bottom:-80}} resizeMode="contain" source={{uri:'http://previews.123rf.com/images/carmenbobo/carmenbobo1501/carmenbobo150100014/35179260-Sello-de-goma-con-la-palabra-importada-interior-ilustraci-n-vectorial-Foto-de-archivo.jpg'}}/>
       }
       if(item.toneladas){
-        var textToneladas='ton'
+        var textToneladas=' ton'
       }else{
-        var textToneladas='kg'
+        var textToneladas=' kg'
       }
       if(item.toneladas){
         var textToneladasTitulo=' (TON.)'
@@ -185,29 +149,9 @@ module.exports = class Home extends Component {
             </View>
             <View style={{flex:4,flexDirection:'row',alignItems:'center'}}>
                {imageInternational}
-               <View style={{flex:2,flexDirection:'row',alignItems:'center',justifyContent:'center',marginTop:0}}>
-                  <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
-                   <TouchableOpacity onPress={()=>{this.restaKilos(this.props.dataSource.indexOf(item))}}style={{alignItems:'center'}}>
-                    <View style={{flex:1,alignItems:'center',alignItems:'center'}}>
-                        <View style={{height:40,width:40,borderRadius:3,alignItems:'center',backgroundColor:'rgb(219, 69, 69)',alignItems:'center',justifyContent:'center'}}>
-                           <Icon name="minus" style={{color:'white'}}/>
-                        </View>
-                    </View>
-                 </TouchableOpacity>
-                  <TouchableOpacity onPress={()=>{this.sumaKilos(this.props.dataSource.indexOf(item))}}>
-                     <View style={{flex:1,alignItems:'center'}}>
-                        <View style={{height:40,width:40,marginLeft:5,borderRadius:3,alignItems:'center',backgroundColor:'#0071B2',alignItems:'center',justifyContent:'center'}}>
-                           <Icon name="plus" style={{color:'white'}}/>
-                        </View>
-                     </View>
-                  </TouchableOpacity>
-                  </View>
-               </View>
+               <Input index={this.props.dataSource.indexOf(item)} valueChanged={this.setCantidad.bind(this)} data={this.props.dataSource.indexOf(item)}/>
                <View style={{flex:1,flexDirection:'row'}}>
-                  <Text style={{fontSize:35,color:'rgb(55, 55, 55)',backgroundColor:'transparent'}}>
-                     {item.kilos}
-                  </Text>
-                  <Text style={{fontSize:10,backgroundColor:'transparent'}}>
+                  <Text style={{fontSize:14,backgroundColor:'transparent'}}>
                       {textToneladas}
                   </Text>
                </View>

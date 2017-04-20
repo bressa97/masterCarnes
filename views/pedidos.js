@@ -116,6 +116,7 @@ module.exports = class Help extends Component {
    }
 
    renderRow(item){
+     console.log(item);
       return(
          <TouchableOpacity style={{marginTop:10,borderRadius:3}}onPress={()=>this.setModalVisible(true,item)}>
          <View style={{flexDirection:'row',backgroundColor:'white',borderRadius:3,padding:10,marginLeft:10,marginRight:10,marginTop:10,elevation:2}}>
@@ -125,7 +126,7 @@ module.exports = class Help extends Component {
            </View>
            <View style={{flex:3}}>
              <Text style={{fontSize:34,textAlign:'right',color:'#8c8c8c'}}>{item.order.length}<Iconi size={25} name="assignment"/></Text>
-             <Text style={{fontSize:14,textAlign:'right',color:'#8c8c8c'}}>{item.cantidadTotal/1000} Toneladas</Text>
+             <Text style={{fontSize:14,textAlign:'right',color:'#8c8c8c'}}>{item.cantidadTotal/10000} Toneladas</Text>
            </View>
          </View>
          </TouchableOpacity>

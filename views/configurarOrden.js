@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Iconi from 'react-native-vector-icons/MaterialIcons';
 import { CheckboxField, Checkbox } from 'react-native-checkbox-field';
 import * as firebase from 'firebase';
+import Input from './input';
 
 
 import {
@@ -80,13 +81,9 @@ module.exports = class Home extends Component {
      }
      this.setState({dataSource:dataSource.cloneWithRows(this.props.dataSource)});
    }
+
    sendOrder(index){
      this.props.navigator.push({index:2,order:this.props.dataSource})
-   }
-
-   editValue(index,cantidadTotal){
-     this.setState({cantidadTotal:cantidadTotal});
-     this.props.dataSource[index].kilos = cantidadTotal;
    }
 
    deleteItem(item){
@@ -97,6 +94,17 @@ module.exports = class Home extends Component {
         sectionHeaderHasChanged: (s1, s2) => s1 !== s2
       });
       this.setState({dataSource:dataSource.cloneWithRows(newData)});
+   }
+
+   setCantidad(index,cantidad){
+     var dataSource = new ListView.DataSource({
+       rowHasChanged: (r1, r2) => r1 !== r2,
+       sectionHeaderHasChanged: (s1, s2) => s1 !== s2
+     });
+     this.props.dataSource[index].kilos = cantidad
+     this.props.dataSource[index].cantidadTotal = cantidad
+     var newData = this.props.dataSource
+     this.setState({dataSource:dataSource.cloneWithRows(newData)});
    }
 
    renderRow(item){
@@ -117,9 +125,9 @@ module.exports = class Home extends Component {
          var imageInternational = <Image style={{opacity:0.15,height:110,width:190,position:'absolute',left:20,bottom:-80}} resizeMode="contain" source={{uri:'http://previews.123rf.com/images/carmenbobo/carmenbobo1501/carmenbobo150100014/35179260-Sello-de-goma-con-la-palabra-importada-interior-ilustraci-n-vectorial-Foto-de-archivo.jpg'}}/>
       }
       if(item.toneladas){
-        var textToneladas='ton'
+        var textToneladas=' ton'
       }else{
-        var textToneladas='kg'
+        var textToneladas=' kg'
       }
       if(item.toneladas){
         var textToneladasTitulo=' (TON.)'
@@ -141,14 +149,9 @@ module.exports = class Home extends Component {
             </View>
             <View style={{flex:4,flexDirection:'row',alignItems:'center'}}>
                {imageInternational}
-                  <TextInput
-                    keyboardType={'numeric'}
-                    style={{flex:2,height: 40, backgroundColor:'#cccccc', borderWidth: 1}}
-                    onChangeText={(cantidadTotal) => {this.editValue(this.props.dataSource.indexOf(item),cantidadTotal)}}
-                    value={this.state.cantidadTotal}
-                  />
+               <Input index={this.props.dataSource.indexOf(item)} valueChanged={this.setCantidad.bind(this)} data={this.props.dataSource.indexOf(item)}/>
                <View style={{flex:1,flexDirection:'row'}}>
-                  <Text style={{fontSize:10,backgroundColor:'transparent'}}>
+                  <Text style={{fontSize:14,backgroundColor:'transparent'}}>
                       {textToneladas}
                   </Text>
                </View>

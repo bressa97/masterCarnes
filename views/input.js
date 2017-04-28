@@ -24,7 +24,7 @@ module.exports = class input extends Component {
       return(
         <TextInput
           keyboardType={'numeric'}
-          style={{flex:2,height: 40, backgroundColor:'#cccccc', borderWidth: 1}}
+          style={{flex:2,height: 40, backgroundColor:'#e8e8e8',borderColor:'#e8e8e8'}}
           onChangeText={(cantidadTotal) => {this.editValue(this.props.index,cantidadTotal)}}
           value={this.state.cantidadTotal}
         />

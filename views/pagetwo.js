@@ -281,7 +281,7 @@ module.exports = class Help extends Component {
 
                 <Text style={{color:'#ffffff',textAlign:'center',padding:10,fontSize:16}}>Precios sujetos a cambio</Text>
               </View>
-              <TouchableOpacity onPress={()=>Communications.phonecall('89896312', true)} style={{height:70,backgroundColor:'#03d282',alignItems:'center',justifyContent:'center'}}>
+              <TouchableOpacity onPress={()=>Communications.phonecall('8189896512', true)} style={{height:70,backgroundColor:'#03d282',alignItems:'center',justifyContent:'center'}}>
                   <Text style={{color:'white',fontSize:23}}>
                      <Iconi name="phone" size={23}/> Llamar Para Confirmar
                   </Text>

@@ -18,7 +18,7 @@ module.exports = class LogIn extends Component{
       this.state ={
          modalVisibleRegistro: false,
          name:'',
-         apellido:'',
+         estado:'',
          email:'',
          password:'',
          telefono:'',
@@ -81,9 +81,9 @@ module.exports = class LogIn extends Component{
       });
    }
 
-   signUp(name,apellido,email,password,empresa,telefono){
+   signUp(name,estado,email,password,empresa,telefono){
       var self = this;
-      if(!name||!apellido||!email||!password||!empresa||!telefono){
+      if(!name||!estado||!email||!password||!empresa||!telefono){
          Platform.select({
             ios:()=>AlertIOS.alert('Porfavor llene los campos solicitados'),
             android:()=>ToastAndroid.show('Porfavor llene los campos solicitados', ToastAndroid.SHORT)
@@ -106,7 +106,7 @@ module.exports = class LogIn extends Component{
                var self = this;
                var current = firebase.auth().currentUser;
                console.log(current.uid+"uid login");
-               firebase.database().ref('users/'+current.uid).set({name:name,apellido:apellido,email:email,empresa:empresa,telefono:telefono});
+               firebase.database().ref('users/'+current.uid).set({name:name,estado:estado,email:email,empresa:empresa,telefono:telefono});
             }else{
             }
          })
@@ -229,7 +229,7 @@ module.exports = class LogIn extends Component{
                <View style={{flexDirection:'row',flex:14,justifyContent:'center',alignItems:'center',marginTop:-40}}>
                <View style={{flex:13}}>
              <Hoshi
-              label={'Nombre'}
+              label={'Nombre y apellido'}
               // this is used as active and passive border color
               borderColor={'#aee2c9'}
               labelStyle={{ color: '#fcfffe' }}
@@ -238,13 +238,13 @@ module.exports = class LogIn extends Component{
               onChangeText={(name) => this.setState({name})}
             />
              <Hoshi
-              label={'Apellido'}
+              label={'Estado'}
               // this is used as active and passive border color
               borderColor={'#aee2c9'}
               labelStyle={{ color: '#fcfffe' }}
               inputStyle={{ color: '#ffffff' }}
-              value={this.state.apellido}
-              onChangeText={(apellido) => this.setState({apellido})}
+              value={this.state.estado}
+              onChangeText={(estado) => this.setState({estado})}
             />
              <Hoshi
               label={'Correo electrónico'}
@@ -290,7 +290,7 @@ module.exports = class LogIn extends Component{
               </TouchableOpacity>
             </View>
           </View>
-          <TouchableOpacity onPress={() => {this.signUp(this.state.name,this.state.apellido,this.state.email2,this.state.password2,this.state.empresa,this.state.telefono)}} style={{backgroundColor:'rgba(214, 159, 34, 0)',marginTop:15}}>
+          <TouchableOpacity onPress={() => {this.signUp(this.state.name,this.state.estado,this.state.email2,this.state.password2,this.state.empresa,this.state.telefono)}} style={{backgroundColor:'rgba(214, 159, 34, 0)',marginTop:15}}>
                 <View style={{flex:1,borderRadius:2,backgroundColor:'#31A3DD',padding:20}}>
                    <Text style={{color:'white',justifyContent:'center',textAlign:'center'}}>Registrarte</Text>
                 </View>

@@ -122,7 +122,7 @@ module.exports = class Home extends Component {
 
       if(item.international){
          var textInternational=' (IMP.)'
-         var imageInternational = <Image style={{opacity:0.15,height:110,width:190,position:'absolute',left:20,bottom:-80}} resizeMode="contain" source={{uri:'http://previews.123rf.com/images/carmenbobo/carmenbobo1501/carmenbobo150100014/35179260-Sello-de-goma-con-la-palabra-importada-interior-ilustraci-n-vectorial-Foto-de-archivo.jpg'}}/>
+         var imageInternational = <Image style={{opacity:0.15,height:180,width:250,position:'absolute',left:130,bottom:-95}} resizeMode="contain" source={{uri:'http://previews.123rf.com/images/carmenbobo/carmenbobo1501/carmenbobo150100014/35179260-Sello-de-goma-con-la-palabra-importada-interior-ilustraci-n-vectorial-Foto-de-archivo.jpg'}}/>
       }
       if(item.toneladas){
         var textToneladas=' TON'
@@ -140,7 +140,7 @@ module.exports = class Home extends Component {
          <View style={{margin:10,backgroundColor:'white',borderRadius:3,padding:10,overflow:'hidden'}}>
          <View style={{alignItems:'flex-end'}}>
             <TouchableOpacity onPress={()=>{this.deleteItem(this.props.dataSource.indexOf(item))}}>
-              <Iconi name="delete" style={{color:'#c2c2c2',fontSize:20}}/>
+              <Iconi name="clear" style={{color:'#c2c2c2',fontSize:20}}/>
             </TouchableOpacity>
          </View>
          <View style={{flexDirection:'column'}}>
@@ -155,7 +155,7 @@ module.exports = class Home extends Component {
             <View style={{flexDirection:'row',alignItems:'center'}}>
                {imageInternational}
                <Input index={this.props.dataSource.indexOf(item)} valueChanged={this.setCantidad.bind(this)} data={this.props.dataSource.indexOf(item)}/>
-               <View style={{flex:1,flexDirection:'row',justifyContent:'center'}}>
+               <View style={{flex:2,flexDirection:'row',justifyContent:'center'}}>
                   <Text style={{marginTop:6,alignItems:'center',justifyContent:'center',fontSize:14,backgroundColor:'transparent'}}>
                      {' '}KG{' '}
                   </Text>
@@ -178,7 +178,7 @@ module.exports = class Home extends Component {
                         selected={item.inyect}
                         defaultColor="#f0efef"
                         selectedColor="#24d279"
-                        labelStyle={{flex:1,color:'#858585',fontSize:10}}
+                        labelStyle={{flex:1,color:'#858585',fontSize:11}}
                         checkboxStyle={styles.checkboxStyle}
                         labelSide="right">
                         <Icon color="#fff" name="tint"/>
@@ -189,7 +189,7 @@ module.exports = class Home extends Component {
                         selected={item.international}
                         defaultColor="#f0efef"
                         selectedColor="#d22439"
-                        labelStyle={{flex:1,color:'#858585',fontSize:10}}
+                        labelStyle={{flex:1,color:'#858585',fontSize:11,backgroundColor:'transparent'}}
                         checkboxStyle={styles.checkboxStyle}
                         labelSide="right">
                         <Icon color="#fff" name="flag"/>

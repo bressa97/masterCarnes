@@ -104,6 +104,7 @@ module.exports = class Orden extends Component {
       });
       this.state.products[row].selected=!this.state.products[row].selected
       this.setState({products:this.state.products});
+      this.setState({filteredProducts:this.state.products});
       this.setState({dataSource: dataSource.cloneWithRowsAndSections(this.convertFoodArrayToMap(this.state.filteredProducts))})
    }
 

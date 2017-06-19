@@ -171,11 +171,6 @@ module.exports = class Orden extends Component {
    goBack(){
      const self = this;
      var resetProducts = this.state.products;
-     for (var i = 0; i < resetProducts.length; i++) {
-       if (resetProducts[i].selected==true) {
-         resetProducts[i].selected = false;
-       }
-     }
    }
 
    renderScene(route, navigator){

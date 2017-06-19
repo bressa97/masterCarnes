@@ -65,7 +65,7 @@ module.exports = class Home extends Component {
        rowHasChanged: (r1, r2) => r1 !== r2,
        sectionHeaderHasChanged: (s1, s2) => s1 !== s2
      });
-     this.props.dataSource[row].international=value
+     this.props.dataSource[row].international=!this.props.dataSource[row].international;
      this.setState({dataSource:dataSource.cloneWithRows(this.props.dataSource)});
    }
    selectUnity(row,toneladas){
@@ -125,9 +125,9 @@ module.exports = class Home extends Component {
          var imageInternational = <Image style={{opacity:0.15,height:110,width:190,position:'absolute',left:20,bottom:-80}} resizeMode="contain" source={{uri:'http://previews.123rf.com/images/carmenbobo/carmenbobo1501/carmenbobo150100014/35179260-Sello-de-goma-con-la-palabra-importada-interior-ilustraci-n-vectorial-Foto-de-archivo.jpg'}}/>
       }
       if(item.toneladas){
-        var textToneladas=' ton'
+        var textToneladas=' TON'
       }else{
-        var textToneladas=' kg'
+        var textToneladas=' KG'
       }
       if(item.toneladas){
         var textToneladasTitulo=' (TON.)'
@@ -138,8 +138,13 @@ module.exports = class Home extends Component {
 
       return(
          <View style={{margin:10,backgroundColor:'white',borderRadius:3,padding:10,overflow:'hidden'}}>
-         <View style={{flexDirection:'row',alignItems:'center'}}>
-            <View style={{flex:4}}>
+         <View style={{alignItems:'flex-end'}}>
+            <TouchableOpacity onPress={()=>{this.deleteItem(this.props.dataSource.indexOf(item))}}>
+              <Iconi name="delete" style={{color:'#c2c2c2',fontSize:20}}/>
+            </TouchableOpacity>
+         </View>
+         <View style={{flexDirection:'column'}}>
+            <View style={{alignItems:''}}>
                <Text style={{color:'rgb(55, 55, 55)'}}>
                   {item.name}{textInternational}{textToneladasTitulo}
                </Text>
@@ -147,29 +152,26 @@ module.exports = class Home extends Component {
                   {item.category}
                </Text>
             </View>
-            <View style={{flex:4,flexDirection:'row',alignItems:'center'}}>
+            <View style={{flexDirection:'row',alignItems:'center'}}>
                {imageInternational}
                <Input index={this.props.dataSource.indexOf(item)} valueChanged={this.setCantidad.bind(this)} data={this.props.dataSource.indexOf(item)}/>
-               <View style={{flex:1,flexDirection:'row'}}>
-                  <Text style={{fontSize:14,backgroundColor:'transparent'}}>
-                      {textToneladas}
+               <View style={{flex:1,flexDirection:'row',justifyContent:'center'}}>
+                  <Text style={{marginTop:6,alignItems:'center',justifyContent:'center',fontSize:14,backgroundColor:'transparent'}}>
+                     {' '}KG{' '}
+                  </Text>
+                  <Switch
+                  onValueChange={(toneladas) => {this.selectUnity(this.props.dataSource.indexOf(item),toneladas)}}
+                  style={{marginBottom: 0}}
+                  value={item.toneladas} />
+                  <Text style={{marginTop:6,fontSize:14,backgroundColor:'transparent'}}>
+                      {' '}TON
                   </Text>
                </View>
             </View>
          </View>
          <View style={{flexDirection:'row',marginBottom:-15}}>
             <View style={{flex:4,flexDirection:'row'}}>
-                  <View style={{flexDirection:'row',marginTop:5}}>
-                     <Switch
-                     onValueChange={(value) => {this.selectInternational(this.props.dataSource.indexOf(item),value)}}
-                     style={{marginBottom: 0}}
-                     value={item.international} />
-                     <Switch
-                     onValueChange={(toneladas) => {this.selectUnity(this.props.dataSource.indexOf(item),toneladas)}}
-                     style={{marginBottom: 0}}
-                     value={item.toneladas} />
-                  </View>
-                  <View style={{flexDirection:'column',marginTop:-14,marginLeft:-13}}>
+                  <View style={{flexDirection:'row',marginTop:-14,marginLeft:-13}}>
                      <CheckboxField
                         label={" SUAVIZANTE"}
                         onSelect={() => {this.selectInyect(this.props.dataSource.indexOf(item))}}
@@ -181,10 +183,18 @@ module.exports = class Home extends Component {
                         labelSide="right">
                         <Icon color="#fff" name="tint"/>
                      </CheckboxField>
+                     <CheckboxField
+                        label={" IMPORTADO"}
+                        onSelect={(value) => {this.selectInternational(this.props.dataSource.indexOf(item),value)}}
+                        selected={item.international}
+                        defaultColor="#f0efef"
+                        selectedColor="#d22439"
+                        labelStyle={{flex:1,color:'#858585',fontSize:10}}
+                        checkboxStyle={styles.checkboxStyle}
+                        labelSide="right">
+                        <Icon color="#fff" name="flag"/>
+                     </CheckboxField>
                   </View>
-                  <TouchableOpacity onPress={()=>{this.deleteItem(this.props.dataSource.indexOf(item))}}>
-                    <Iconi name="clear" style={{fontSize:20,marginLeft:30,marginTop:10,color:'black'}}/>
-                  </TouchableOpacity>
             </View>
          </View>
       </View>)

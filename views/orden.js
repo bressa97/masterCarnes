@@ -24,7 +24,8 @@ import {
    AsyncStorage,
    StatusBar,
    AlertIOS,
-   ToastAndroid
+   ToastAndroid,
+   TextInput,
 } from 'react-native';
 
 module.exports = class Orden extends Component {
@@ -32,6 +33,8 @@ module.exports = class Orden extends Component {
       super(props)
       this.state={
          products:this.props.data,
+         searchValue:"",
+         filteredProducts:this.props.data
       }
    }
 
@@ -40,19 +43,38 @@ module.exports = class Orden extends Component {
          rowHasChanged: (r1, r2) => r1 !== r2,
          sectionHeaderHasChanged: (s1, s2) => s1 !== s2
       });
-      this.setState({dataSource: dataSource.cloneWithRowsAndSections(this.convertFoodArrayToMap())})
+      this.setState({dataSource: dataSource.cloneWithRowsAndSections(this.convertFoodArrayToMap(this.state.products))})
    }
 
-   convertFoodArrayToMap() {
-      var foodCategoryMap = {}; // Create the blank map
-      this.state.products.forEach(function(productsItem) {
-         if (!foodCategoryMap[productsItem.category]) {
-            // Create an entry in the map for the category if it hasn't yet been created
-            foodCategoryMap[productsItem.category] = [];
-         }
-         foodCategoryMap[productsItem.category].push(productsItem);
+   searchList(text){
+      this.setState({searchValue:text.text});
+      var filtered = this.state.products.filter(function(element){
+         reg = new RegExp(text.text.toLowerCase());
+         console.log(text.text);
+         return reg.test(JSON.stringify(element).toLowerCase());
+      })
+      var dataSource = new ListView.DataSource({
+         rowHasChanged: (r1, r2) => r1 !== r2,
+         sectionHeaderHasChanged: (s1, s2) => s1 !== s2
       });
-      return foodCategoryMap;
+      this.setState({filteredProducts:filtered})
+      this.setState({dataSource: dataSource.cloneWithRowsAndSections(this.convertFoodArrayToMap(filtered))})
+   }
+
+   convertFoodArrayToMap(products) {
+      if(products){
+         var foodCategoryMap = {}; // Create the blank map
+         products.forEach(function(productsItem) {
+            if (!foodCategoryMap[productsItem.category]) {
+               // Create an entry in the map for the category if it hasn't yet been created
+               foodCategoryMap[productsItem.category] = [];
+            }
+            foodCategoryMap[productsItem.category].push(productsItem);
+         });
+         return foodCategoryMap;
+      }else{
+         return [];
+      }
    }
 
    close(){
@@ -82,7 +104,21 @@ module.exports = class Orden extends Component {
       });
       this.state.products[row].selected=!this.state.products[row].selected
       this.setState({products:this.state.products});
-      this.setState({dataSource: dataSource.cloneWithRowsAndSections(this.convertFoodArrayToMap())})
+      this.setState({dataSource: dataSource.cloneWithRowsAndSections(this.convertFoodArrayToMap(this.state.filteredProducts))})
+   }
+
+   clear(){
+      var dataSource = new ListView.DataSource({
+         rowHasChanged: (r1, r2) => r1 !== r2,
+         sectionHeaderHasChanged: (s1, s2) => s1 !== s2
+      });
+      var unselected = this.state.products.map(function(element){
+         element.selected = false;
+         return element
+      })
+      this.setState({products:unselected});
+      this.setState({searchValue:''});
+      this.setState({dataSource: dataSource.cloneWithRowsAndSections(this.convertFoodArrayToMap(unselected))})
    }
 
    renderRow(productsItem,section,row) {
@@ -146,17 +182,24 @@ module.exports = class Orden extends Component {
       var self= this
       if(route.index==0)
          return(
-            <View style={{flex:1}}>
-              <ListView
-                 style={{flex:.9}}
-                 dataSource={this.state.dataSource}
-                 renderRow={this.renderRow.bind(this)}
-                 renderSectionHeader={this.renderSectionHeader}
+            <View style={{flex:1,backgroundColor:'#0071B2'}}>
+               <TextInput
+                 style={{margin:10,height: 40, borderColor: 'gray', color:'white', borderWidth: 0,borderRadius:10,backgroundColor:'rgba(194, 194, 194, 0.21)',padding:10}}
+                 onChangeText={(text) => this.searchList({text})}
+                 value={this.state.searchValue}
+                  placeholder="Busqueda"
+                  placeholderTextColor="rgba(255, 255, 255, 0.2)"
                />
-              <TouchableOpacity style={{flex:.08,flexDirection:'row',backgroundColor:'#03d282',alignItems:'center',justifyContent:'center'}} onPress={() => {this.validate(navigator)}}>
-                 <Text style={{color:'#ffffff',justifyContent:'center'}}>Verificar cotización </Text><Iconi name="arrow-forward" color="white"/>
-              </TouchableOpacity>
-           </View>
+               <ListView
+                  style={{flex:.9}}
+                  dataSource={this.state.dataSource}
+                  renderRow={this.renderRow.bind(this)}
+                  renderSectionHeader={this.renderSectionHeader}
+                  />
+               <TouchableOpacity style={{flex:.08,flexDirection:'row',backgroundColor:'#03d282',alignItems:'center',justifyContent:'center'}} onPress={() => {this.validate(navigator)}}>
+                  <Text style={{color:'#ffffff',justifyContent:'center'}}>Verificar cotización </Text><Iconi name="arrow-forward" color="white"/>
+               </TouchableOpacity>
+            </View>
          )
       if(route.index==1)
       return(
@@ -228,7 +271,8 @@ module.exports = class Orden extends Component {
                       return (<TouchableOpacity onPress={() => {self.goBack(),navigator.pop()}}><Iconi name="arrow-back" style={{fontSize:30,marginLeft:10,marginTop:10,color:'white'}}/></TouchableOpacity>);
                    },
                    RightButton: function(route, navigator, index, navState){
-                      return (<Text></Text>);
+                     if(route.index==0)
+                     return (<TouchableOpacity onPress={() => {self.clear()}}><Iconi name="delete" style={{fontSize:30,marginRight:10,marginTop:10,color:'white'}}/></TouchableOpacity>);
                    },
                    Title: function(route, navigator, index, navState){
                       if(route.index==0)

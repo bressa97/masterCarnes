@@ -144,7 +144,7 @@ module.exports = class Home extends Component {
             </TouchableOpacity>
          </View>
          <View style={{flexDirection:'column'}}>
-            <View style={{alignItems:''}}>
+            <View>
                <Text style={{color:'rgb(55, 55, 55)'}}>
                   {item.name}{textInternational}{textToneladasTitulo}
                </Text>

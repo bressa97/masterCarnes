@@ -275,8 +275,8 @@ module.exports = class Help extends Component {
                   </TouchableOpacity>
                 </View>
                 <ListView style={{flex:8,margin:10}}dataSource={this.state.dataSourceDetail}renderRow={this.renderRowDetai.bind(this)} renderFooter={ ()=><View style={{flexDirection:'column',borderRadius:3,padding:10,marginLeft:10,marginRight:10,marginTop:10,elevation:2,backgroundColor:'#fff',borderColor:'rgba(25, 120, 231, 0.2)',borderWidth:1}}>
-                  <Text style={{flex:1,fontSize:12,color:'rgb(143, 143, 143)'}}>COMENTARIO</Text>
-                  <Text style={{flex:1}}>{this.state.orderDetails.comentario}</Text>
+                  <Text style={{fontSize:12,color:'rgb(143, 143, 143)'}}>COMENTARIO</Text>
+                  <Text>{this.state.orderDetails.comentario}</Text>
                   </View>}/>
 
                 <Text style={{color:'#ffffff',textAlign:'center',padding:10,fontSize:16}}>Precios sujetos a cambio</Text>
